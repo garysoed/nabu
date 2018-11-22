@@ -1,4 +1,3 @@
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const glob = require("glob");
 const path = require("path");
 
@@ -14,8 +13,6 @@ module.exports = {
 
   resolve: {
     alias: {
-      'grapevine': path.resolve('./node_modules/grapevine'),
-      'gs-tools': path.resolve('./node_modules/gs-tools'),
       'rxjs': path.resolve('./node_modules/rxjs'),
       'tslib': path.resolve('./node_modules/tslib'),
     },
@@ -44,13 +41,5 @@ module.exports = {
   watch: true,
 
   plugins: [
-    // new UglifyJsPlugin({
-    //   uglifyOptions: {
-    //     keep_classnames: true,
-    //     keep_fnames: true,
-    //     mangle: false,
-    //   },
-    //   sourceMap: true,
-    // }),
   ]
 };

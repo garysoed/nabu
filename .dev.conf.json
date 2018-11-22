@@ -3,6 +3,12 @@
     {
       "command": "link",
       "actions": ["npm link gs-testing gs-types dev"]
+    },
+    {
+      "command": "parse",
+      "actions": [
+        "pegjs --plugin ./node_modules/ts-pegjs/src/tspegjs -o src/grammar-out/human.ts src/grammar/human.pegjs"
+      ]
     }
   ]
 }
