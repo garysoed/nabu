@@ -5,9 +5,9 @@
       "actions": ["npm link gs-testing gs-types dev"]
     },
     {
-      "command": "parse",
+      "command": "pegjs",
       "actions": [
-        "pegjs --plugin ./node_modules/ts-pegjs/src/tspegjs --allowed-start-rules start,object,array,string,number,boolean,null,undefined -o src/grammar-out/human.ts src/grammar/human.pegjs"
+        "pegjs --plugin ./node_modules/ts-pegjs/src/tspegjs --allowed-start-rules start,object,array,string,number,boolean,null,undefined -o src/dialect/human/human.ts src/dialect/human/human.pegjs"
       ]
     }
   ]

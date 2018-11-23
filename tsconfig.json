@@ -21,7 +21,6 @@
   },
   "include": [
     "src/**/*.ts",
-    "node_modules/grapevine/export/*",
     "node_modules/gs-testing/export/*",
     "node_modules/gs-types/export/*"
   ]
