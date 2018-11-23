@@ -1,5 +1,5 @@
 import { assert, match, should, test } from 'gs-testing/export/main';
-import { parse } from './human';
+import { parse } from './parser';
 
 test('grammar.human', () => {
   should(`parse null correctly`, () => {

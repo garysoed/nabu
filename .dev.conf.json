@@ -7,7 +7,7 @@
     {
       "command": "pegjs",
       "actions": [
-        "pegjs --plugin ./node_modules/ts-pegjs/src/tspegjs --allowed-start-rules start,object,array,string,number,boolean,null,undefined -o src/dialect/human/human.ts src/dialect/human/human.pegjs"
+        "pegjs --plugin ./node_modules/ts-pegjs/src/tspegjs -o src/grammar/human/parser.ts src/grammar/human/parser.pegjs"
       ]
     }
   ]
