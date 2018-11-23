@@ -1,5 +1,5 @@
 start = _ root:root _ { return root }
-root = object / list / string / number / boolean
+root = object / list / string / number / boolean / null / undefined
 
 /**
  * Objects
@@ -80,6 +80,16 @@ boolean = booleanTrue / booleanFalse
 booleanTrue = ("true" / "TRUE" / "T") { return true }
 
 booleanFalse = ("false" / "FALSE" / "F") { return false }
+
+/**
+ * Nulls
+ */
+null = ("NULL" / "null") { return null }
+
+/**
+ * Undefineds
+ */
+undefined = "undefined" { return undefined }
 
 /**
  * General, basic components

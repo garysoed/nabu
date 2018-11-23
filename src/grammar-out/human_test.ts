@@ -2,6 +2,15 @@ import { assert, match, should, test } from 'gs-testing/export/main';
 import { parse } from './human';
 
 test('grammar.human', () => {
+  should.only(`parse null correctly`, () => {
+    assert(parse('NULL')).to.beNull();
+    assert(parse('null')).to.beNull();
+  });
+
+  should.only(`parse undefined correctly`, () => {
+    assert(parse('undefined')).toNot.beDefined();
+  });
+
   should(`parse booleans correctly`, () => {
     assert(parse('TRUE')).to.equal(true);
     assert(parse('true')).to.equal(true);
@@ -56,7 +65,9 @@ test('grammar.human', () => {
     "string",
     .234,
     0.002,
-  ]
+  ],
+  null: null,
+  undefined: undefined,
 }
     `;
     assert(parse(INPUT)).to.equal(match.anyObjectThat().haveProperties({
@@ -65,11 +76,13 @@ test('grammar.human', () => {
         0.234,
         0.002,
       ]),
+      null: null,
       object: match.anyObjectThat().haveProperties({
         decimal: 123.456,
         number: 123,
         string: 'string',
       }),
+      undefined,
     }));
   });
 });
