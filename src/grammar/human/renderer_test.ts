@@ -1,7 +1,7 @@
 import { assert, should, test } from 'gs-testing/export/main';
 import { render } from './renderer';
 
-test('human.renderer', () => {
+test('grammar.human.renderer', () => {
   test('render', () => {
     should(`render undefined correctly`, () => {
       assert(render(undefined)).to.equal('undefined');

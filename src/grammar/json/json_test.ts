@@ -1,36 +1,37 @@
 import { assert, match, should, test } from 'gs-testing/export/main';
 import { Serializable } from '../../base/serializable';
-import { human } from './human';
+import { json } from './json';
 
-test('grammer.human.Human', () => {
+test('grammar.human.Json', () => {
+
   test('convertBackward', () => {
     should(`parse undefined correctly`, () => {
-      assert(human().convertBackward('undefined')).toNot.beDefined();
+      assert(json().convertBackward(JSON.stringify(undefined))).toNot.beDefined();
     });
 
     should(`parse null correctly`, () => {
-      assert(human().convertBackward('null')).to.beNull();
+      assert(json().convertBackward(JSON.stringify(null))).to.beNull();
     });
 
     should(`parse booleans correctly`, () => {
-      assert(human().convertBackward('T')).to.equal(true);
+      assert(json().convertBackward(JSON.stringify(true))).to.equal(true);
     });
 
     should(`parse strings correctly`, () => {
-      assert(human().convertBackward('"abc"')).to.equal('abc');
+      assert(json().convertBackward(JSON.stringify('abc'))).to.equal('abc');
     });
 
     should(`parse numbers correctly`, () => {
-      assert(human().convertBackward('1.23')).to.equal(1.23);
+      assert(json().convertBackward(JSON.stringify(1.23))).to.equal(1.23);
     });
 
     should(`parse lists correctly`, () => {
-      assert(human().convertBackward('[1.23 "test"]')).to
+      assert(json().convertBackward(JSON.stringify([1.23, 'test']))).to
           .equal(match.anyArrayThat<Serializable>().haveExactElements([1.23, 'test']));
     });
 
     should(`parse objects correctly`, () => {
-      assert(human().convertBackward('{a: 1, b: "b"}')).to
+      assert(json().convertBackward(JSON.stringify({a: 1, b: 'b'}))).to
           .equal(match.anyObjectThat().haveProperties({
             a: 1,
             b: 'b',
@@ -38,37 +39,37 @@ test('grammer.human.Human', () => {
     });
 
     should(`return null if value is null`, () => {
-      assert(human().convertBackward(null)).to.beNull();
+      assert(json().convertBackward(null)).to.beNull();
     });
   });
 
   test('convertForward', () => {
     should(`render undefined correctly`, () => {
-      assert(human().convertForward(undefined)).to.equal('undefined');
+      assert(json().convertForward(undefined)).to.equal(JSON.stringify(undefined));
     });
 
     should(`render null correctly`, () => {
-      assert(human().convertForward(null)).to.equal('null');
+      assert(json().convertForward(null)).to.equal(JSON.stringify(null));
     });
 
     should(`render booleans correctly`, () => {
-      assert(human().convertForward(true)).to.equal('T');
+      assert(json().convertForward(true)).to.equal(JSON.stringify(true));
     });
 
     should(`render strings correctly`, () => {
-      assert(human().convertForward('abc')).to.equal('"abc"');
+      assert(json().convertForward('abc')).to.equal(JSON.stringify('abc'));
     });
 
     should(`render numbers correctly`, () => {
-      assert(human().convertForward(1.23)).to.equal('1.23');
+      assert(json().convertForward(1.23)).to.equal(JSON.stringify(1.23));
     });
 
     should(`render lists correctly`, () => {
-      assert(human().convertForward([1.23, 'test'])).to.equal('[1.23 "test"]');
+      assert(json().convertForward([1.23, 'test'])).to.equal(JSON.stringify([1.23, 'test']));
     });
 
     should(`render objects correctly`, () => {
-      assert(human().convertForward({a: 1, b: 'b'})).to.equal('{a: 1, b: "b"}');
+      assert(json().convertForward({a: 1, b: 'b'})).to.equal(JSON.stringify({a: 1, b: 'b'}));
     });
   });
 });
