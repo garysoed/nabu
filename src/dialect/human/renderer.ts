@@ -1,4 +1,4 @@
-import { Serializable, SerializableObject } from '../base/serializable';
+import { Serializable, SerializableObject } from '../../base/serializable';
 
 export function render(serializable: Serializable): string {
   if (serializable === undefined) {

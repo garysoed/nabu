@@ -11,10 +11,17 @@ module.exports = function(config) {
     },
     plugins: [
       require("karma-jasmine"),
-      require("karma-sourcemap-loader")
+      require("karma-sourcemap-loader"),
+      require("karma-summary-reporter"),
     ],
     port: 8888,
-    reporters: ["dots"],
+    reporters: ["summary"],
+    summaryReporter: {
+      show: 'all',
+      // specLength: 50,
+      // Show an 'all' column as a summary
+      // overviewColumn: true
+    },
     singleRun: false
   });
 };
