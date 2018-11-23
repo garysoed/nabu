@@ -12,10 +12,10 @@ module.exports = function(config) {
     plugins: [
       require("karma-jasmine"),
       require("karma-sourcemap-loader"),
-      require("karma-summary-reporter"),
+      require("dev/karma-reporter"),
     ],
     port: 8888,
-    reporters: ["summary"],
+    reporters: ["gs"],
     summaryReporter: {
       show: 'all',
       // specLength: 50,

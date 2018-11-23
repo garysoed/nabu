@@ -2,7 +2,7 @@ import { assert, match, should, test } from 'gs-testing/export/main';
 import { Serializable } from '../../base/serializable';
 import { human } from './human';
 
-test('grammer.human.Human', () => {
+test('grammar.human.Human', () => {
   test('convertBackward', () => {
     should(`parse undefined correctly`, () => {
       assert(human().convertBackward('undefined')).toNot.beDefined();
