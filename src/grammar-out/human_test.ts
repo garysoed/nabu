@@ -40,9 +40,9 @@ test('grammar.human', () => {
   should(`parse lists correctly`, () => {
     const INPUT = `
 [
-  "string",
-  123,
-  [1, 2, 3],
+  "string"
+  123
+  [1 2 3]
 ]
     `;
 
@@ -62,9 +62,9 @@ test('grammar.human', () => {
     decimal: 123.456,
   },
   list: [
-    "string",
-    .234,
-    0.002,
+    "string"
+    .234
+    0.002
   ],
   null: null,
   undefined: undefined,

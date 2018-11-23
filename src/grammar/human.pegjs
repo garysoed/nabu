@@ -1,5 +1,5 @@
 start = _ root:root _ { return root }
-root = object / list / string / number / boolean / null / undefined
+root = object / array / string / number / boolean / null / undefined
 
 /**
  * Objects
@@ -24,24 +24,18 @@ objectEntry = key:objectIdentifier _ ":" _ value:start { return {key, value} }
 objectIdentifier = entries:[a-zA-Z0-9_]+ { return entries.join('') }
 
 /**
- * Lists
+ * Arrays
  */
-list = "[" _ entries:listEntryWithComma* lastEntry:listEntry? _ "]" {
+array = "[" _ entries:arrayEntry* _ "]" {
   const result = [];
   for (const {entry} of entries) {
     result.push(entry);
   }
 
-  if (lastEntry !== null) {
-    result.push(lastEntry.entry);
-  }
-
   return result;
 }
 
-listEntryWithComma = entry:listEntry _ "," _ { return entry }
-
-listEntry = entry:start { return {entry} }
+arrayEntry = entry:start { return {entry} }
 
 
 /**

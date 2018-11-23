@@ -171,7 +171,7 @@ function peg$parse(input: string, options?: IParseOptions) {
 
   const peg$FAILED = {};
 
-  const peg$startRuleFunctions: {[id: string]: any} = { start: peg$parsestart, object: peg$parseobject, list: peg$parselist, string: peg$parsestring, number: peg$parsenumber, boolean: peg$parseboolean, null: peg$parsenull, undefined: peg$parseundefined };
+  const peg$startRuleFunctions: {[id: string]: any} = { start: peg$parsestart, object: peg$parseobject, array: peg$parsearray, string: peg$parsestring, number: peg$parsenumber, boolean: peg$parseboolean, null: peg$parsenull, undefined: peg$parseundefined };
   let peg$startRuleFunction: () => any = peg$parsestart;
 
   const peg$c0 = function(root: any) { return root };
@@ -204,14 +204,10 @@ function peg$parse(input: string, options?: IParseOptions) {
   const peg$c16 = peg$literalExpectation("[", false);
   const peg$c17 = "]";
   const peg$c18 = peg$literalExpectation("]", false);
-  const peg$c19 = function(entries: any, lastEntry: any) {
+  const peg$c19 = function(entries: any) {
     const result = [];
     for (const {entry} of entries) {
       result.push(entry);
-    }
-
-    if (lastEntry !== null) {
-      result.push(lastEntry.entry);
     }
 
     return result;
@@ -442,7 +438,7 @@ function peg$parse(input: string, options?: IParseOptions) {
 
     s0 = peg$parseobject();
     if (s0 === peg$FAILED) {
-      s0 = peg$parselist();
+      s0 = peg$parsearray();
       if (s0 === peg$FAILED) {
         s0 = peg$parsestring();
         if (s0 === peg$FAILED) {
@@ -653,8 +649,8 @@ function peg$parse(input: string, options?: IParseOptions) {
     return s0;
   }
 
-  function peg$parselist(): any {
-    let s0, s1, s2, s3, s4, s5, s6;
+  function peg$parsearray(): any {
+    let s0, s1, s2, s3, s4, s5;
 
     s0 = peg$currPos;
     if (input.charCodeAt(peg$currPos) === 91) {
@@ -668,34 +664,25 @@ function peg$parse(input: string, options?: IParseOptions) {
       s2 = peg$parse_();
       if (s2 !== peg$FAILED) {
         s3 = [];
-        s4 = peg$parselistEntryWithComma();
+        s4 = peg$parsearrayEntry();
         while (s4 !== peg$FAILED) {
           s3.push(s4);
-          s4 = peg$parselistEntryWithComma();
+          s4 = peg$parsearrayEntry();
         }
         if (s3 !== peg$FAILED) {
-          s4 = peg$parselistEntry();
-          if (s4 === peg$FAILED) {
-            s4 = null;
-          }
+          s4 = peg$parse_();
           if (s4 !== peg$FAILED) {
-            s5 = peg$parse_();
+            if (input.charCodeAt(peg$currPos) === 93) {
+              s5 = peg$c17;
+              peg$currPos++;
+            } else {
+              s5 = peg$FAILED;
+              if (peg$silentFails === 0) { peg$fail(peg$c18); }
+            }
             if (s5 !== peg$FAILED) {
-              if (input.charCodeAt(peg$currPos) === 93) {
-                s6 = peg$c17;
-                peg$currPos++;
-              } else {
-                s6 = peg$FAILED;
-                if (peg$silentFails === 0) { peg$fail(peg$c18); }
-              }
-              if (s6 !== peg$FAILED) {
-                peg$savedPos = s0;
-                s1 = peg$c19(s3, s4);
-                s0 = s1;
-              } else {
-                peg$currPos = s0;
-                s0 = peg$FAILED;
-              }
+              peg$savedPos = s0;
+              s1 = peg$c19(s3);
+              s0 = s1;
             } else {
               peg$currPos = s0;
               s0 = peg$FAILED;
@@ -720,48 +707,7 @@ function peg$parse(input: string, options?: IParseOptions) {
     return s0;
   }
 
-  function peg$parselistEntryWithComma(): any {
-    let s0, s1, s2, s3, s4;
-
-    s0 = peg$currPos;
-    s1 = peg$parselistEntry();
-    if (s1 !== peg$FAILED) {
-      s2 = peg$parse_();
-      if (s2 !== peg$FAILED) {
-        if (input.charCodeAt(peg$currPos) === 44) {
-          s3 = peg$c6;
-          peg$currPos++;
-        } else {
-          s3 = peg$FAILED;
-          if (peg$silentFails === 0) { peg$fail(peg$c7); }
-        }
-        if (s3 !== peg$FAILED) {
-          s4 = peg$parse_();
-          if (s4 !== peg$FAILED) {
-            peg$savedPos = s0;
-            s1 = peg$c8(s1);
-            s0 = s1;
-          } else {
-            peg$currPos = s0;
-            s0 = peg$FAILED;
-          }
-        } else {
-          peg$currPos = s0;
-          s0 = peg$FAILED;
-        }
-      } else {
-        peg$currPos = s0;
-        s0 = peg$FAILED;
-      }
-    } else {
-      peg$currPos = s0;
-      s0 = peg$FAILED;
-    }
-
-    return s0;
-  }
-
-  function peg$parselistEntry(): any {
+  function peg$parsearrayEntry(): any {
     let s0, s1;
 
     s0 = peg$currPos;
