@@ -2,12 +2,12 @@ import { assert, match, should, test } from 'gs-testing/export/main';
 import { parse } from './human';
 
 test('grammar.human', () => {
-  should.only(`parse null correctly`, () => {
+  should(`parse null correctly`, () => {
     assert(parse('NULL')).to.beNull();
     assert(parse('null')).to.beNull();
   });
 
-  should.only(`parse undefined correctly`, () => {
+  should(`parse undefined correctly`, () => {
     assert(parse('undefined')).toNot.beDefined();
   });
 
