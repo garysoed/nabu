@@ -1,5 +1,7 @@
-export interface Converter<F, T> {
-  convertBackward(value: T|null): F|null;
+import { Result } from './result';
 
-  convertForward(input: F|null): T|null;
+export interface Converter<F, T> {
+  convertBackward(value: T): Result<F>;
+
+  convertForward(input: F): Result<T>;
 }

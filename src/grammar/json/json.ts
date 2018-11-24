@@ -1,21 +1,26 @@
 import { Converter } from '../../base/converter';
+import { Result } from '../../base/result';
 import { Serializable } from '../../base/serializable';
 
 class Json implements Converter<Serializable, string> {
-  convertBackward(value: string|null|undefined): Serializable {
-    if (value === null) {
-      return null;
-    }
-
+  convertBackward(value: string|undefined): Result<Serializable> {
     if (value === undefined) {
-      return undefined;
+      return {result: undefined, success: true};
     }
 
-    return JSON.parse(value);
+    try {
+      return {result: JSON.parse(value), success: true};
+    } catch (error) {
+      return {success: false};
+    }
   }
 
-  convertForward(input: Serializable): string|null {
-    return JSON.stringify(input);
+  convertForward(input: Serializable): Result<string> {
+    try {
+      return {result: JSON.stringify(input), success: true};
+    } catch (error) {
+      return {success: false};
+    }
   }
 }
 

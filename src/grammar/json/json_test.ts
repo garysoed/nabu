@@ -6,70 +6,83 @@ test('grammar.human.Json', () => {
 
   test('convertBackward', () => {
     should(`parse undefined correctly`, () => {
-      assert(json().convertBackward(JSON.stringify(undefined))).toNot.beDefined();
+      assert(json().convertBackward(JSON.stringify(undefined))).to
+          .haveProperties({result: undefined});
     });
 
     should(`parse null correctly`, () => {
-      assert(json().convertBackward(JSON.stringify(null))).to.beNull();
+      assert(json().convertBackward(JSON.stringify(null))).to.haveProperties({result: null});
     });
 
     should(`parse booleans correctly`, () => {
-      assert(json().convertBackward(JSON.stringify(true))).to.equal(true);
+      assert(json().convertBackward(JSON.stringify(true))).to.haveProperties({result: true});
     });
 
     should(`parse strings correctly`, () => {
-      assert(json().convertBackward(JSON.stringify('abc'))).to.equal('abc');
+      assert(json().convertBackward(JSON.stringify('abc'))).to.haveProperties({result: 'abc'});
     });
 
     should(`parse numbers correctly`, () => {
-      assert(json().convertBackward(JSON.stringify(1.23))).to.equal(1.23);
+      assert(json().convertBackward(JSON.stringify(1.23))).to.haveProperties({result: 1.23});
     });
 
     should(`parse lists correctly`, () => {
-      assert(json().convertBackward(JSON.stringify([1.23, 'test']))).to
-          .equal(match.anyArrayThat<Serializable>().haveExactElements([1.23, 'test']));
+      assert(json().convertBackward(JSON.stringify([1.23, 'test']))).to.haveProperties({
+        result: match.anyArrayThat<Serializable>().haveExactElements([1.23, 'test']),
+      });
     });
 
     should(`parse objects correctly`, () => {
-      assert(json().convertBackward(JSON.stringify({a: 1, b: 'b'}))).to
-          .equal(match.anyObjectThat().haveProperties({
+      assert(json().convertBackward(JSON.stringify({a: 1, b: 'b'}))).to.haveProperties({
+        result: match.anyObjectThat().haveProperties({
             a: 1,
             b: 'b',
-          }));
+          }),
+      });
     });
 
-    should(`return null if value is null`, () => {
-      assert(json().convertBackward(null)).to.beNull();
+    should(`fail if parsing failed`, () => {
+      assert(json().convertBackward('')).to.haveProperties({success: false});
     });
   });
 
   test('convertForward', () => {
     should(`render undefined correctly`, () => {
-      assert(json().convertForward(undefined)).to.equal(JSON.stringify(undefined));
+      assert(json().convertForward(undefined)).to
+          .haveProperties({result: JSON.stringify(undefined)});
     });
 
     should(`render null correctly`, () => {
-      assert(json().convertForward(null)).to.equal(JSON.stringify(null));
+      assert(json().convertForward(null)).to.haveProperties({result: JSON.stringify(null)});
     });
 
     should(`render booleans correctly`, () => {
-      assert(json().convertForward(true)).to.equal(JSON.stringify(true));
+      assert(json().convertForward(true)).to.haveProperties({result: JSON.stringify(true)});
     });
 
     should(`render strings correctly`, () => {
-      assert(json().convertForward('abc')).to.equal(JSON.stringify('abc'));
+      assert(json().convertForward('abc')).to.haveProperties({result: JSON.stringify('abc')});
     });
 
     should(`render numbers correctly`, () => {
-      assert(json().convertForward(1.23)).to.equal(JSON.stringify(1.23));
+      assert(json().convertForward(1.23)).to.haveProperties({result: JSON.stringify(1.23)});
     });
 
     should(`render lists correctly`, () => {
-      assert(json().convertForward([1.23, 'test'])).to.equal(JSON.stringify([1.23, 'test']));
+      assert(json().convertForward([1.23, 'test'])).to
+          .haveProperties({result: JSON.stringify([1.23, 'test'])});
     });
 
     should(`render objects correctly`, () => {
-      assert(json().convertForward({a: 1, b: 'b'})).to.equal(JSON.stringify({a: 1, b: 'b'}));
+      assert(json().convertForward({a: 1, b: 'b'})).to
+          .haveProperties({result: JSON.stringify({a: 1, b: 'b'})});
+    });
+
+    should(`fail if object cannot be stringified`, () => {
+      const obj: {a?: any} = {};
+      obj.a = obj;
+
+      assert(json().convertForward(obj)).to.haveProperties({success: false});
     });
   });
 });

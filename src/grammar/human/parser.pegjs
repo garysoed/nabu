@@ -68,9 +68,9 @@ zero = "0" { return 0 }
 
 numberHex = "0x" digits:[0-9abcdef]+ { return Number.parseInt(`0x${digits.join('')}`, 16) }
 
-numberOct = "0o" digits:[0-7]+ { return Number.parseInt(`0o${digits.join('')}`, 16) }
+numberOct = "0o" digits:[0-7]+ { return Number.parseInt(digits.join(''), 8) }
 
-numberBin = "0b" digits:[01]+ { return Number.parseInt(`0b${digits.join('')}`, 16) }
+numberBin = "0b" digits:[01]+ { return Number.parseInt(digits.join(''), 2) }
 
 /**
  * Booleans

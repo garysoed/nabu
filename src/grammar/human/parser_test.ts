@@ -43,6 +43,7 @@ test('grammar.human.parser', () => {
       // Non decimals
       assert(parse('0xbeef')).to.equal(0xBEEF);
       assert(parse('0o1234')).to.equal(0o1234);
+      assert(parse('0b1010')).to.equal(0b1010);
     });
 
     should(`parse lists correctly`, () => {

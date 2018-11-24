@@ -245,12 +245,12 @@ function peg$parse(input: string, options?: IParseOptions) {
   const peg$c46 = peg$literalExpectation("0o", false);
   const peg$c47 = /^[0-7]/;
   const peg$c48 = peg$classExpectation([["0", "7"]], false, false);
-  const peg$c49 = function(digits: any) { return Number.parseInt(`0o${digits.join('')}`, 16) };
+  const peg$c49 = function(digits: any) { return Number.parseInt(digits.join(''), 8) };
   const peg$c50 = "0b";
   const peg$c51 = peg$literalExpectation("0b", false);
   const peg$c52 = /^[01]/;
   const peg$c53 = peg$classExpectation(["0", "1"], false, false);
-  const peg$c54 = function(digits: any) { return Number.parseInt(`0b${digits.join('')}`, 16) };
+  const peg$c54 = function(digits: any) { return Number.parseInt(digits.join(''), 2) };
   const peg$c55 = "true";
   const peg$c56 = peg$literalExpectation("true", false);
   const peg$c57 = "TRUE";
