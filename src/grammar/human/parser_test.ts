@@ -26,16 +26,23 @@ test('grammar.human.parser', () => {
     });
 
     should(`parse numbers correctly`, () => {
+      // Positive numbers
       assert(parse('123')).to.equal(123);
       assert(parse('123.456')).to.equal(123.456);
       assert(parse('123.001')).to.equal(123.001);
       assert(parse('0.001')).to.equal(0.001);
       assert(parse('.001')).to.equal(0.001);
+
+      // Negative numbers
       assert(parse('-123')).to.equal(-123);
       assert(parse('-123.456')).to.equal(-123.456);
       assert(parse('-123.001')).to.equal(-123.001);
       assert(parse('-0.001')).to.equal(-0.001);
       assert(parse('-.001')).to.equal(-0.001);
+
+      // Non decimals
+      assert(parse('0xbeef')).to.equal(0xBEEF);
+      assert(parse('0o1234')).to.equal(0o1234);
     });
 
     should(`parse lists correctly`, () => {
