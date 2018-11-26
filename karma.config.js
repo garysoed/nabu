@@ -12,16 +12,12 @@ module.exports = function(config) {
     plugins: [
       require("karma-jasmine"),
       require("karma-sourcemap-loader"),
+      require("karma-chrome-launcher"),
       require("dev/karma-reporter"),
     ],
     port: 8888,
     reporters: ["gs"],
-    summaryReporter: {
-      show: 'all',
-      // specLength: 50,
-      // Show an 'all' column as a summary
-      // overviewColumn: true
-    },
+    browsers: ['ChromeHeadless'],
     singleRun: false
   });
 };

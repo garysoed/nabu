@@ -1,8 +1,11 @@
 const glob = require("glob");
 const path = require("path");
 
-module.exports = {
-  entry: glob.sync("./src/**/*_test.ts"),
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const smp = new SpeedMeasurePlugin();
+
+module.exports = smp.wrap({
+  entry: glob.sync("./src/**/*.test.ts"),
   output: {
     filename: "bundle.js",
     path: __dirname + "/out"
@@ -42,4 +45,4 @@ module.exports = {
 
   plugins: [
   ]
-};
+});
