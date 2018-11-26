@@ -1,4 +1,4 @@
-interface SuccessResult<T> {
+export interface SuccessResult<T> {
   result: T;
   success: true;
 }
