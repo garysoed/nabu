@@ -72,6 +72,19 @@ test('grammar.binary.StringConverter', () => {
   });
 
   test('convertForward', () => {
-    should(`convert correctly`);
+    should(`convert correctly`, () => {
+      assert(converter.convertForward('Hello')).to.haveProperties({
+        result: match.anyArrayThat().haveExactElements([
+          DataType.STRING,
+          DataType.UINT8,
+          5,
+          72,
+          101,
+          108,
+          108,
+          111,
+        ]),
+      });
+    });
   });
 });

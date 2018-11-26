@@ -12,9 +12,7 @@ export enum DataType {
   FLOAT64,
   STRING,
   LIST,
-  LIST_ENTRY,
   OBJECT,
-  OBJECT_ENTRY,
 }
 
 const NUMBER_SET = new Set<number>();
