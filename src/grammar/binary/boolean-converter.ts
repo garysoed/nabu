@@ -4,6 +4,12 @@ import { BinaryData } from './binary-data';
 import { DataType } from './data-type';
 import { DataTypeConverter } from './data-type-converter';
 
+/**
+ * Converts boolean to uint8array
+ *
+ * Format:
+ * [type][1/0]
+ */
 export class BooleanConverter implements BinaryConverter<boolean> {
   private readonly dataTypeConverter_: DataTypeConverter = new DataTypeConverter();
 
@@ -17,7 +23,7 @@ export class BooleanConverter implements BinaryConverter<boolean> {
       return {success: false};
     }
 
-    const isTrue = !!value[1];
+    const isTrue = !!value[typeResult.result.length];
 
     return {
       result: {data: isTrue, length: typeResult.result.length + 1},

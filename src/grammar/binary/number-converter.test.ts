@@ -189,13 +189,9 @@ test('grammar.binary.NumberConverter', () => {
         255,
         255,
         255,
-        255,
-        255,
-        255,
-        255,
       ]);
       assert(converter.convertBackward(array)).to.haveProperties({
-        result: match.anyObjectThat().haveProperties({data: 0xFFFFFFFF, length: 9}),
+        result: match.anyObjectThat().haveProperties({data: 0xFFFFFFFF, length: 5}),
       });
     });
 
