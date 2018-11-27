@@ -6,8 +6,13 @@ import { BooleanConverter } from './boolean-converter';
 import { ListConverter } from './list-converter';
 import { NullConverter } from './null-converter';
 import { NumberConverter } from './number-converter';
+import { ObjectConverter } from './object-converter';
 import { StringConverter } from './string-converter';
 import { UndefinedConverter } from './undefined-converter';
+
+function assertNever(v: never): void {
+  // noop
+}
 
 /**
  * Combines all the different converters.
@@ -17,6 +22,7 @@ export class SerializableConverter implements BinaryConverter<Serializable> {
   private readonly listConverter: ListConverter = new ListConverter(this);
   private readonly nullConverter: NullConverter = new NullConverter();
   private readonly numberConverter: NumberConverter = new NumberConverter();
+  private readonly objectConverter: ObjectConverter = new ObjectConverter(this);
   private readonly stringConverter: StringConverter = new StringConverter();
   private readonly undefinedConverter: UndefinedConverter = new UndefinedConverter();
 
@@ -26,6 +32,7 @@ export class SerializableConverter implements BinaryConverter<Serializable> {
       this.listConverter,
       this.nullConverter,
       this.numberConverter,
+      this.objectConverter,
       this.stringConverter,
       this.undefinedConverter,
     ];
@@ -64,6 +71,10 @@ export class SerializableConverter implements BinaryConverter<Serializable> {
       return this.listConverter.convertForward(value);
     }
 
-    return {success: false};
+    if (value instanceof Object) {
+      return this.objectConverter.convertForward(value);
+    }
+
+    throw assertNever(value);
   }
 }

@@ -23,49 +23,52 @@ export class NumberConverter implements BinaryConverter<number> {
     const valueRest = value.slice(typeResult.result.length);
     switch (typeResult.result.data) {
       case DataType.FLOAT64:
-        const float64Array = new Float64Array(valueRest.buffer);
+        const float64Array = new Float64Array(
+            valueRest.slice(0, Float64Array.BYTES_PER_ELEMENT).buffer);
         result = {
           data: float64Array[0],
           length: typeResult.result.length + float64Array.BYTES_PER_ELEMENT,
         };
         break;
       case DataType.INT16:
-        const int16Array = new Int16Array(valueRest.buffer);
+        const int16Array = new Int16Array(valueRest.slice(0, Int16Array.BYTES_PER_ELEMENT).buffer);
         result = {
           data: int16Array[0],
           length: typeResult.result.length + int16Array.BYTES_PER_ELEMENT,
         };
         break;
       case DataType.INT32:
-        const int32Array = new Int32Array(valueRest.buffer);
+        const int32Array = new Int32Array(valueRest.slice(0, Int32Array.BYTES_PER_ELEMENT).buffer);
         result = {
           data: int32Array[0],
           length: typeResult.result.length + int32Array.BYTES_PER_ELEMENT,
         };
         break;
       case DataType.INT8:
-        const int8Array = new Int8Array(valueRest.buffer);
+        const int8Array = new Int8Array(valueRest.slice(0, Int8Array.BYTES_PER_ELEMENT).buffer);
         result = {
           data: int8Array[0],
           length: typeResult.result.length + int8Array.BYTES_PER_ELEMENT,
         };
         break;
       case DataType.UINT16:
-        const uint16Array = new Uint16Array(valueRest.buffer);
+        const uint16Array = new Uint16Array(
+            valueRest.slice(0, Uint16Array.BYTES_PER_ELEMENT).buffer);
         result = {
           data: uint16Array[0],
           length: typeResult.result.length + uint16Array.BYTES_PER_ELEMENT,
         };
         break;
       case DataType.UINT32:
-        const uint32Array = new Uint32Array(valueRest.buffer);
+        const uint32Array = new Uint32Array(
+            valueRest.slice(0, Uint32Array.BYTES_PER_ELEMENT).buffer);
         result = {
           data: uint32Array[0],
           length: typeResult.result.length + uint32Array.BYTES_PER_ELEMENT,
         };
         break;
       case DataType.UINT8:
-        const uint8Array = new Uint8Array(valueRest.buffer);
+        const uint8Array = new Uint8Array(valueRest.slice(0, Uint8Array.BYTES_PER_ELEMENT).buffer);
         result = {
           data: uint8Array[0],
           length: typeResult.result.length + uint8Array.BYTES_PER_ELEMENT,

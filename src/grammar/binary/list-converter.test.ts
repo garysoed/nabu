@@ -12,7 +12,7 @@ test('grammar.binary.ListConverter', () => {
   });
 
   should(`convert forward and backward correctly`, () => {
-    const list = [undefined, null, true, 1.23, 'abc', ['list']];
+    const list = [undefined, null, true, 1.23, 'abc', ['list'], {a: 1}];
     const forwardResult = (converter.convertForward(list) as SuccessResult<Uint8Array>).result;
     assert(converter.convertBackward(forwardResult)).to.haveProperties({
       result: match.anyObjectThat().haveProperties({
@@ -23,6 +23,7 @@ test('grammar.binary.ListConverter', () => {
           1.23,
           'abc',
           match.anyArrayThat().haveExactElements(['list']),
+          match.anyObjectThat().haveProperties({a: 1}),
         ]),
       }),
     });
