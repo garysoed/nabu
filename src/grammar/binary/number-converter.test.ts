@@ -80,16 +80,6 @@ test('grammar.binary.NumberConverter', () => {
     });
   });
 
-  should(`convert forward and backwards 3E38 correctly`, () => {
-    const forwardResult = (converter.convertForward(3E38) as SuccessResult<Uint8Array>)
-        .result;
-    assert(converter.convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({
-        data: match.anyNumberThat().beCloseTo(3E38, -37),
-      }),
-    });
-  });
-
   should(`convert forward and backwards 4E38 correctly`, () => {
     const forwardResult = (converter.convertForward(4E38) as SuccessResult<Uint8Array>)
         .result;
@@ -107,19 +97,6 @@ test('grammar.binary.NumberConverter', () => {
   });
 
   test('convertBackward', () => {
-    should(`convert float32 correctly`, () => {
-      const array = Uint8Array.from([
-        DataType.FLOAT32,
-        0,
-        0,
-        192,
-        63,
-      ]);
-      assert(converter.convertBackward(array)).to.haveProperties({
-        result: match.anyObjectThat().haveProperties({data: 1.5, length: 5}),
-      });
-    });
-
     should(`convert float64 correctly`, () => {
       const array = Uint8Array.from([
         DataType.FLOAT64,
@@ -248,18 +225,6 @@ test('grammar.binary.NumberConverter', () => {
       });
     });
 
-    should(`convert -1E38 correctly`, () => {
-      assert(converter.convertForward(-1E38)).to.haveProperties({
-        result: match.anyArrayThat<number>().haveExactElements([
-          DataType.FLOAT32,
-          153,
-          118,
-          150,
-          254,
-        ]),
-      });
-    });
-
     should(`convert -4E38 correctly`, () => {
       assert(converter.convertForward(-4E38)).to.haveProperties({
         result: match.anyArrayThat<number>().haveExactElements([
@@ -279,10 +244,14 @@ test('grammar.binary.NumberConverter', () => {
     should(`convert -1.5 correctly`, () => {
       assert(converter.convertForward(-1.5)).to.haveProperties({
         result: match.anyArrayThat<number>().haveExactElements([
-          DataType.FLOAT32,
+          DataType.FLOAT64,
           0,
           0,
-          192,
+          0,
+          0,
+          0,
+          0,
+          248,
           191,
         ]),
       });
@@ -319,18 +288,6 @@ test('grammar.binary.NumberConverter', () => {
       });
     });
 
-    should(`convert 3E38 correctly`, () => {
-      assert(converter.convertForward(3E38)).to.haveProperties({
-        result: match.anyArrayThat<number>().haveExactElements([
-          DataType.FLOAT32,
-          230,
-          177,
-          97,
-          127,
-        ]),
-      });
-    });
-
     should(`convert 4E38 correctly`, () => {
       assert(converter.convertForward(4E38)).to.haveProperties({
         result: match.anyArrayThat<number>().haveExactElements([
@@ -350,10 +307,14 @@ test('grammar.binary.NumberConverter', () => {
     should(`convert 1.5 correctly`, () => {
       assert(converter.convertForward(1.5)).to.haveProperties({
         result: match.anyArrayThat<number>().haveExactElements([
-          DataType.FLOAT32,
+          DataType.FLOAT64,
           0,
           0,
-          192,
+          0,
+          0,
+          0,
+          0,
+          248,
           63,
         ]),
       });

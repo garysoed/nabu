@@ -8,7 +8,6 @@ export enum DataType {
   UINT16,
   INT32,
   UINT32,
-  FLOAT32,
   FLOAT64,
   STRING,
   LIST,

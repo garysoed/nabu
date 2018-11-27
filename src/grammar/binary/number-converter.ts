@@ -5,7 +5,7 @@ import { DataType } from './data-type';
 import { DataTypeConverter } from './data-type-converter';
 
 /**
- * Converts numbers to uint8array
+ * Converts numbers to uint8array. We don't use float 32 since it tends to lose precision.
  *
  * Format:
  * [type][number]
@@ -22,13 +22,6 @@ export class NumberConverter implements BinaryConverter<number> {
     let result: BinaryData<number>|null = null;
     const valueRest = value.slice(typeResult.result.length);
     switch (typeResult.result.data) {
-      case DataType.FLOAT32:
-        const float32Array = new Float32Array(valueRest.buffer);
-        result = {
-          data: float32Array[0],
-          length: typeResult.result.length + float32Array.BYTES_PER_ELEMENT,
-        };
-        break;
       case DataType.FLOAT64:
         const float64Array = new Float64Array(valueRest.buffer);
         result = {
@@ -104,7 +97,7 @@ export class NumberConverter implements BinaryConverter<number> {
   }
 }
 
-function getArrayType(value: number): {array: Uint8Array, type: DataType} {
+function getArrayType(value: number): {array: Uint8Array; type: DataType} {
   const isInt = Number.isInteger(value);
   if (value < 0) {
     if (isInt) {
@@ -117,11 +110,7 @@ function getArrayType(value: number): {array: Uint8Array, type: DataType} {
       }
     }
 
-    if (value >= -3.4E38) {
-      return {array: new Uint8Array(new Float32Array([value]).buffer), type: DataType.FLOAT32};
-    } else {
-      return {array: new Uint8Array(new Float64Array([value]).buffer), type: DataType.FLOAT64};
-    }
+    return {array: new Uint8Array(new Float64Array([value]).buffer), type: DataType.FLOAT64};
   } else {
     if (isInt) {
       if (value <= 0xFF) {
@@ -133,10 +122,6 @@ function getArrayType(value: number): {array: Uint8Array, type: DataType} {
       }
     }
 
-    if (value <= 3.4E38) {
-      return {array: new Uint8Array(new Float32Array([value]).buffer), type: DataType.FLOAT32};
-    } else {
-      return {array: new Uint8Array(new Float64Array([value]).buffer), type: DataType.FLOAT64};
-    }
+    return {array: new Uint8Array(new Float64Array([value]).buffer), type: DataType.FLOAT64};
   }
 }
