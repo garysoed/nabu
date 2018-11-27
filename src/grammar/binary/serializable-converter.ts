@@ -3,13 +3,18 @@ import { Serializable } from '../../base/serializable';
 import { BinaryConverter } from './binary-converter';
 import { BinaryData } from './binary-data';
 import { BooleanConverter } from './boolean-converter';
+import { ListConverter } from './list-converter';
 import { NullConverter } from './null-converter';
 import { NumberConverter } from './number-converter';
 import { StringConverter } from './string-converter';
 import { UndefinedConverter } from './undefined-converter';
 
+/**
+ * Combines all the different converters.
+ */
 export class SerializableConverter implements BinaryConverter<Serializable> {
   private readonly booleanConverter: BooleanConverter = new BooleanConverter();
+  private readonly listConverter: ListConverter = new ListConverter(this);
   private readonly nullConverter: NullConverter = new NullConverter();
   private readonly numberConverter: NumberConverter = new NumberConverter();
   private readonly stringConverter: StringConverter = new StringConverter();
@@ -18,6 +23,7 @@ export class SerializableConverter implements BinaryConverter<Serializable> {
   convertBackward(value: Uint8Array): Result<BinaryData<Serializable>> {
     const converters = [
       this.booleanConverter,
+      this.listConverter,
       this.nullConverter,
       this.numberConverter,
       this.stringConverter,
@@ -52,6 +58,10 @@ export class SerializableConverter implements BinaryConverter<Serializable> {
 
     if (typeof value === 'string') {
       return this.stringConverter.convertForward(value);
+    }
+
+    if (value instanceof Array) {
+      return this.listConverter.convertForward(value);
     }
 
     return {success: false};
