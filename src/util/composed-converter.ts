@@ -3,16 +3,16 @@ import { Result } from '../base/result';
 
 class ComposedConverter<A, B> implements Converter<A, B> {
   private readonly converters_: Array<Converter<unknown, unknown>>;
-  private readonly revesedConverters_: Array<Converter<unknown, unknown>>;
+  private readonly reversedConverters_: Array<Converter<unknown, unknown>>;
 
   constructor(...converters: Array<Converter<unknown, unknown>>) {
     this.converters_ = converters;
-    this.revesedConverters_ = converters.reverse();
+    this.reversedConverters_ = [...converters].reverse();
   }
 
   convertBackward(value: B): Result<A> {
     let currentValue: any = value;
-    for (const converter of this.revesedConverters_) {
+    for (const converter of this.reversedConverters_) {
       const result = converter.convertBackward(currentValue);
       if (!result.success) {
         return {success: false};
