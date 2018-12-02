@@ -46,7 +46,7 @@ string = "\"" content:([^"]*) "\"" { return content.join('') }
 /**
  * Numbers
  */
-number = numberNeg / numberPos / numberHex / numberOct / numberBin
+number = numberNeg / numberPos / numberHex / numberOct / numberBin / zero
 
 numberNeg = "-" positive:numberPos { return -1 * positive }
 

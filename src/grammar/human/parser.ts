@@ -806,6 +806,9 @@ function peg$parse(input: string, options?: IParseOptions) {
           s0 = peg$parsenumberOct();
           if (s0 === peg$FAILED) {
             s0 = peg$parsenumberBin();
+            if (s0 === peg$FAILED) {
+              s0 = peg$parsezero();
+            }
           }
         }
       }

@@ -40,6 +40,9 @@ test('grammar.human.parser', () => {
       assert(parse('-0.001')).to.equal(-0.001);
       assert(parse('-.001')).to.equal(-0.001);
 
+      // Zero
+      assert(parse('0')).to.equal(0);
+
       // Non decimals
       assert(parse('0xbeef')).to.equal(0xBEEF);
       assert(parse('0o1234')).to.equal(0o1234);
