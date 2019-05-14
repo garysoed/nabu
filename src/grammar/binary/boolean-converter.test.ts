@@ -1,4 +1,4 @@
-import { assert, match, setup, should, test } from 'gs-testing/export/main';
+import { assert, match, setup, should, test } from '@gs-testing';
 import { SuccessResult } from '../../base/result';
 import { BooleanConverter } from './boolean-converter';
 import { DataType } from './data-type';

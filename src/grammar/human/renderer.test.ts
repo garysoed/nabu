@@ -1,4 +1,4 @@
-import { assert, should, test } from 'gs-testing/export/main';
+import { assert, should, test } from '@gs-testing';
 import { render } from './renderer';
 
 test('grammar.human.renderer', () => {

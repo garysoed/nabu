@@ -1,4 +1,4 @@
-import { assert, setup, should, test } from 'gs-testing/export/main';
+import { assert, setup, should, test } from '@gs-testing';
 import { Converter } from '../base/converter';
 import { Result } from '../base/result';
 import { reverse } from './reversed-converter';

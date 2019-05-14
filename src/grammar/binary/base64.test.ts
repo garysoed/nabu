@@ -1,4 +1,4 @@
-import { assert, setup, should, test } from 'gs-testing/export/main';
+import { assert, setup, should, test } from '@gs-testing';
 import { SuccessResult } from '../../base/result';
 import { Base64 } from './base64';
 
