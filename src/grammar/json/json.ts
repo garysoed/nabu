@@ -3,11 +3,7 @@ import { Result } from '../../base/result';
 import { Serializable } from '../../base/serializable';
 
 class Json implements Converter<Serializable, string> {
-  convertBackward(value: string|undefined): Result<Serializable> {
-    if (value === undefined) {
-      return {result: undefined, success: true};
-    }
-
+  convertBackward(value: string): Result<Serializable> {
     try {
       return {result: JSON.parse(value), success: true};
     } catch (error) {
