@@ -1,5 +1,7 @@
-import { assert, match, should, test } from '@gs-testing';
+import { arrayThat, assert, objectThat, should, test } from '@gs-testing';
+
 import { SuccessResult } from '../../base/result';
+
 import { binary } from './binary';
 
 test('grammar.binary.Binary', () => {
@@ -31,14 +33,14 @@ test('grammar.binary.Binary', () => {
   should(`convert forward and backward lists correctly`, () => {
     const forwardResult = (binary().convertForward([1.23, 'test']) as SuccessResult<string>).result;
     assert(binary().convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyArrayThat().haveExactElements([1.23, 'test']),
+      result: arrayThat().haveExactElements([1.23, 'test']),
     });
   });
 
   should(`convert forward and backward objects correctly`, () => {
     const forwardResult = (binary().convertForward({a: 1, b: 2}) as SuccessResult<string>).result;
     assert(binary().convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({a: 1, b: 2}),
+      result: objectThat().haveProperties({a: 1, b: 2}),
     });
   });
 });

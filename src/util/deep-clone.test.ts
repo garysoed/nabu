@@ -1,4 +1,5 @@
-import { assert, match, should, test } from '@gs-testing';
+import { assert, objectThat, should, test } from '@gs-testing';
+
 import { deepClone } from './deep-clone';
 
 test('@nabu/util/deep-clone', () => {
@@ -8,7 +9,7 @@ test('@nabu/util/deep-clone', () => {
     };
     const clone = deepClone(original);
     assert(clone).to.haveProperties({
-      a: match.anyObjectThat().haveProperties({b: 2}),
+      a: objectThat().haveProperties({b: 2}),
     });
     assert(clone).toNot.equal(original);
   });

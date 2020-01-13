@@ -1,5 +1,7 @@
-import { assert, match, setup, should, test } from '@gs-testing';
+import { arrayThat, assert, objectThat, setup, should, test } from '@gs-testing';
+
 import { SuccessResult } from '../../base/result';
+
 import { DataType } from './data-type';
 import { NullConverter } from './null-converter';
 
@@ -13,7 +15,7 @@ test('grammar.binary.NullConverter', () => {
   should(`convert forward and backwards correctly`, () => {
     const forwardResult = (converter.convertForward(null) as SuccessResult<Uint8Array>).result;
     assert(converter.convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({data: null}),
+      result: objectThat().haveProperties({data: null}),
     });
   });
 
@@ -22,7 +24,7 @@ test('grammar.binary.NullConverter', () => {
       const dataType = DataType.NULL;
       const array = Uint8Array.from([dataType]);
       assert(converter.convertBackward(array)).to.haveProperties({
-        result: match.anyObjectThat().haveProperties({data: null, length: 1}),
+        result: objectThat().haveProperties({data: null, length: 1}),
       });
     });
 
@@ -41,7 +43,7 @@ test('grammar.binary.NullConverter', () => {
   test('convertForward', () => {
     should(`convert correctly`, () => {
       assert(converter.convertForward(null)).to.haveProperties({
-        result: match.anyArrayThat<number>().haveExactElements([DataType.NULL]),
+        result: arrayThat<number>().haveExactElements([DataType.NULL]),
       });
     });
   });

@@ -1,7 +1,10 @@
-import { assert, match, setup, should, test } from '@gs-testing';
+import { arrayThat, assert, objectThat, setup, should, test } from '@gs-testing';
+
 import { SuccessResult } from '../../base/result';
+
 import { BooleanConverter } from './boolean-converter';
 import { DataType } from './data-type';
+
 
 test('grammar.binary.BooleanConverter', () => {
   let converter: BooleanConverter;
@@ -13,14 +16,14 @@ test('grammar.binary.BooleanConverter', () => {
   should(`convert forward and backwards true correctly`, () => {
     const forwardResult = (converter.convertForward(true) as SuccessResult<Uint8Array>).result;
     assert(converter.convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({data: true}),
+      result: objectThat().haveProperties({data: true}),
     });
   });
 
   should(`convert forward and backwards false correctly`, () => {
     const forwardResult = (converter.convertForward(false) as SuccessResult<Uint8Array>).result;
     assert(converter.convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({data: false}),
+      result: objectThat().haveProperties({data: false}),
     });
   });
 
@@ -29,7 +32,7 @@ test('grammar.binary.BooleanConverter', () => {
       const dataType = DataType.BOOLEAN;
       const array = Uint8Array.from([dataType, 1]);
       assert(converter.convertBackward(array)).to.haveProperties({
-        result: match.anyObjectThat().haveProperties({data: true, length: 2}),
+        result: objectThat().haveProperties({data: true, length: 2}),
       });
     });
 
@@ -37,7 +40,7 @@ test('grammar.binary.BooleanConverter', () => {
       const dataType = DataType.BOOLEAN;
       const array = Uint8Array.from([dataType, 0]);
       assert(converter.convertBackward(array)).to.haveProperties({
-        result: match.anyObjectThat().haveProperties({data: false, length: 2}),
+        result: objectThat().haveProperties({data: false, length: 2}),
       });
     });
 
@@ -56,7 +59,7 @@ test('grammar.binary.BooleanConverter', () => {
   test('convertForward', () => {
     should(`convert true correctly`, () => {
       assert(converter.convertForward(true)).to.haveProperties({
-        result: match.anyArrayThat<number>().haveExactElements([
+        result: arrayThat<number>().haveExactElements([
           DataType.BOOLEAN,
           1,
         ]),
@@ -65,7 +68,7 @@ test('grammar.binary.BooleanConverter', () => {
 
     should(`convert false correctly`, () => {
       assert(converter.convertForward(false)).to.haveProperties({
-        result: match.anyArrayThat<number>().haveExactElements([
+        result: arrayThat<number>().haveExactElements([
           DataType.BOOLEAN,
           0,
         ]),

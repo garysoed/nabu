@@ -1,6 +1,8 @@
 import { assert, setup, should, test } from '@gs-testing';
+
 import { Converter } from '../base/converter';
 import { Result } from '../base/result';
+
 import { firstSuccess } from './first-success-converter';
 import { reverse } from './reversed-converter';
 import { strict } from './strict-converter';

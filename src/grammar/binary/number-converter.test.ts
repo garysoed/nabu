@@ -1,5 +1,7 @@
-import { assert, match, setup, should, test } from '@gs-testing';
+import { arrayThat, assert, numberThat, objectThat, setup, should, test } from '@gs-testing';
+
 import { SuccessResult } from '../../base/result';
+
 import { DataType } from './data-type';
 import { NumberConverter } from './number-converter';
 
@@ -13,14 +15,14 @@ test('grammar.binary.NumberConverter', () => {
   should(`convert forward and backwards -127 correctly`, () => {
     const forwardResult = (converter.convertForward(-127) as SuccessResult<Uint8Array>).result;
     assert(converter.convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({data: -127}),
+      result: objectThat().haveProperties({data: -127}),
     });
   });
 
   should(`convert forward and backwards -32768 correctly`, () => {
     const forwardResult = (converter.convertForward(-0x8000) as SuccessResult<Uint8Array>).result;
     assert(converter.convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({data: -0x8000}),
+      result: objectThat().haveProperties({data: -0x8000}),
     });
   });
 
@@ -28,7 +30,7 @@ test('grammar.binary.NumberConverter', () => {
     const forwardResult = (converter.convertForward(-0x80000000) as SuccessResult<Uint8Array>)
         .result;
     assert(converter.convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({data: -0x80000000}),
+      result: objectThat().haveProperties({data: -0x80000000}),
     });
   });
 
@@ -36,8 +38,8 @@ test('grammar.binary.NumberConverter', () => {
     const forwardResult = (converter.convertForward(-3E38) as SuccessResult<Uint8Array>)
         .result;
     assert(converter.convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({
-        data: match.anyNumberThat().beCloseTo(-3E38, -37),
+      result: objectThat().haveProperties({
+        data: numberThat().beCloseTo(-3E38, -37),
       }),
     });
   });
@@ -46,7 +48,7 @@ test('grammar.binary.NumberConverter', () => {
     const forwardResult = (converter.convertForward(-4E38) as SuccessResult<Uint8Array>)
         .result;
     assert(converter.convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({data: -4E38}),
+      result: objectThat().haveProperties({data: -4E38}),
     });
   });
 
@@ -54,21 +56,21 @@ test('grammar.binary.NumberConverter', () => {
     const forwardResult = (converter.convertForward(-1.5) as SuccessResult<Uint8Array>)
         .result;
     assert(converter.convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({data: -1.5}),
+      result: objectThat().haveProperties({data: -1.5}),
     });
   });
 
   should(`convert forward and backwards 255 correctly`, () => {
     const forwardResult = (converter.convertForward(255) as SuccessResult<Uint8Array>).result;
     assert(converter.convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({data: 255}),
+      result: objectThat().haveProperties({data: 255}),
     });
   });
 
   should(`convert forward and backwards 65535 correctly`, () => {
     const forwardResult = (converter.convertForward(0xFFFF) as SuccessResult<Uint8Array>).result;
     assert(converter.convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({data: 0xFFFF}),
+      result: objectThat().haveProperties({data: 0xFFFF}),
     });
   });
 
@@ -76,7 +78,7 @@ test('grammar.binary.NumberConverter', () => {
     const forwardResult = (converter.convertForward(0xFFFFFFFF) as SuccessResult<Uint8Array>)
         .result;
     assert(converter.convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({data: 0xFFFFFFFF}),
+      result: objectThat().haveProperties({data: 0xFFFFFFFF}),
     });
   });
 
@@ -84,7 +86,7 @@ test('grammar.binary.NumberConverter', () => {
     const forwardResult = (converter.convertForward(4E38) as SuccessResult<Uint8Array>)
         .result;
     assert(converter.convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({data: 4E38}),
+      result: objectThat().haveProperties({data: 4E38}),
     });
   });
 
@@ -92,7 +94,7 @@ test('grammar.binary.NumberConverter', () => {
     const forwardResult = (converter.convertForward(1.5) as SuccessResult<Uint8Array>)
         .result;
     assert(converter.convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({data: 1.5}),
+      result: objectThat().haveProperties({data: 1.5}),
     });
   });
 
@@ -110,7 +112,7 @@ test('grammar.binary.NumberConverter', () => {
         71,
       ]);
       assert(converter.convertBackward(array)).to.haveProperties({
-        result: match.anyObjectThat().haveProperties({data: 4E38, length: 9}),
+        result: objectThat().haveProperties({data: 4E38, length: 9}),
       });
     });
 
@@ -121,7 +123,7 @@ test('grammar.binary.NumberConverter', () => {
         128,
       ]);
       assert(converter.convertBackward(array)).to.haveProperties({
-        result: match.anyObjectThat().haveProperties({data: -0x8000, length: 3}),
+        result: objectThat().haveProperties({data: -0x8000, length: 3}),
       });
     });
 
@@ -134,7 +136,7 @@ test('grammar.binary.NumberConverter', () => {
         128,
       ]);
       assert(converter.convertBackward(array)).to.haveProperties({
-        result: match.anyObjectThat().haveProperties({data: -0x80000000, length: 5}),
+        result: objectThat().haveProperties({data: -0x80000000, length: 5}),
       });
     });
 
@@ -144,7 +146,7 @@ test('grammar.binary.NumberConverter', () => {
         129,
       ]);
       assert(converter.convertBackward(array)).to.haveProperties({
-        result: match.anyObjectThat().haveProperties({data: -127, length: 2}),
+        result: objectThat().haveProperties({data: -127, length: 2}),
       });
     });
 
@@ -155,7 +157,7 @@ test('grammar.binary.NumberConverter', () => {
         255,
       ]);
       assert(converter.convertBackward(array)).to.haveProperties({
-        result: match.anyObjectThat().haveProperties({data: 0xFFFF, length: 3}),
+        result: objectThat().haveProperties({data: 0xFFFF, length: 3}),
       });
     });
 
@@ -168,7 +170,7 @@ test('grammar.binary.NumberConverter', () => {
         255,
       ]);
       assert(converter.convertBackward(array)).to.haveProperties({
-        result: match.anyObjectThat().haveProperties({data: 0xFFFFFFFF, length: 5}),
+        result: objectThat().haveProperties({data: 0xFFFFFFFF, length: 5}),
       });
     });
 
@@ -178,7 +180,7 @@ test('grammar.binary.NumberConverter', () => {
         255,
       ]);
       assert(converter.convertBackward(array)).to.haveProperties({
-        result: match.anyObjectThat().haveProperties({data: 255, length: 2}),
+        result: objectThat().haveProperties({data: 255, length: 2}),
       });
     });
 
@@ -196,7 +198,7 @@ test('grammar.binary.NumberConverter', () => {
   test('convertForward', () => {
     should(`convert -127 correctly`, () => {
       assert(converter.convertForward(-127)).to.haveProperties({
-        result: match.anyArrayThat<number>().haveExactElements([
+        result: arrayThat<number>().haveExactElements([
           DataType.INT8,
           129,
         ]),
@@ -205,7 +207,7 @@ test('grammar.binary.NumberConverter', () => {
 
     should(`convert -32768 correctly`, () => {
       assert(converter.convertForward(-0x8000)).to.haveProperties({
-        result: match.anyArrayThat<number>().haveExactElements([
+        result: arrayThat<number>().haveExactElements([
           DataType.INT16,
           0,
           128,
@@ -215,7 +217,7 @@ test('grammar.binary.NumberConverter', () => {
 
     should(`convert -2147483648 correctly`, () => {
       assert(converter.convertForward(-0x80000000)).to.haveProperties({
-        result: match.anyArrayThat<number>().haveExactElements([
+        result: arrayThat<number>().haveExactElements([
           DataType.INT32,
           0,
           0,
@@ -227,7 +229,7 @@ test('grammar.binary.NumberConverter', () => {
 
     should(`convert -4E38 correctly`, () => {
       assert(converter.convertForward(-4E38)).to.haveProperties({
-        result: match.anyArrayThat<number>().haveExactElements([
+        result: arrayThat<number>().haveExactElements([
           DataType.FLOAT64,
           177,
           161,
@@ -243,7 +245,7 @@ test('grammar.binary.NumberConverter', () => {
 
     should(`convert -1.5 correctly`, () => {
       assert(converter.convertForward(-1.5)).to.haveProperties({
-        result: match.anyArrayThat<number>().haveExactElements([
+        result: arrayThat<number>().haveExactElements([
           DataType.FLOAT64,
           0,
           0,
@@ -259,7 +261,7 @@ test('grammar.binary.NumberConverter', () => {
 
     should(`convert 255 correctly`, () => {
       assert(converter.convertForward(255)).to.haveProperties({
-        result: match.anyArrayThat<number>().haveExactElements([
+        result: arrayThat<number>().haveExactElements([
           DataType.UINT8,
           255,
         ]),
@@ -268,7 +270,7 @@ test('grammar.binary.NumberConverter', () => {
 
     should(`convert 65535 correctly`, () => {
       assert(converter.convertForward(0xFFFF)).to.haveProperties({
-        result: match.anyArrayThat<number>().haveExactElements([
+        result: arrayThat<number>().haveExactElements([
           DataType.UINT16,
           255,
           255,
@@ -278,7 +280,7 @@ test('grammar.binary.NumberConverter', () => {
 
     should(`convert 4294967295 correctly`, () => {
       assert(converter.convertForward(0xFFFFFFFF)).to.haveProperties({
-        result: match.anyArrayThat<number>().haveExactElements([
+        result: arrayThat<number>().haveExactElements([
           DataType.UINT32,
           255,
           255,
@@ -290,7 +292,7 @@ test('grammar.binary.NumberConverter', () => {
 
     should(`convert 4E38 correctly`, () => {
       assert(converter.convertForward(4E38)).to.haveProperties({
-        result: match.anyArrayThat<number>().haveExactElements([
+        result: arrayThat<number>().haveExactElements([
           DataType.FLOAT64,
           177,
           161,
@@ -306,7 +308,7 @@ test('grammar.binary.NumberConverter', () => {
 
     should(`convert 1.5 correctly`, () => {
       assert(converter.convertForward(1.5)).to.haveProperties({
-        result: match.anyArrayThat<number>().haveExactElements([
+        result: arrayThat<number>().haveExactElements([
           DataType.FLOAT64,
           0,
           0,

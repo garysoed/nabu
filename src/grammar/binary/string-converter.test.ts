@@ -1,5 +1,7 @@
-import { assert, match, setup, should, test } from '@gs-testing';
+import { arrayThat, assert, objectThat, setup, should, test } from '@gs-testing';
+
 import { SuccessResult } from '../../base/result';
+
 import { DataType } from './data-type';
 import { StringConverter } from './string-converter';
 
@@ -14,7 +16,7 @@ test('grammar.binary.StringConverter', () => {
     const text = 'Hello W0rld 🤣';
     const forwardResult = (converter.convertForward(text) as SuccessResult<Uint8Array>).result;
     assert(converter.convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({data: text}),
+      result: objectThat().haveProperties({data: text}),
     });
   });
 
@@ -32,7 +34,7 @@ test('grammar.binary.StringConverter', () => {
         111,
       ]);
       assert(converter.convertBackward(array)).to.haveProperties({
-        result: match.anyObjectThat().haveProperties({data: 'Hello', length: 8}),
+        result: objectThat().haveProperties({data: 'Hello', length: 8}),
       });
     });
 
@@ -74,7 +76,7 @@ test('grammar.binary.StringConverter', () => {
   test('convertForward', () => {
     should(`convert correctly`, () => {
       assert(converter.convertForward('Hello')).to.haveProperties({
-        result: match.anyArrayThat().haveExactElements([
+        result: arrayThat().haveExactElements([
           DataType.STRING,
           DataType.UINT8,
           5,

@@ -1,4 +1,5 @@
-import { assert, match, should, test } from '@gs-testing';
+import { arrayThat, assert, objectThat, should, test } from '@gs-testing';
+
 import { parse } from './parser';
 
 test('grammar.human.parser', () => {
@@ -61,7 +62,7 @@ test('grammar.human.parser', () => {
       assert(parse(INPUT) as any[]).to.haveExactElements([
         'string',
         123,
-        match.anyArrayThat().haveExactElements([1, 2, 3]),
+        arrayThat().haveExactElements([1, 2, 3]),
       ]);
     });
 
@@ -82,14 +83,14 @@ test('grammar.human.parser', () => {
     undefined: undefined,
   }
       `;
-      assert(parse(INPUT)).to.equal(match.anyObjectThat().haveProperties({
-        list: match.anyArrayThat().haveExactElements([
+      assert(parse(INPUT)).to.equal(objectThat().haveProperties({
+        list: arrayThat().haveExactElements([
           'string',
           0.234,
           0.002,
         ]),
         null: null,
-        object: match.anyObjectThat().haveProperties({
+        object: objectThat().haveProperties({
           decimal: 123.456,
           number: 123,
           string: 'string',

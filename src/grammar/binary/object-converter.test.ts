@@ -1,5 +1,7 @@
-import { assert, match, setup, should, test } from '@gs-testing';
+import { arrayThat, assert, objectThat, setup, should, test } from '@gs-testing';
+
 import { SuccessResult } from '../../base/result';
+
 import { DataType } from './data-type';
 import { ObjectConverter } from './object-converter';
 import { SerializableConverter } from './serializable-converter';
@@ -23,13 +25,13 @@ test('grammar.binary.ObjectConverter', () => {
     };
     const forwardResult = (converter.convertForward(object) as SuccessResult<Uint8Array>).result;
     assert(converter.convertBackward(forwardResult)).to.haveProperties({
-      result: match.anyObjectThat().haveProperties({
-        data: match.anyObjectThat().haveProperties({
+      result: objectThat().haveProperties({
+        data: objectThat().haveProperties({
           boolean: true,
-          list: match.anyArrayThat().haveExactElements(['list']),
+          list: arrayThat().haveExactElements(['list']),
           null: null,
           number: 1.23,
-          object: match.anyObjectThat().haveProperties({a: 1}),
+          object: objectThat().haveProperties({a: 1}),
           string: 'abc',
           undefined,
         }),
@@ -69,8 +71,8 @@ test('grammar.binary.ObjectConverter', () => {
         2,
       ]);
       assert(converter.convertBackward(object)).to.haveProperties({
-        result: match.anyObjectThat().haveProperties({
-          data: match.anyObjectThat().haveProperties({a: 1, b: 2}),
+        result: objectThat().haveProperties({
+          data: objectThat().haveProperties({a: 1, b: 2}),
         }),
       });
     });
@@ -218,7 +220,7 @@ test('grammar.binary.ObjectConverter', () => {
   test('convertForward', () => {
     should(`convert correctly`, () => {
       assert(converter.convertForward({a: 1, b: 2})).to.haveProperties({
-        result: match.anyArrayThat().haveExactElements([
+        result: arrayThat().haveExactElements([
           DataType.OBJECT,
           // length
           DataType.UINT8,
