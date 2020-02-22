@@ -2,7 +2,7 @@
   "name": "nabu",
   "version": "1.0.0",
   "description": "",
-  "main": "karma.config.js",
+  "main": "export/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -16,6 +16,7 @@
     "url": "https://github.com/garysoed/nabu/issues"
   },
   "homepage": "https://github.com/garysoed/nabu#readme",
+  "files": ["export/index.ts"],
   "devDependencies": {
     "awesome-typescript-loader": "^5.2.1",
     "glob": "^7.1.3",
