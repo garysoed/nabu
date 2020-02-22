@@ -1,4 +1,4 @@
-import { arrayThat, assert, objectThat, setup, should, test } from '@gs-testing';
+import { arrayThat, assert, objectThat, setup, should, test } from 'gs-testing';
 
 import { SuccessResult } from '../../base/result';
 

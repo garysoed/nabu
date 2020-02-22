@@ -1,4 +1,4 @@
-import { arrayThat, assert, objectThat, should, test } from '@gs-testing';
+import { arrayThat, assert, objectThat, should, test } from 'gs-testing';
 
 import { Serializable } from '../../base/serializable';
 

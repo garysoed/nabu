@@ -1,4 +1,4 @@
-import { Type } from '@gs-types';
+import { Type } from 'gs-types';
 
 import { Converter } from '../base/converter';
 import { Result } from '../base/result';
