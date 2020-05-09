@@ -1,6 +1,8 @@
 import { assert, should, test } from 'gs-testing';
+
 import { Converter } from '../base/converter';
 import { Result } from '../base/result';
+
 import { reverse } from './reversed-converter';
 
 class ForwardOnlyConverter implements Converter<object, object> {

@@ -1,4 +1,5 @@
 import { assert, should, test } from 'gs-testing';
+
 import { identity } from './identity-converter';
 
 test('util.IdentityConverter', () => {

@@ -1,4 +1,4 @@
-import { arrayThat, assert, objectThat, setup, should, test } from 'gs-testing';
+import { arrayThat, assert, objectThat, should, test } from 'gs-testing';
 
 import { SuccessResult } from '../../base/result';
 
@@ -6,23 +6,23 @@ import { BooleanConverter } from './boolean-converter';
 import { DataType } from './data-type';
 
 
-test('grammar.binary.BooleanConverter', () => {
-  let converter: BooleanConverter;
+test('grammar.binary.BooleanConverter', init => {
 
-  setup(() => {
-    converter = new BooleanConverter();
+  const _ = init(() => {
+    const converter = new BooleanConverter();
+    return {converter};
   });
 
   should(`convert forward and backwards true correctly`, () => {
-    const forwardResult = (converter.convertForward(true) as SuccessResult<Uint8Array>).result;
-    assert(converter.convertBackward(forwardResult)).to.haveProperties({
+    const forwardResult = (_.converter.convertForward(true) as SuccessResult<Uint8Array>).result;
+    assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
       result: objectThat().haveProperties({data: true}),
     });
   });
 
   should(`convert forward and backwards false correctly`, () => {
-    const forwardResult = (converter.convertForward(false) as SuccessResult<Uint8Array>).result;
-    assert(converter.convertBackward(forwardResult)).to.haveProperties({
+    const forwardResult = (_.converter.convertForward(false) as SuccessResult<Uint8Array>).result;
+    assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
       result: objectThat().haveProperties({data: false}),
     });
   });
@@ -31,7 +31,7 @@ test('grammar.binary.BooleanConverter', () => {
     should(`convert true correctly`, () => {
       const dataType = DataType.BOOLEAN;
       const array = Uint8Array.from([dataType, 1]);
-      assert(converter.convertBackward(array)).to.haveProperties({
+      assert(_.converter.convertBackward(array)).to.haveProperties({
         result: objectThat().haveProperties({data: true, length: 2}),
       });
     });
@@ -39,7 +39,7 @@ test('grammar.binary.BooleanConverter', () => {
     should(`convert false correctly`, () => {
       const dataType = DataType.BOOLEAN;
       const array = Uint8Array.from([dataType, 0]);
-      assert(converter.convertBackward(array)).to.haveProperties({
+      assert(_.converter.convertBackward(array)).to.haveProperties({
         result: objectThat().haveProperties({data: false, length: 2}),
       });
     });
@@ -47,18 +47,18 @@ test('grammar.binary.BooleanConverter', () => {
     should(`fail if the type is not BOOLEAN`, () => {
       const dataType = DataType.NULL;
       const array = Uint8Array.from([dataType]);
-      assert(converter.convertBackward(array)).to.haveProperties({success: false});
+      assert(_.converter.convertBackward(array)).to.haveProperties({success: false});
     });
 
     should(`fail if the type conversion failed`, () => {
       const array = Uint8Array.from([200]);
-      assert(converter.convertBackward(array)).to.haveProperties({success: false});
+      assert(_.converter.convertBackward(array)).to.haveProperties({success: false});
     });
   });
 
   test('convertForward', () => {
     should(`convert true correctly`, () => {
-      assert(converter.convertForward(true)).to.haveProperties({
+      assert(_.converter.convertForward(true)).to.haveProperties({
         result: arrayThat<number>().haveExactElements([
           DataType.BOOLEAN,
           1,
@@ -67,7 +67,7 @@ test('grammar.binary.BooleanConverter', () => {
     });
 
     should(`convert false correctly`, () => {
-      assert(converter.convertForward(false)).to.haveProperties({
+      assert(_.converter.convertForward(false)).to.haveProperties({
         result: arrayThat<number>().haveExactElements([
           DataType.BOOLEAN,
           0,

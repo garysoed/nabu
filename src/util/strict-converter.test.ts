@@ -1,12 +1,13 @@
-import { assert, setup, should, test } from 'gs-testing';
+import { assert, should, test } from 'gs-testing';
 
 import { Converter } from '../base/converter';
 import { Result } from '../base/result';
 
 import { reverse } from './reversed-converter';
-import { strict, StrictConverter } from './strict-converter';
+import { strict } from './strict-converter';
 
-class NumberConverter implements Converter<number, string> {
+
+class TestConverter implements Converter<number, string> {
   convertBackward(value: string): Result<number> {
     const result = parseFloat(value);
     if (isNaN(result)) {
@@ -21,36 +22,34 @@ class NumberConverter implements Converter<number, string> {
   }
 }
 
-test('util.StrictConverter', () => {
+test('util.StrictConverter', init => {
   test('convertBackward', () => {
-    let converter: StrictConverter<number, string>;
-
-    setup(() => {
-      converter = strict(new NumberConverter());
+    const _ = init(() => {
+      const converter = strict(new TestConverter());
+      return {converter};
     });
 
     should(`return the result if successful`, () => {
-      assert(converter.convertBackward('1.23')).to.equal(1.23);
+      assert(_.converter.convertBackward('1.23')).to.equal(1.23);
     });
 
     should(`throw error if fail`, () => {
-      assert(() => converter.convertBackward('abc')).to.throwErrorWithMessage(/Conversion of/);
+      assert(() => _.converter.convertBackward('abc')).to.throwErrorWithMessage(/Conversion of/);
     });
   });
 
-  test('convertForward', () => {
-    let converter: StrictConverter<string, number>;
-
-    setup(() => {
-      converter = strict(reverse(new NumberConverter()));
+  test('convertForward', init => {
+    const _ = init(() => {
+      const converter = strict(reverse(new TestConverter()));
+      return {converter};
     });
 
     should(`return the result if successful`, () => {
-      assert(converter.convertForward('1.23')).to.equal(1.23);
+      assert(_.converter.convertForward('1.23')).to.equal(1.23);
     });
 
     should(`throw error if fail`, () => {
-      assert(() => converter.convertForward('abc')).to.throwErrorWithMessage(/Conversion of/);
+      assert(() => _.converter.convertForward('abc')).to.throwErrorWithMessage(/Conversion of/);
     });
   });
 });

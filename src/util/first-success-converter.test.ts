@@ -1,4 +1,4 @@
-import { assert, setup, should, test } from 'gs-testing';
+import { assert, should, test } from 'gs-testing';
 
 import { Converter } from '../base/converter';
 import { Result } from '../base/result';
@@ -6,6 +6,7 @@ import { Result } from '../base/result';
 import { firstSuccess } from './first-success-converter';
 import { reverse } from './reversed-converter';
 import { strict } from './strict-converter';
+
 
 class FloatParseConverter implements Converter<number, string> {
   convertBackward(value: string): Result<number> {
@@ -38,38 +39,36 @@ class IntegerParseConverter implements Converter<number, string> {
 }
 
 test('util.FirstSuccessConverter', () => {
-  test('convertBackward', () => {
-    let converter: Converter<number, string>;
-
-    setup(() => {
-      converter = firstSuccess(new IntegerParseConverter(), new FloatParseConverter());
+  test('convertBackward', init => {
+    const _ = init(() => {
+      const converter = firstSuccess(new IntegerParseConverter(), new FloatParseConverter());
+      return {converter};
     });
 
     should(`return the first successful conversion`, () => {
-      assert(strict(converter).convertBackward('1.23')).to.equal(1);
+      assert(strict(_.converter).convertBackward('1.23')).to.equal(1);
     });
 
     should(`fail if none of the converters are successful`, () => {
-      assert(converter.convertBackward('abc')).to.haveProperties({success: false});
+      assert(_.converter.convertBackward('abc')).to.haveProperties({success: false});
     });
   });
 
-  test('convertForward', () => {
-    let converter: Converter<string, number>;
-
-    setup(() => {
-      converter = firstSuccess(
+  test('convertForward', init => {
+    const _ = init(() => {
+      const converter = firstSuccess(
           reverse(new IntegerParseConverter()),
           reverse(new FloatParseConverter()),
       );
+      return {converter};
     });
 
     should(`return the first successful conversion`, () => {
-      assert(strict(converter).convertForward('1.23')).to.equal(1);
+      assert(strict(_.converter).convertForward('1.23')).to.equal(1);
     });
 
     should(`fail if none of the converters are successful`, () => {
-      assert(converter.convertForward('abc')).to.haveProperties({success: false});
+      assert(_.converter.convertForward('abc')).to.haveProperties({success: false});
     });
   });
 });

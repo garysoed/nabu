@@ -1,21 +1,21 @@
-import { arrayThat, assert, objectThat, setup, should, test } from 'gs-testing';
+import { arrayThat, assert, objectThat, should, test } from 'gs-testing';
 
 import { SuccessResult } from '../../base/result';
 
 import { DataType } from './data-type';
 import { StringConverter } from './string-converter';
 
-test('grammar.binary.StringConverter', () => {
-  let converter: StringConverter;
 
-  setup(() => {
-    converter = new StringConverter();
+test('grammar.binary.StringConverter', init => {
+  const _ = init(() => {
+    const converter = new StringConverter();
+    return {converter};
   });
 
   should(`convert forward and backwards correctly`, () => {
     const text = 'Hello W0rld 🤣';
-    const forwardResult = (converter.convertForward(text) as SuccessResult<Uint8Array>).result;
-    assert(converter.convertBackward(forwardResult)).to.haveProperties({
+    const forwardResult = (_.converter.convertForward(text) as SuccessResult<Uint8Array>).result;
+    assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
       result: objectThat().haveProperties({data: text}),
     });
   });
@@ -33,7 +33,7 @@ test('grammar.binary.StringConverter', () => {
         108,
         111,
       ]);
-      assert(converter.convertBackward(array)).to.haveProperties({
+      assert(_.converter.convertBackward(array)).to.haveProperties({
         result: objectThat().haveProperties({data: 'Hello', length: 8}),
       });
     });
@@ -47,7 +47,7 @@ test('grammar.binary.StringConverter', () => {
         72,
         105,
       ]);
-      assert(converter.convertBackward(array)).to.haveProperties({success: false});
+      assert(_.converter.convertBackward(array)).to.haveProperties({success: false});
     });
 
     should(`fail if type conversion failed`, () => {
@@ -58,7 +58,7 @@ test('grammar.binary.StringConverter', () => {
         72,
         105,
       ]);
-      assert(converter.convertBackward(array)).to.haveProperties({success: false});
+      assert(_.converter.convertBackward(array)).to.haveProperties({success: false});
     });
 
     should(`fail if length conversion failed`, () => {
@@ -69,13 +69,13 @@ test('grammar.binary.StringConverter', () => {
         72,
         105,
       ]);
-      assert(converter.convertBackward(array)).to.haveProperties({success: false});
+      assert(_.converter.convertBackward(array)).to.haveProperties({success: false});
     });
   });
 
   test('convertForward', () => {
     should(`convert correctly`, () => {
-      assert(converter.convertForward('Hello')).to.haveProperties({
+      assert(_.converter.convertForward('Hello')).to.haveProperties({
         result: arrayThat().haveExactElements([
           DataType.STRING,
           DataType.UINT8,
