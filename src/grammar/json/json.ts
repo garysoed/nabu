@@ -1,9 +1,8 @@
 import { Converter } from '../../base/converter';
 import { Result } from '../../base/result';
-import { Serializable } from '../../base/serializable';
 
-class Json implements Converter<Serializable, string> {
-  convertBackward(value: string): Result<Serializable> {
+class Json implements Converter<unknown, string> {
+  convertBackward(value: string): Result<unknown> {
     try {
       return {result: JSON.parse(value), success: true};
     } catch (error) {
@@ -11,7 +10,7 @@ class Json implements Converter<Serializable, string> {
     }
   }
 
-  convertForward(input: Serializable): Result<string> {
+  convertForward(input: unknown): Result<string> {
     try {
       return {result: JSON.stringify(input), success: true};
     } catch (error) {

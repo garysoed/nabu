@@ -1,7 +1,5 @@
 import { arrayThat, assert, objectThat, should, test } from 'gs-testing';
 
-import { Serializable, SerializableObject } from '../../base/serializable';
-
 import { json } from './json';
 
 test('grammar.human.Json', () => {
@@ -30,13 +28,13 @@ test('grammar.human.Json', () => {
 
     should(`parse lists correctly`, () => {
       assert(json().convertBackward(JSON.stringify([1.23, 'test']))).to.haveProperties({
-        result: arrayThat<Serializable>().haveExactElements([1.23, 'test']),
+        result: arrayThat().haveExactElements([1.23, 'test']),
       });
     });
 
     should(`parse objects correctly`, () => {
       assert(json().convertBackward(JSON.stringify({a: 1, b: 'b'}))).to.haveProperties({
-        result: objectThat<SerializableObject>().haveProperties({
+        result: objectThat<Record<string, unknown>>().haveProperties({
             a: 1,
             b: 'b',
           }),

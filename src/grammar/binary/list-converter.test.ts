@@ -1,7 +1,6 @@
 import { arrayThat, assert, iterableThat, objectThat, should, test } from 'gs-testing';
 
 import { SuccessResult } from '../../base/result';
-import { Serializable, SerializableObject } from '../../base/serializable';
 
 import { BinaryData } from './binary-data';
 import { DataType } from './data-type';
@@ -19,15 +18,15 @@ test('grammar.binary.ListConverter', init => {
     const list = [undefined, null, true, 1.23, 'abc', ['list'], {a: 1}];
     const forwardResult = (_.converter.convertForward(list) as SuccessResult<Uint8Array>).result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
-      result: objectThat<BinaryData<Serializable[]>>().haveProperties({
-        data: arrayThat<Serializable>().haveExactElements([
+      result: objectThat<BinaryData<readonly unknown[]>>().haveProperties({
+        data: arrayThat().haveExactElements([
           undefined,
           null,
           true,
           1.23,
           'abc',
           arrayThat<string>().haveExactElements(['list']),
-          objectThat<SerializableObject>().haveProperties({a: 1}),
+          objectThat<Record<string, unknown>>().haveProperties({a: 1}),
         ]),
       }),
     });
@@ -45,8 +44,8 @@ test('grammar.binary.ListConverter', init => {
         1,
       ]);
       assert(_.converter.convertBackward(array)).to.haveProperties({
-        result: objectThat<BinaryData<Serializable[]>>().haveProperties({
-          data: arrayThat<Serializable>().haveExactElements([1, true]),
+        result: objectThat<BinaryData<readonly unknown[]>>().haveProperties({
+          data: arrayThat().haveExactElements([1, true]),
         }),
       });
     });

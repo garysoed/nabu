@@ -1,7 +1,6 @@
 import { arrayThat, assert, objectThat, should, test } from 'gs-testing';
 
 import { SuccessResult } from '../../base/result';
-import { Serializable, SerializableObject } from '../../base/serializable';
 
 import { human } from './human';
 
@@ -29,14 +28,14 @@ test('grammar.human.Human', () => {
 
     should(`parse lists correctly`, () => {
       assert(human().convertBackward(`[1.23 'test']`)).to.haveProperties({
-        result: arrayThat<Serializable>().haveExactElements([1.23, 'test']),
+        result: arrayThat().haveExactElements([1.23, 'test']),
       });
     });
 
     should(`parse objects correctly`, () => {
       assert(human().convertBackward(`{a: 1, b: 'b'}`)).to
           .haveProperties({
-            result: objectThat<SerializableObject>().haveProperties({
+            result: objectThat().haveProperties({
               a: 1,
               b: 'b',
             }),
@@ -106,14 +105,14 @@ test('grammar.human.Human', () => {
   should(`convert forward and backward lists correctly`, () => {
     const forwardResult = (human().convertForward([1.23, 'test']) as SuccessResult<string>).result;
     assert(human().convertBackward(forwardResult)).to.haveProperties({
-      result: arrayThat<Serializable>().haveExactElements([1.23, 'test']),
+      result: arrayThat().haveExactElements([1.23, 'test']),
     });
   });
 
   should(`convert forward and backward objects correctly`, () => {
     const forwardResult = (human().convertForward({a: 1, b: 2}) as SuccessResult<string>).result;
     assert(human().convertBackward(forwardResult)).to.haveProperties({
-      result: objectThat<SerializableObject>().haveProperties({a: 1, b: 2}),
+      result: objectThat().haveProperties({a: 1, b: 2}),
     });
   });
 });

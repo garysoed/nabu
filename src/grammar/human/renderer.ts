@@ -1,6 +1,4 @@
-import { Serializable, SerializableObject } from '../../base/serializable';
-
-export function render(serializable: Serializable): string {
+export function render(serializable: unknown): string {
   if (serializable === undefined) {
     return 'undefined';
   } else if (serializable === null) {
@@ -13,12 +11,14 @@ export function render(serializable: Serializable): string {
     return `'${serializable}'`;
   } else if (serializable instanceof Array) {
     return renderArray(serializable);
+  } else if (serializable instanceof Object) {
+    return renderObject(serializable as Record<string, unknown>);
   } else {
-    return renderObject(serializable);
+    throw new Error(`Unsupported object: ${serializable}`);
   }
 }
 
-function renderArray(value: Serializable[]): string {
+function renderArray(value: readonly unknown[]): string {
   return `[${value.map(item => render(item)).join(' ')}]`;
 }
 
@@ -26,7 +26,7 @@ function renderBoolean(value: boolean): string {
   return value ? 'T' : 'F';
 }
 
-function renderObject(value: SerializableObject): string {
+function renderObject<O extends Record<string, unknown>>(value: O): string {
   const renderedItems = [];
   for (const key of Object.keys(value)) {
     renderedItems.push(`${key}: ${render(value[key])}`);

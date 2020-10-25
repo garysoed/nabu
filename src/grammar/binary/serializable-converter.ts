@@ -1,5 +1,5 @@
 import { Result } from '../../base/result';
-import { Serializable } from '../../base/serializable';
+
 import { BinaryConverter } from './binary-converter';
 import { BinaryData } from './binary-data';
 import { BooleanConverter } from './boolean-converter';
@@ -10,14 +10,10 @@ import { ObjectConverter } from './object-converter';
 import { StringConverter } from './string-converter';
 import { UndefinedConverter } from './undefined-converter';
 
-function assertNever(v: never): void {
-  // noop
-}
-
 /**
  * Combines all the different converters.
  */
-export class SerializableConverter implements BinaryConverter<Serializable> {
+export class SerializableConverter implements BinaryConverter<unknown> {
   private readonly booleanConverter: BooleanConverter = new BooleanConverter();
   private readonly listConverter: ListConverter = new ListConverter(this);
   private readonly nullConverter: NullConverter = new NullConverter();
@@ -26,7 +22,7 @@ export class SerializableConverter implements BinaryConverter<Serializable> {
   private readonly stringConverter: StringConverter = new StringConverter();
   private readonly undefinedConverter: UndefinedConverter = new UndefinedConverter();
 
-  convertBackward(value: Uint8Array): Result<BinaryData<Serializable>> {
+  convertBackward(value: Uint8Array): Result<BinaryData<unknown>> {
     const converters = [
       this.booleanConverter,
       this.listConverter,
@@ -46,7 +42,7 @@ export class SerializableConverter implements BinaryConverter<Serializable> {
     return {success: false};
   }
 
-  convertForward(value: Serializable): Result<Uint8Array> {
+  convertForward(value: unknown): Result<Uint8Array> {
     if (value === undefined) {
       return this.undefinedConverter.convertForward(value);
     }
@@ -72,9 +68,9 @@ export class SerializableConverter implements BinaryConverter<Serializable> {
     }
 
     if (value instanceof Object) {
-      return this.objectConverter.convertForward(value);
+      return this.objectConverter.convertForward(value as Record<string, unknown>);
     }
 
-    throw assertNever(value);
+    throw new Error(`Unsupported value: ${value}`);
   }
 }

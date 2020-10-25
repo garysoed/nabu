@@ -1,11 +1,11 @@
 import { Converter } from '../../base/converter';
 import { Result } from '../../base/result';
-import { Serializable } from '../../base/serializable';
+
 import { parse } from './parser';
 import { render } from './renderer';
 
-class Human implements Converter<Serializable, string> {
-  convertBackward(value: string): Result<Serializable> {
+class Human implements Converter<unknown, string> {
+  convertBackward(value: string): Result<unknown> {
     try {
       return {result: parse(value), success: true};
     } catch (error) {
@@ -13,7 +13,7 @@ class Human implements Converter<Serializable, string> {
     }
   }
 
-  convertForward(input: Serializable): Result<string> {
+  convertForward(input: unknown): Result<string> {
     return {result: render(input), success: true};
   }
 }

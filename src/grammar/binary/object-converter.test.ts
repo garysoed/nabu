@@ -1,7 +1,6 @@
 import { arrayThat, assert, iterableThat, objectThat, should, test } from 'gs-testing';
 
 import { SuccessResult } from '../../base/result';
-import { SerializableObject } from '../../base/serializable';
 
 import { BinaryData } from './binary-data';
 import { DataType } from './data-type';
@@ -27,13 +26,13 @@ test('grammar.binary.ObjectConverter', init => {
     };
     const forwardResult = (_.converter.convertForward(object) as SuccessResult<Uint8Array>).result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
-      result: objectThat<BinaryData<SerializableObject>>().haveProperties({
-        data: objectThat<SerializableObject>().haveProperties({
+      result: objectThat<BinaryData<Record<string, unknown>>>().haveProperties({
+        data: objectThat<Record<string, unknown>>().haveProperties({
           boolean: true,
           list: arrayThat<string>().haveExactElements(['list']),
           null: null,
           number: 1.23,
-          object: objectThat<SerializableObject>().haveProperties({a: 1}),
+          object: objectThat<Record<string, unknown>>().haveProperties({a: 1}),
           string: 'abc',
           undefined,
         }),
@@ -73,8 +72,8 @@ test('grammar.binary.ObjectConverter', init => {
         2,
       ]);
       assert(_.converter.convertBackward(object)).to.haveProperties({
-        result: objectThat<BinaryData<SerializableObject>>().haveProperties({
-          data: objectThat<SerializableObject>().haveProperties({a: 1, b: 2}),
+        result: objectThat<BinaryData<Record<string, unknown>>>().haveProperties({
+          data: objectThat<Record<string, unknown>>().haveProperties({a: 1, b: 2}),
         }),
       });
     });

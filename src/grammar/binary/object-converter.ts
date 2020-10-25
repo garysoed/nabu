@@ -1,5 +1,5 @@
 import { Result } from '../../base/result';
-import { Serializable, SerializableObject } from '../../base/serializable';
+
 import { BinaryConverter } from './binary-converter';
 import { BinaryData } from './binary-data';
 import { DataType } from './data-type';
@@ -7,12 +7,12 @@ import { DataTypeConverter } from './data-type-converter';
 import { NumberConverter } from './number-converter';
 import { StringConverter } from './string-converter';
 
-class ObjectEntryConverter implements BinaryConverter<[string, Serializable]> {
+class ObjectEntryConverter implements BinaryConverter<[string, unknown]> {
   private readonly stringConverter_: StringConverter = new StringConverter();
 
-  constructor(private readonly serializableConverter_: BinaryConverter<Serializable>) { }
+  constructor(private readonly serializableConverter_: BinaryConverter<unknown>) { }
 
-  convertBackward(value: Uint8Array): Result<BinaryData<[string, Serializable]>> {
+  convertBackward(value: Uint8Array): Result<BinaryData<[string, unknown]>> {
     const keyResult = this.stringConverter_.convertBackward(value);
     if (!keyResult.success) {
       return {success: false};
@@ -33,7 +33,7 @@ class ObjectEntryConverter implements BinaryConverter<[string, Serializable]> {
     };
   }
 
-  convertForward(value: [string, Serializable]): Result<Uint8Array> {
+  convertForward(value: [string, unknown]): Result<Uint8Array> {
     const keyResult = this.stringConverter_.convertForward(value[0]);
     if (!keyResult.success) {
       return {success: false};
@@ -53,16 +53,16 @@ class ObjectEntryConverter implements BinaryConverter<[string, Serializable]> {
   }
 }
 
-export class ObjectConverter implements BinaryConverter<SerializableObject> {
+export class ObjectConverter implements BinaryConverter<Record<string, unknown>> {
   private readonly dataTypeConverter_: DataTypeConverter = new DataTypeConverter();
   private readonly numberConverter_: NumberConverter = new NumberConverter();
   private readonly objectEntryConverter_: ObjectEntryConverter;
 
-  constructor(serializableConverter: BinaryConverter<Serializable>) {
+  constructor(serializableConverter: BinaryConverter<unknown>) {
     this.objectEntryConverter_ = new ObjectEntryConverter(serializableConverter);
   }
 
-  convertBackward(value: Uint8Array): Result<BinaryData<SerializableObject>> {
+  convertBackward(value: Uint8Array): Result<BinaryData<{}>> {
     const typeResult = this.dataTypeConverter_.convertBackward(value);
     if (!typeResult.success) {
       return {success: false};
@@ -79,7 +79,7 @@ export class ObjectConverter implements BinaryConverter<SerializableObject> {
     }
 
     let arrayIndex = typeLength + lengthResult.result.length;
-    const object: SerializableObject = {};
+    const object: Record<string, unknown> = {};
     for (let i = 0; i < lengthResult.result.data; i++) {
       const entryResult = this.objectEntryConverter_.convertBackward(value.slice(arrayIndex));
       if (!entryResult.success) {
@@ -94,7 +94,7 @@ export class ObjectConverter implements BinaryConverter<SerializableObject> {
     return {result: {data: object, length: arrayIndex}, success: true};
   }
 
-  convertForward(value: SerializableObject): Result<Uint8Array> {
+  convertForward(value: Record<string, unknown>): Result<Uint8Array> {
     const entryResults = [];
     for (const key in value) {
       if (!value.hasOwnProperty(key)) {

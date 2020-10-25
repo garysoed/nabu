@@ -1,5 +1,5 @@
 import { Result } from '../../base/result';
-import { Serializable } from '../../base/serializable';
+
 import { BinaryConverter } from './binary-converter';
 import { BinaryData } from './binary-data';
 import { DataType } from './data-type';
@@ -12,13 +12,13 @@ import { NumberConverter } from './number-converter';
  * Format:
  * [type][length][entry1][entry2]...[entryN]
  */
-export class ListConverter implements BinaryConverter<Serializable[]> {
+export class ListConverter implements BinaryConverter<readonly unknown[]> {
   private readonly dataTypeConverter_: DataTypeConverter = new DataTypeConverter();
   private readonly numberConverter_: NumberConverter = new NumberConverter();
 
-  constructor(private readonly serializableConverter_: BinaryConverter<Serializable>) { }
+  constructor(private readonly serializableConverter_: BinaryConverter<unknown>) { }
 
-  convertBackward(value: Uint8Array): Result<BinaryData<Serializable[]>> {
+  convertBackward(value: Uint8Array): Result<BinaryData<readonly unknown[]>> {
     const typeResult = this.dataTypeConverter_.convertBackward(value);
     if (!typeResult.success) {
       return {success: false};
@@ -49,7 +49,7 @@ export class ListConverter implements BinaryConverter<Serializable[]> {
     return {result: {data: array, length: arrayIndex}, success: true};
   }
 
-  convertForward(value: Serializable[]): Result<Uint8Array> {
+  convertForward(value: readonly unknown[]): Result<Uint8Array> {
     const itemResults = value.map(item => this.serializableConverter_.convertForward(item));
     const results = [
       this.dataTypeConverter_.convertForward(DataType.LIST),
