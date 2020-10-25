@@ -10,7 +10,7 @@ export function render(serializable: Serializable): string {
   } else if (typeof serializable === 'number') {
     return `${serializable}`;
   } else if (typeof serializable === 'string') {
-    return `"${serializable}"`;
+    return `'${serializable}'`;
   } else if (serializable instanceof Array) {
     return renderArray(serializable);
   } else {

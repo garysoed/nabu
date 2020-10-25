@@ -1,7 +1,9 @@
-import { arrayThat, assert, objectThat, should, test } from 'gs-testing';
+import { arrayThat, assert, iterableThat, objectThat, should, test } from 'gs-testing';
 
 import { SuccessResult } from '../../base/result';
+import { Serializable, SerializableObject } from '../../base/serializable';
 
+import { BinaryData } from './binary-data';
 import { DataType } from './data-type';
 import { ListConverter } from './list-converter';
 import { SerializableConverter } from './serializable-converter';
@@ -17,15 +19,15 @@ test('grammar.binary.ListConverter', init => {
     const list = [undefined, null, true, 1.23, 'abc', ['list'], {a: 1}];
     const forwardResult = (_.converter.convertForward(list) as SuccessResult<Uint8Array>).result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
-      result: objectThat().haveProperties({
-        data: arrayThat().haveExactElements([
+      result: objectThat<BinaryData<Serializable[]>>().haveProperties({
+        data: arrayThat<Serializable>().haveExactElements([
           undefined,
           null,
           true,
           1.23,
           'abc',
-          arrayThat().haveExactElements(['list']),
-          objectThat().haveProperties({a: 1}),
+          arrayThat<string>().haveExactElements(['list']),
+          objectThat<SerializableObject>().haveProperties({a: 1}),
         ]),
       }),
     });
@@ -43,8 +45,8 @@ test('grammar.binary.ListConverter', init => {
         1,
       ]);
       assert(_.converter.convertBackward(array)).to.haveProperties({
-        result: objectThat().haveProperties({
-          data: arrayThat().haveExactElements([1, true]),
+        result: objectThat<BinaryData<Serializable[]>>().haveProperties({
+          data: arrayThat<Serializable>().haveExactElements([1, true]),
         }),
       });
     });
@@ -105,7 +107,7 @@ test('grammar.binary.ListConverter', init => {
   test('convertForward', () => {
     should(`convert correctly`, () => {
       assert(_.converter.convertForward([1, true])).to.haveProperties({
-        result: arrayThat().haveExactElements([
+        result: iterableThat<number, Uint8Array>().startWith([
           DataType.LIST,
           DataType.UINT8,
           2,

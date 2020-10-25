@@ -1,7 +1,9 @@
-import { arrayThat, assert, objectThat, should, test } from 'gs-testing';
+import { arrayThat, assert, iterableThat, objectThat, should, test } from 'gs-testing';
 
 import { SuccessResult } from '../../base/result';
+import { SerializableObject } from '../../base/serializable';
 
+import { BinaryData } from './binary-data';
 import { DataType } from './data-type';
 import { ObjectConverter } from './object-converter';
 import { SerializableConverter } from './serializable-converter';
@@ -25,13 +27,13 @@ test('grammar.binary.ObjectConverter', init => {
     };
     const forwardResult = (_.converter.convertForward(object) as SuccessResult<Uint8Array>).result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
-      result: objectThat().haveProperties({
-        data: objectThat().haveProperties({
+      result: objectThat<BinaryData<SerializableObject>>().haveProperties({
+        data: objectThat<SerializableObject>().haveProperties({
           boolean: true,
-          list: arrayThat().haveExactElements(['list']),
+          list: arrayThat<string>().haveExactElements(['list']),
           null: null,
           number: 1.23,
-          object: objectThat().haveProperties({a: 1}),
+          object: objectThat<SerializableObject>().haveProperties({a: 1}),
           string: 'abc',
           undefined,
         }),
@@ -71,8 +73,8 @@ test('grammar.binary.ObjectConverter', init => {
         2,
       ]);
       assert(_.converter.convertBackward(object)).to.haveProperties({
-        result: objectThat().haveProperties({
-          data: objectThat().haveProperties({a: 1, b: 2}),
+        result: objectThat<BinaryData<SerializableObject>>().haveProperties({
+          data: objectThat<SerializableObject>().haveProperties({a: 1, b: 2}),
         }),
       });
     });
@@ -220,7 +222,7 @@ test('grammar.binary.ObjectConverter', init => {
   test('convertForward', () => {
     should(`convert correctly`, () => {
       assert(_.converter.convertForward({a: 1, b: 2})).to.haveProperties({
-        result: arrayThat().haveExactElements([
+        result: iterableThat<number, Uint8Array>().startWith([
           DataType.OBJECT,
           // length
           DataType.UINT8,

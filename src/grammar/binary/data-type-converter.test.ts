@@ -1,7 +1,8 @@
-import { arrayThat, assert, objectThat, should, test } from 'gs-testing';
+import { arrayThat, assert, iterableThat, objectThat, should, test } from 'gs-testing';
 
 import { SuccessResult } from '../../base/result';
 
+import { BinaryData } from './binary-data';
 import { DataType } from './data-type';
 import { DataTypeConverter } from './data-type-converter';
 
@@ -17,7 +18,7 @@ test('grammar.binary.DataTypeConverter', init => {
     const forwardResult = (_.converter.convertForward(dataType) as SuccessResult<Uint8Array>)
         .result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
-      result: objectThat().haveProperties({data: dataType}),
+      result: objectThat<BinaryData<number>>().haveProperties({data: dataType}),
     });
   });
 
@@ -26,7 +27,7 @@ test('grammar.binary.DataTypeConverter', init => {
       const dataType = DataType.LIST;
       const array = Uint8Array.from([dataType]);
       assert(_.converter.convertBackward(array)).to.haveProperties({
-        result: objectThat().haveProperties({data: dataType, length: 1}),
+        result: objectThat<BinaryData<number>>().haveProperties({data: dataType, length: 1}),
       });
     });
 
@@ -40,7 +41,7 @@ test('grammar.binary.DataTypeConverter', init => {
     should(`convert correctly`, () => {
       const dataType = DataType.LIST;
       assert(_.converter.convertForward(dataType)).to.haveProperties({
-        result: arrayThat<number>().haveExactElements([dataType]),
+        result: iterableThat<number, Uint8Array>().startWith([dataType]),
       });
     });
   });

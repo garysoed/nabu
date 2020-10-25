@@ -9,7 +9,7 @@ test('@nabu/util/deep-clone', () => {
     };
     const clone = deepClone(original);
     assert(clone).to.haveProperties({
-      a: objectThat().haveProperties({b: 2}),
+      a: objectThat<{b: number}>().haveProperties({b: 2}),
     });
     assert(clone).toNot.equal(original);
   });

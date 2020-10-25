@@ -1,4 +1,5 @@
 import { assert, should, test } from 'gs-testing';
+
 import { render } from './renderer';
 
 test('grammar.human.renderer', () => {
@@ -16,13 +17,13 @@ test('grammar.human.renderer', () => {
     });
 
     should(`render strings correctly`, () => {
-      assert(render('string')).to.equal('"string"');
+      assert(render('string')).to.equal(`'string'`);
     });
   });
 
   test('renderArray', () => {
     should(`render arrays correctly`, () => {
-      assert(render([1, '2', [3, 4], {a: 5, b: '6'}])).to.equal('[1 "2" [3 4] {a: 5, b: "6"}]');
+      assert(render([1, '2', [3, 4], {a: 5, b: '6'}])).to.equal(`[1 '2' [3 4] {a: 5, b: '6'}]`);
     });
   });
 

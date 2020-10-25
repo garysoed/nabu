@@ -1,7 +1,8 @@
-import { arrayThat, assert, objectThat, should, test } from 'gs-testing';
+import { assert, iterableThat, objectThat, should, test } from 'gs-testing';
 
 import { SuccessResult } from '../../base/result';
 
+import { BinaryData } from './binary-data';
 import { DataType } from './data-type';
 import { UndefinedConverter } from './undefined-converter';
 
@@ -16,7 +17,7 @@ test('grammar.binary.UndefinedConverter', init => {
     const forwardResult = (_.converter.convertForward(undefined) as SuccessResult<Uint8Array>)
         .result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
-      result: objectThat().haveProperties({data: undefined}),
+      result: objectThat<BinaryData<undefined>>().haveProperties({data: undefined}),
     });
   });
 
@@ -25,7 +26,7 @@ test('grammar.binary.UndefinedConverter', init => {
       const dataType = DataType.UNDEFINED;
       const array = Uint8Array.from([dataType]);
       assert(_.converter.convertBackward(array)).to.haveProperties({
-        result: objectThat().haveProperties({data: undefined, length: 1}),
+        result: objectThat<BinaryData<undefined>>().haveProperties({data: undefined, length: 1}),
       });
     });
 
@@ -44,7 +45,7 @@ test('grammar.binary.UndefinedConverter', init => {
   test('convertForward', () => {
     should(`convert correctly`, () => {
       assert(_.converter.convertForward(undefined)).to.haveProperties({
-        result: arrayThat<number>().haveExactElements([DataType.UNDEFINED]),
+        result: iterableThat<number, Uint8Array>().startWith([DataType.UNDEFINED]),
       });
     });
   });

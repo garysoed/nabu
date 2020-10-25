@@ -41,7 +41,7 @@ arrayEntry = entry:start { return {entry} }
 /**
  * Strings
  */
-string = "\"" content:([^"]*) "\"" { return content.join('') }
+string = "'" content:([^']*) "'" { return content.join('') }
 
 /**
  * Numbers

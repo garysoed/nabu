@@ -1,7 +1,9 @@
 import { assert, objectThat, should, test } from 'gs-testing';
 
 import { SuccessResult } from '../../base/result';
+import { Serializable } from '../../base/serializable';
 
+import { BinaryData } from './binary-data';
 import { SerializableConverter } from './serializable-converter';
 
 
@@ -15,28 +17,28 @@ test('grammar.binary.SerializableConverter', init => {
     const forwardResult = (_.converter.convertForward(undefined) as SuccessResult<Uint8Array>)
         .result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
-      result: objectThat().haveProperties({data: undefined}),
+      result: objectThat<BinaryData<Serializable>>().haveProperties({data: undefined}),
     });
   });
 
   should(`convert forward and backward null correctly`, () => {
     const forwardResult = (_.converter.convertForward(null) as SuccessResult<Uint8Array>).result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
-      result: objectThat().haveProperties({data: null}),
+      result: objectThat<BinaryData<Serializable>>().haveProperties({data: null}),
     });
   });
 
   should(`convert forward and backward boolean correctly`, () => {
     const forwardResult = (_.converter.convertForward(true) as SuccessResult<Uint8Array>).result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
-      result: objectThat().haveProperties({data: true}),
+      result: objectThat<BinaryData<Serializable>>().haveProperties({data: true}),
     });
   });
 
   should(`convert forward and backward number correctly`, () => {
     const forwardResult = (_.converter.convertForward(1.234) as SuccessResult<Uint8Array>).result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
-      result: objectThat().haveProperties({data: 1.234}),
+      result: objectThat<BinaryData<Serializable>>().haveProperties({data: 1.234}),
     });
   });
 
@@ -44,7 +46,7 @@ test('grammar.binary.SerializableConverter', init => {
     const text = 'Hello W0rld 🤣';
     const forwardResult = (_.converter.convertForward(text) as SuccessResult<Uint8Array>).result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
-      result: objectThat().haveProperties({data: text}),
+      result: objectThat<BinaryData<Serializable>>().haveProperties({data: text}),
     });
   });
 });

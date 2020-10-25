@@ -213,10 +213,10 @@ function peg$parse(input: string, options?: IParseOptions) {
     return result;
   };
   const peg$c20 = function(entry: any) { return {entry} };
-  const peg$c21 = "\"";
-  const peg$c22 = peg$literalExpectation("\"", false);
-  const peg$c23 = /^[^"]/;
-  const peg$c24 = peg$classExpectation(["\""], true, false);
+  const peg$c21 = "'";
+  const peg$c22 = peg$literalExpectation("'", false);
+  const peg$c23 = /^[^']/;
+  const peg$c24 = peg$classExpectation(["'"], true, false);
   const peg$c25 = function(content: any) { return content.join('') };
   const peg$c26 = "-";
   const peg$c27 = peg$literalExpectation("-", false);
@@ -740,7 +740,7 @@ function peg$parse(input: string, options?: IParseOptions) {
     let s0, s1, s2, s3;
 
     s0 = peg$currPos;
-    if (input.charCodeAt(peg$currPos) === 34) {
+    if (input.charCodeAt(peg$currPos) === 39) {
       s1 = peg$c21;
       peg$currPos++;
     } else {
@@ -767,7 +767,7 @@ function peg$parse(input: string, options?: IParseOptions) {
         }
       }
       if (s2 !== peg$FAILED) {
-        if (input.charCodeAt(peg$currPos) === 34) {
+        if (input.charCodeAt(peg$currPos) === 39) {
           s3 = peg$c21;
           peg$currPos++;
         } else {

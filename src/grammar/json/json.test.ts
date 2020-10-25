@@ -1,6 +1,6 @@
 import { arrayThat, assert, objectThat, should, test } from 'gs-testing';
 
-import { Serializable } from '../../base/serializable';
+import { Serializable, SerializableObject } from '../../base/serializable';
 
 import { json } from './json';
 
@@ -36,7 +36,7 @@ test('grammar.human.Json', () => {
 
     should(`parse objects correctly`, () => {
       assert(json().convertBackward(JSON.stringify({a: 1, b: 'b'}))).to.haveProperties({
-        result: objectThat().haveProperties({
+        result: objectThat<SerializableObject>().haveProperties({
             a: 1,
             b: 'b',
           }),

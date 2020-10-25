@@ -23,7 +23,7 @@ test('grammar.human.parser', () => {
     });
 
     should(`parse strings correctly`, () => {
-      assert(parse('"b\'a\'c"')).to.equal('b\'a\'c');
+      assert(parse(`'b"a"c'`)).to.equal('b"a"c');
     });
 
     should(`parse numbers correctly`, () => {
@@ -53,7 +53,7 @@ test('grammar.human.parser', () => {
     should(`parse lists correctly`, () => {
       const INPUT = `
   [
-    "string"
+    'string'
     123
     [1 2 3]
   ]
@@ -70,12 +70,12 @@ test('grammar.human.parser', () => {
       const INPUT = `
   {
     object: {
-      string: "string",
+      string: 'string',
       number: 123,
       decimal: 123.456,
     },
     list: [
-      "string"
+      'string'
       .234
       0.002
     ],

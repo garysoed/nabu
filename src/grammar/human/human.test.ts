@@ -1,6 +1,7 @@
 import { arrayThat, assert, objectThat, should, test } from 'gs-testing';
 
-import { Serializable } from '../../base/serializable';
+import { SuccessResult } from '../../base/result';
+import { Serializable, SerializableObject } from '../../base/serializable';
 
 import { human } from './human';
 
@@ -19,7 +20,7 @@ test('grammar.human.Human', () => {
     });
 
     should(`parse strings correctly`, () => {
-      assert(human().convertBackward('"abc"')).to.haveProperties({result: 'abc'});
+      assert(human().convertBackward(`'abc'`)).to.haveProperties({result: 'abc'});
     });
 
     should(`parse numbers correctly`, () => {
@@ -27,15 +28,15 @@ test('grammar.human.Human', () => {
     });
 
     should(`parse lists correctly`, () => {
-      assert(human().convertBackward('[1.23 "test"]')).to.haveProperties({
+      assert(human().convertBackward(`[1.23 'test']`)).to.haveProperties({
         result: arrayThat<Serializable>().haveExactElements([1.23, 'test']),
       });
     });
 
     should(`parse objects correctly`, () => {
-      assert(human().convertBackward('{a: 1, b: "b"}')).to
+      assert(human().convertBackward(`{a: 1, b: 'b'}`)).to
           .haveProperties({
-            result: objectThat().haveProperties({
+            result: objectThat<SerializableObject>().haveProperties({
               a: 1,
               b: 'b',
             }),
@@ -61,7 +62,7 @@ test('grammar.human.Human', () => {
     });
 
     should(`render strings correctly`, () => {
-      assert(human().convertForward('abc')).to.haveProperties({result: '"abc"'});
+      assert(human().convertForward('abc')).to.haveProperties({result: `'abc'`});
     });
 
     should(`render numbers correctly`, () => {
@@ -69,11 +70,50 @@ test('grammar.human.Human', () => {
     });
 
     should(`render lists correctly`, () => {
-      assert(human().convertForward([1.23, 'test'])).to.haveProperties({result: '[1.23 "test"]'});
+      assert(human().convertForward([1.23, 'test'])).to.haveProperties({result: `[1.23 'test']`});
     });
 
     should(`render objects correctly`, () => {
-      assert(human().convertForward({a: 1, b: 'b'})).to.haveProperties({result: '{a: 1, b: "b"}'});
+      assert(human().convertForward({a: 1, b: 'b'})).to.haveProperties({result: `{a: 1, b: 'b'}`});
+    });
+  });
+
+  should(`convert forward and backward undefined correctly`, () => {
+    const forwardResult = (human().convertForward(undefined) as SuccessResult<string>).result;
+    assert(human().convertBackward(forwardResult)).to.haveProperties({result: undefined});
+  });
+
+  should(`convert forward and backward null correctly`, () => {
+    const forwardResult = (human().convertForward(null) as SuccessResult<string>).result;
+    assert(human().convertBackward(forwardResult)).to.haveProperties({result: null});
+  });
+
+  should(`convert forward and backward booleans correctly`, () => {
+    const forwardResult = (human().convertForward(true) as SuccessResult<string>).result;
+    assert(human().convertBackward(forwardResult)).to.haveProperties({result: true});
+  });
+
+  should(`convert forward and backward strings correctly`, () => {
+    const forwardResult = (human().convertForward('hello') as SuccessResult<string>).result;
+    assert(human().convertBackward(forwardResult)).to.haveProperties({result: 'hello'});
+  });
+
+  should(`convert forward and backward numbers correctly`, () => {
+    const forwardResult = (human().convertForward(1.234) as SuccessResult<string>).result;
+    assert(human().convertBackward(forwardResult)).to.haveProperties({result: 1.234});
+  });
+
+  should(`convert forward and backward lists correctly`, () => {
+    const forwardResult = (human().convertForward([1.23, 'test']) as SuccessResult<string>).result;
+    assert(human().convertBackward(forwardResult)).to.haveProperties({
+      result: arrayThat<Serializable>().haveExactElements([1.23, 'test']),
+    });
+  });
+
+  should(`convert forward and backward objects correctly`, () => {
+    const forwardResult = (human().convertForward({a: 1, b: 2}) as SuccessResult<string>).result;
+    assert(human().convertBackward(forwardResult)).to.haveProperties({
+      result: objectThat<SerializableObject>().haveProperties({a: 1, b: 2}),
     });
   });
 });
