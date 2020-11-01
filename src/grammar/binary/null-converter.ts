@@ -1,8 +1,8 @@
-import { Result } from '../../base/result';
 import { BinaryConverter } from './binary-converter';
 import { BinaryData } from './binary-data';
 import { DataType } from './data-type';
 import { DataTypeConverter } from './data-type-converter';
+import { Result } from '../../base/result';
 
 /**
  * Converts null to uint8array
@@ -26,7 +26,8 @@ export class NullConverter implements BinaryConverter<null> {
     return {result: {data: null, length: typeResult.result.length}, success: true};
   }
 
-  convertForward(input: null): Result<Uint8Array> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  convertForward(_input: null): Result<Uint8Array> {
     const dataTypeResult = this.dataTypeConverter_.convertForward(DataType.NULL);
     if (!dataTypeResult.success) {
       return {success: false};

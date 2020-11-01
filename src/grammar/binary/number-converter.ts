@@ -1,8 +1,8 @@
-import { Result } from '../../base/result';
 import { BinaryConverter } from './binary-converter';
 import { BinaryData } from './binary-data';
 import { DataType } from './data-type';
 import { DataTypeConverter } from './data-type-converter';
+import { Result } from '../../base/result';
 
 /**
  * Converts numbers to uint8array. We don't use float 32 since it tends to lose precision.
@@ -22,7 +22,7 @@ export class NumberConverter implements BinaryConverter<number> {
     let result: BinaryData<number>|null = null;
     const valueRest = value.slice(typeResult.result.length);
     switch (typeResult.result.data) {
-      case DataType.FLOAT64:
+      case DataType.FLOAT64: {
         const float64Array = new Float64Array(
             valueRest.slice(0, Float64Array.BYTES_PER_ELEMENT).buffer);
         result = {
@@ -30,28 +30,32 @@ export class NumberConverter implements BinaryConverter<number> {
           length: typeResult.result.length + float64Array.BYTES_PER_ELEMENT,
         };
         break;
-      case DataType.INT16:
+      }
+      case DataType.INT16: {
         const int16Array = new Int16Array(valueRest.slice(0, Int16Array.BYTES_PER_ELEMENT).buffer);
         result = {
           data: int16Array[0],
           length: typeResult.result.length + int16Array.BYTES_PER_ELEMENT,
         };
         break;
-      case DataType.INT32:
+      }
+      case DataType.INT32: {
         const int32Array = new Int32Array(valueRest.slice(0, Int32Array.BYTES_PER_ELEMENT).buffer);
         result = {
           data: int32Array[0],
           length: typeResult.result.length + int32Array.BYTES_PER_ELEMENT,
         };
         break;
-      case DataType.INT8:
+      }
+      case DataType.INT8: {
         const int8Array = new Int8Array(valueRest.slice(0, Int8Array.BYTES_PER_ELEMENT).buffer);
         result = {
           data: int8Array[0],
           length: typeResult.result.length + int8Array.BYTES_PER_ELEMENT,
         };
         break;
-      case DataType.UINT16:
+      }
+      case DataType.UINT16: {
         const uint16Array = new Uint16Array(
             valueRest.slice(0, Uint16Array.BYTES_PER_ELEMENT).buffer);
         result = {
@@ -59,7 +63,8 @@ export class NumberConverter implements BinaryConverter<number> {
           length: typeResult.result.length + uint16Array.BYTES_PER_ELEMENT,
         };
         break;
-      case DataType.UINT32:
+      }
+      case DataType.UINT32: {
         const uint32Array = new Uint32Array(
             valueRest.slice(0, Uint32Array.BYTES_PER_ELEMENT).buffer);
         result = {
@@ -67,13 +72,15 @@ export class NumberConverter implements BinaryConverter<number> {
           length: typeResult.result.length + uint32Array.BYTES_PER_ELEMENT,
         };
         break;
-      case DataType.UINT8:
+      }
+      case DataType.UINT8: {
         const uint8Array = new Uint8Array(valueRest.slice(0, Uint8Array.BYTES_PER_ELEMENT).buffer);
         result = {
           data: uint8Array[0],
           length: typeResult.result.length + uint8Array.BYTES_PER_ELEMENT,
         };
         break;
+      }
     }
 
     if (result === null) {

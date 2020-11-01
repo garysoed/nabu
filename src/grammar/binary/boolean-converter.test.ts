@@ -7,7 +7,7 @@ import { BooleanConverter } from './boolean-converter';
 import { DataType } from './data-type';
 
 
-test('grammar.binary.BooleanConverter', init => {
+test(`grammar.binary.BooleanConverter`, init => {
 
   const _ = init(() => {
     const converter = new BooleanConverter();
@@ -28,7 +28,7 @@ test('grammar.binary.BooleanConverter', init => {
     });
   });
 
-  test('convertBackward', () => {
+  test(`convertBackward`, () => {
     should(`convert true correctly`, () => {
       const dataType = DataType.BOOLEAN;
       const array = Uint8Array.from([dataType, 1]);
@@ -57,7 +57,7 @@ test('grammar.binary.BooleanConverter', init => {
     });
   });
 
-  test('convertForward', () => {
+  test(`convertForward`, () => {
     should(`convert true correctly`, () => {
       assert(_.converter.convertForward(true)).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([

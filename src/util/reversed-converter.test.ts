@@ -5,18 +5,18 @@ import { Result } from '../base/result';
 
 import { reverse } from './reversed-converter';
 
-class ForwardOnlyConverter implements Converter<object, object> {
-  convertBackward(value: object): Result<object> {
+class ForwardOnlyConverter implements Converter<unknown, unknown> {
+  convertBackward(): Result<unknown> {
     return {success: false};
   }
 
-  convertForward(value: object): Result<object> {
+  convertForward(value: unknown): Result<unknown> {
     return {result: value, success: true};
   }
 }
 
-test('util.ReversedConverter', () => {
-  test('convertBackward', () => {
+test(`util.ReversedConverter`, () => {
+  test(`convertBackward`, () => {
     should(`convert correctly`, () => {
       const converter = reverse(new ForwardOnlyConverter());
       const obj = {};
@@ -24,7 +24,7 @@ test('util.ReversedConverter', () => {
     });
   });
 
-  test('convertForward', () => {
+  test(`convertForward`, () => {
     should(`convert correctly`, () => {
       const converter = reverse(new ForwardOnlyConverter());
       assert(converter.convertForward({})).to.haveProperties({success: false});

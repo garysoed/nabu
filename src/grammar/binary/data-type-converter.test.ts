@@ -1,13 +1,13 @@
-import { arrayThat, assert, iterableThat, objectThat, should, test } from 'gs-testing';
-
-import { SuccessResult } from '../../base/result';
-
 import { BinaryData } from './binary-data';
 import { DataType } from './data-type';
 import { DataTypeConverter } from './data-type-converter';
+import { SuccessResult } from '../../base/result';
+import { assert, iterableThat, objectThat, should, test } from 'gs-testing';
 
 
-test('grammar.binary.DataTypeConverter', init => {
+
+
+test(`grammar.binary.DataTypeConverter`, init => {
   const _ = init(() => {
     const converter = new DataTypeConverter();
     return {converter};
@@ -22,7 +22,7 @@ test('grammar.binary.DataTypeConverter', init => {
     });
   });
 
-  test('convertBackward', () => {
+  test(`convertBackward`, () => {
     should(`convert correctly`, () => {
       const dataType = DataType.LIST;
       const array = Uint8Array.from([dataType]);
@@ -37,7 +37,7 @@ test('grammar.binary.DataTypeConverter', init => {
     });
   });
 
-  test('convertForward', () => {
+  test(`convertForward`, () => {
     should(`convert correctly`, () => {
       const dataType = DataType.LIST;
       assert(_.converter.convertForward(dataType)).to.haveProperties({

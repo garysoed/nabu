@@ -1,13 +1,11 @@
-import { arrayThat, assert, iterableThat, numberThat, objectThat, should, test } from 'gs-testing';
-
-import { SuccessResult } from '../../base/result';
-
 import { BinaryData } from './binary-data';
 import { DataType } from './data-type';
 import { NumberConverter } from './number-converter';
+import { SuccessResult } from '../../base/result';
+import { assert, iterableThat, numberThat, objectThat, should, test } from 'gs-testing';
 
 
-test('grammar.binary.NumberConverter', init => {
+test(`grammar.binary.NumberConverter`, init => {
   const _ = init(() => {
     const converter = new NumberConverter();
     return {converter};
@@ -99,7 +97,7 @@ test('grammar.binary.NumberConverter', init => {
     });
   });
 
-  test('convertBackward', () => {
+  test(`convertBackward`, () => {
     should(`convert float64 correctly`, () => {
       const array = Uint8Array.from([
         DataType.FLOAT64,
@@ -196,7 +194,7 @@ test('grammar.binary.NumberConverter', init => {
     });
   });
 
-  test('convertForward', () => {
+  test(`convertForward`, () => {
     should(`convert -127 correctly`, () => {
       assert(_.converter.convertForward(-127)).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([

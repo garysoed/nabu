@@ -1,13 +1,13 @@
-import { arrayThat, assert, iterableThat, objectThat, should, test } from 'gs-testing';
-
-import { SuccessResult } from '../../base/result';
-
 import { BinaryData } from './binary-data';
 import { DataType } from './data-type';
 import { NullConverter } from './null-converter';
+import { SuccessResult } from '../../base/result';
+import { assert, iterableThat, objectThat, should, test } from 'gs-testing';
 
 
-test('grammar.binary.NullConverter', init => {
+
+
+test(`grammar.binary.NullConverter`, init => {
   const _ = init(() => {
     const converter = new NullConverter();
     return {converter};
@@ -20,7 +20,7 @@ test('grammar.binary.NullConverter', init => {
     });
   });
 
-  test('convertBackward', () => {
+  test(`convertBackward`, () => {
     should(`convert correctly`, () => {
       const dataType = DataType.NULL;
       const array = Uint8Array.from([dataType]);
@@ -41,7 +41,7 @@ test('grammar.binary.NullConverter', init => {
     });
   });
 
-  test('convertForward', () => {
+  test(`convertForward`, () => {
     should(`convert correctly`, () => {
       assert(_.converter.convertForward(null)).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([DataType.NULL]),

@@ -2,9 +2,9 @@ import { arrayThat, assert, objectThat, should, test } from 'gs-testing';
 
 import { json } from './json';
 
-test('grammar.human.Json', () => {
+test(`grammar.human.Json`, () => {
 
-  test('convertBackward', () => {
+  test(`convertBackward`, () => {
     should(`parse undefined correctly`, () => {
       assert(json().convertBackward(JSON.stringify(undefined))).to
           .haveProperties({result: undefined});
@@ -19,7 +19,7 @@ test('grammar.human.Json', () => {
     });
 
     should(`parse strings correctly`, () => {
-      assert(json().convertBackward(JSON.stringify('abc'))).to.haveProperties({result: 'abc'});
+      assert(json().convertBackward(JSON.stringify(`abc`))).to.haveProperties({result: `abc`});
     });
 
     should(`parse numbers correctly`, () => {
@@ -27,26 +27,26 @@ test('grammar.human.Json', () => {
     });
 
     should(`parse lists correctly`, () => {
-      assert(json().convertBackward(JSON.stringify([1.23, 'test']))).to.haveProperties({
-        result: arrayThat().haveExactElements([1.23, 'test']),
+      assert(json().convertBackward(JSON.stringify([1.23, `test`]))).to.haveProperties({
+        result: arrayThat().haveExactElements([1.23, `test`]),
       });
     });
 
     should(`parse objects correctly`, () => {
-      assert(json().convertBackward(JSON.stringify({a: 1, b: 'b'}))).to.haveProperties({
+      assert(json().convertBackward(JSON.stringify({a: 1, b: `b`}))).to.haveProperties({
         result: objectThat<Record<string, unknown>>().haveProperties({
-            a: 1,
-            b: 'b',
-          }),
+          a: 1,
+          b: `b`,
+        }),
       });
     });
 
     should(`fail if parsing failed`, () => {
-      assert(json().convertBackward('')).to.haveProperties({success: false});
+      assert(json().convertBackward(``)).to.haveProperties({success: false});
     });
   });
 
-  test('convertForward', () => {
+  test(`convertForward`, () => {
     should(`render undefined correctly`, () => {
       assert(json().convertForward(undefined)).to
           .haveProperties({result: JSON.stringify(undefined)});
@@ -61,7 +61,7 @@ test('grammar.human.Json', () => {
     });
 
     should(`render strings correctly`, () => {
-      assert(json().convertForward('abc')).to.haveProperties({result: JSON.stringify('abc')});
+      assert(json().convertForward(`abc`)).to.haveProperties({result: JSON.stringify(`abc`)});
     });
 
     should(`render numbers correctly`, () => {
@@ -69,13 +69,13 @@ test('grammar.human.Json', () => {
     });
 
     should(`render lists correctly`, () => {
-      assert(json().convertForward([1.23, 'test'])).to
-          .haveProperties({result: JSON.stringify([1.23, 'test'])});
+      assert(json().convertForward([1.23, `test`])).to
+          .haveProperties({result: JSON.stringify([1.23, `test`])});
     });
 
     should(`render objects correctly`, () => {
-      assert(json().convertForward({a: 1, b: 'b'})).to
-          .haveProperties({result: JSON.stringify({a: 1, b: 'b'})});
+      assert(json().convertForward({a: 1, b: `b`})).to
+          .haveProperties({result: JSON.stringify({a: 1, b: `b`})});
     });
 
     should(`fail if object cannot be stringified`, () => {

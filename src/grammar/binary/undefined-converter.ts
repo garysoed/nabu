@@ -1,8 +1,8 @@
-import { Result } from '../../base/result';
 import { BinaryConverter } from './binary-converter';
 import { BinaryData } from './binary-data';
 import { DataType } from './data-type';
 import { DataTypeConverter } from './data-type-converter';
+import { Result } from '../../base/result';
 
 /**
  * Converts undefined to uint8array
@@ -26,7 +26,7 @@ export class UndefinedConverter implements BinaryConverter<undefined> {
     return {result: {data: undefined, length: typeResult.result.length}, success: true};
   }
 
-  convertForward(input: undefined): Result<Uint8Array> {
+  convertForward(): Result<Uint8Array> {
     const dataTypeResult = this.dataTypeConverter_.convertForward(DataType.UNDEFINED);
     if (!dataTypeResult.success) {
       return {success: false};

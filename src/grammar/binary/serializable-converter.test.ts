@@ -6,7 +6,7 @@ import { BinaryData } from './binary-data';
 import { SerializableConverter } from './serializable-converter';
 
 
-test('grammar.binary.SerializableConverter', init => {
+test(`grammar.binary.SerializableConverter`, init => {
   const _ = init(() => {
     const converter = new SerializableConverter();
     return {converter};
@@ -42,7 +42,7 @@ test('grammar.binary.SerializableConverter', init => {
   });
 
   should(`convert forward and backward string correctly`, () => {
-    const text = 'Hello W0rld 🤣';
+    const text = `Hello W0rld 🤣`;
     const forwardResult = (_.converter.convertForward(text) as SuccessResult<Uint8Array>).result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
       result: objectThat<BinaryData<unknown>>().haveProperties({data: text}),

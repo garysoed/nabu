@@ -51,15 +51,15 @@ export class SerializableConverter implements BinaryConverter<unknown> {
       return this.nullConverter.convertForward(value);
     }
 
-    if (typeof value === 'boolean') {
+    if (typeof value === `boolean`) {
       return this.booleanConverter.convertForward(value);
     }
 
-    if (typeof value === 'number') {
+    if (typeof value === `number`) {
       return this.numberConverter.convertForward(value);
     }
 
-    if (typeof value === 'string') {
+    if (typeof value === `string`) {
       return this.stringConverter.convertForward(value);
     }
 

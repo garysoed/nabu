@@ -1,7 +1,7 @@
 import { Converter } from '../../base/converter';
 import { Result } from '../../base/result';
 
-const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+const LETTERS = `ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/`;
 const REVERSE_MAP = new Map<string, number>();
 for (let i = 0; i < LETTERS.length; i++) {
   REVERSE_MAP.set(LETTERS[i], i);
@@ -18,8 +18,8 @@ export class Base64 implements Converter<Uint8Array, string> {
 
       const item0 = REVERSE_MAP.get(letter0);
       const item1 = REVERSE_MAP.get(letter1);
-      const item2 = letter2 === '=' ? 0 : REVERSE_MAP.get(letter2);
-      const item3 = letter3 === '=' ? 0 : REVERSE_MAP.get(letter3);
+      const item2 = letter2 === `=` ? 0 : REVERSE_MAP.get(letter2);
+      const item3 = letter3 === `=` ? 0 : REVERSE_MAP.get(letter3);
 
       if (item3 === undefined || item2 === undefined || item1 === undefined
           || item0 === undefined) {
@@ -37,11 +37,11 @@ export class Base64 implements Converter<Uint8Array, string> {
       const digit2 = code & 0x0000FF;
 
       array.push(digit0);
-      if (letter2 !== '=') {
+      if (letter2 !== `=`) {
         array.push(digit1);
       }
 
-      if (letter3 !== '=') {
+      if (letter3 !== `=`) {
         array.push(digit2);
       }
     }
@@ -70,18 +70,18 @@ export class Base64 implements Converter<Uint8Array, string> {
       letters.push(LETTERS[letter1]);
 
       if (item1 === undefined) {
-        letters.push('=');
+        letters.push(`=`);
       } else {
         letters.push(LETTERS[letter2]);
       }
 
       if (item2 === undefined) {
-        letters.push('=');
+        letters.push(`=`);
       } else {
         letters.push(LETTERS[letter3]);
       }
     }
 
-    return {result: letters.join(''), success: true};
+    return {result: letters.join(``), success: true};
   }
 }

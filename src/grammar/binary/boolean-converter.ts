@@ -1,8 +1,8 @@
-import { Result } from '../../base/result';
 import { BinaryConverter } from './binary-converter';
 import { BinaryData } from './binary-data';
 import { DataType } from './data-type';
 import { DataTypeConverter } from './data-type-converter';
+import { Result } from '../../base/result';
 
 /**
  * Converts boolean to uint8array

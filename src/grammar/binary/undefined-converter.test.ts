@@ -7,7 +7,7 @@ import { DataType } from './data-type';
 import { UndefinedConverter } from './undefined-converter';
 
 
-test('grammar.binary.UndefinedConverter', init => {
+test(`grammar.binary.UndefinedConverter`, init => {
   const _ = init(() => {
     const converter = new UndefinedConverter();
     return {converter};
@@ -21,7 +21,7 @@ test('grammar.binary.UndefinedConverter', init => {
     });
   });
 
-  test('convertBackward', () => {
+  test(`convertBackward`, () => {
     should(`convert correctly`, () => {
       const dataType = DataType.UNDEFINED;
       const array = Uint8Array.from([dataType]);
@@ -42,7 +42,7 @@ test('grammar.binary.UndefinedConverter', init => {
     });
   });
 
-  test('convertForward', () => {
+  test(`convertForward`, () => {
     should(`convert correctly`, () => {
       assert(_.converter.convertForward(undefined)).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([DataType.UNDEFINED]),

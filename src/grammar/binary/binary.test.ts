@@ -4,7 +4,7 @@ import { SuccessResult } from '../../base/result';
 
 import { binary } from './binary';
 
-test('grammar.binary.Binary', () => {
+test(`grammar.binary.Binary`, () => {
   should(`convert forward and backward undefined correctly`, () => {
     const forwardResult = (binary().convertForward(undefined) as SuccessResult<string>).result;
     assert(binary().convertBackward(forwardResult)).to.haveProperties({result: undefined});
@@ -21,8 +21,8 @@ test('grammar.binary.Binary', () => {
   });
 
   should(`convert forward and backward strings correctly`, () => {
-    const forwardResult = (binary().convertForward('hello') as SuccessResult<string>).result;
-    assert(binary().convertBackward(forwardResult)).to.haveProperties({result: 'hello'});
+    const forwardResult = (binary().convertForward(`hello`) as SuccessResult<string>).result;
+    assert(binary().convertBackward(forwardResult)).to.haveProperties({result: `hello`});
   });
 
   should(`convert forward and backward numbers correctly`, () => {
@@ -31,9 +31,9 @@ test('grammar.binary.Binary', () => {
   });
 
   should(`convert forward and backward lists correctly`, () => {
-    const forwardResult = (binary().convertForward([1.23, 'test']) as SuccessResult<string>).result;
+    const forwardResult = (binary().convertForward([1.23, `test`]) as SuccessResult<string>).result;
     assert(binary().convertBackward(forwardResult)).to.haveProperties({
-      result: arrayThat().haveExactElements([1.23, 'test']),
+      result: arrayThat().haveExactElements([1.23, `test`]),
     });
   });
 

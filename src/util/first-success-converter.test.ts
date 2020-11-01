@@ -38,23 +38,23 @@ class IntegerParseConverter implements Converter<number, string> {
   }
 }
 
-test('util.FirstSuccessConverter', () => {
-  test('convertBackward', init => {
+test(`util.FirstSuccessConverter`, () => {
+  test(`convertBackward`, init => {
     const _ = init(() => {
       const converter = firstSuccess(new IntegerParseConverter(), new FloatParseConverter());
       return {converter};
     });
 
     should(`return the first successful conversion`, () => {
-      assert(strict(_.converter).convertBackward('1.23')).to.equal(1);
+      assert(strict(_.converter).convertBackward(`1.23`)).to.equal(1);
     });
 
     should(`fail if none of the converters are successful`, () => {
-      assert(_.converter.convertBackward('abc')).to.haveProperties({success: false});
+      assert(_.converter.convertBackward(`abc`)).to.haveProperties({success: false});
     });
   });
 
-  test('convertForward', init => {
+  test(`convertForward`, init => {
     const _ = init(() => {
       const converter = firstSuccess(
           reverse(new IntegerParseConverter()),
@@ -64,11 +64,11 @@ test('util.FirstSuccessConverter', () => {
     });
 
     should(`return the first successful conversion`, () => {
-      assert(strict(_.converter).convertForward('1.23')).to.equal(1);
+      assert(strict(_.converter).convertForward(`1.23`)).to.equal(1);
     });
 
     should(`fail if none of the converters are successful`, () => {
-      assert(_.converter.convertForward('abc')).to.haveProperties({success: false});
+      assert(_.converter.convertForward(`abc`)).to.haveProperties({success: false});
     });
   });
 });

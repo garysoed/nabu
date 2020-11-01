@@ -2,52 +2,52 @@ import { arrayThat, assert, objectThat, should, test } from 'gs-testing';
 
 import { parse } from './parser';
 
-test('grammar.human.parser', () => {
-  test('parse', () => {
+test(`grammar.human.parser`, () => {
+  test(`parse`, () => {
     should(`parse null correctly`, () => {
-      assert(parse('NULL')).to.beNull();
-      assert(parse('null')).to.beNull();
+      assert(parse(`NULL`)).to.beNull();
+      assert(parse(`null`)).to.beNull();
     });
 
     should(`parse undefined correctly`, () => {
-      assert(parse('undefined')).toNot.beDefined();
+      assert(parse(`undefined`)).toNot.beDefined();
     });
 
     should(`parse booleans correctly`, () => {
-      assert(parse('TRUE')).to.equal(true);
-      assert(parse('true')).to.equal(true);
-      assert(parse('T')).to.equal(true);
-      assert(parse('FALSE')).to.equal(false);
-      assert(parse('false')).to.equal(false);
-      assert(parse('F')).to.equal(false);
+      assert(parse(`TRUE`)).to.equal(true);
+      assert(parse(`true`)).to.equal(true);
+      assert(parse(`T`)).to.equal(true);
+      assert(parse(`FALSE`)).to.equal(false);
+      assert(parse(`false`)).to.equal(false);
+      assert(parse(`F`)).to.equal(false);
     });
 
     should(`parse strings correctly`, () => {
-      assert(parse(`'b"a"c'`)).to.equal('b"a"c');
+      assert(parse(`'b"a"c'`)).to.equal(`b"a"c`);
     });
 
     should(`parse numbers correctly`, () => {
       // Positive numbers
-      assert(parse('123')).to.equal(123);
-      assert(parse('123.456')).to.equal(123.456);
-      assert(parse('123.001')).to.equal(123.001);
-      assert(parse('0.001')).to.equal(0.001);
-      assert(parse('.001')).to.equal(0.001);
+      assert(parse(`123`)).to.equal(123);
+      assert(parse(`123.456`)).to.equal(123.456);
+      assert(parse(`123.001`)).to.equal(123.001);
+      assert(parse(`0.001`)).to.equal(0.001);
+      assert(parse(`.001`)).to.equal(0.001);
 
       // Negative numbers
-      assert(parse('-123')).to.equal(-123);
-      assert(parse('-123.456')).to.equal(-123.456);
-      assert(parse('-123.001')).to.equal(-123.001);
-      assert(parse('-0.001')).to.equal(-0.001);
-      assert(parse('-.001')).to.equal(-0.001);
+      assert(parse(`-123`)).to.equal(-123);
+      assert(parse(`-123.456`)).to.equal(-123.456);
+      assert(parse(`-123.001`)).to.equal(-123.001);
+      assert(parse(`-0.001`)).to.equal(-0.001);
+      assert(parse(`-.001`)).to.equal(-0.001);
 
       // Zero
-      assert(parse('0')).to.equal(0);
+      assert(parse(`0`)).to.equal(0);
 
       // Non decimals
-      assert(parse('0xbeef')).to.equal(0xBEEF);
-      assert(parse('0o1234')).to.equal(0o1234);
-      assert(parse('0b1010')).to.equal(0b1010);
+      assert(parse(`0xbeef`)).to.equal(0xBEEF);
+      assert(parse(`0o1234`)).to.equal(0o1234);
+      assert(parse(`0b1010`)).to.equal(0b1010);
     });
 
     should(`parse lists correctly`, () => {
@@ -60,7 +60,7 @@ test('grammar.human.parser', () => {
       `;
 
       assert(parse(INPUT) as any[]).to.haveExactElements([
-        'string',
+        `string`,
         123,
         arrayThat().haveExactElements([1, 2, 3]),
       ]);
@@ -85,7 +85,7 @@ test('grammar.human.parser', () => {
       `;
       assert(parse(INPUT)).to.equal(objectThat().haveProperties({
         list: arrayThat().haveExactElements([
-          'string',
+          `string`,
           0.234,
           0.002,
         ]),
@@ -93,7 +93,7 @@ test('grammar.human.parser', () => {
         object: objectThat().haveProperties({
           decimal: 123.456,
           number: 123,
-          string: 'string',
+          string: `string`,
         }),
         undefined,
       }));

@@ -8,14 +8,14 @@ import { ListConverter } from './list-converter';
 import { SerializableConverter } from './serializable-converter';
 
 
-test('grammar.binary.ListConverter', init => {
+test(`grammar.binary.ListConverter`, init => {
   const _ = init(() => {
     const converter = new ListConverter(new SerializableConverter());
     return {converter};
   });
 
   should(`convert forward and backward correctly`, () => {
-    const list = [undefined, null, true, 1.23, 'abc', ['list'], {a: 1}];
+    const list = [undefined, null, true, 1.23, `abc`, [`list`], {a: 1}];
     const forwardResult = (_.converter.convertForward(list) as SuccessResult<Uint8Array>).result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
       result: objectThat<BinaryData<readonly unknown[]>>().haveProperties({
@@ -24,15 +24,15 @@ test('grammar.binary.ListConverter', init => {
           null,
           true,
           1.23,
-          'abc',
-          arrayThat<string>().haveExactElements(['list']),
+          `abc`,
+          arrayThat<string>().haveExactElements([`list`]),
           objectThat<Record<string, unknown>>().haveProperties({a: 1}),
         ]),
       }),
     });
   });
 
-  test('convertBackward', () => {
+  test(`convertBackward`, () => {
     should(`convert correctly`, () => {
       const array = Uint8Array.from([
         DataType.LIST,
@@ -103,7 +103,7 @@ test('grammar.binary.ListConverter', init => {
     });
   });
 
-  test('convertForward', () => {
+  test(`convertForward`, () => {
     should(`convert correctly`, () => {
       assert(_.converter.convertForward([1, true])).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([

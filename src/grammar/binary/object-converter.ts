@@ -62,7 +62,7 @@ export class ObjectConverter implements BinaryConverter<Record<string, unknown>>
     this.objectEntryConverter_ = new ObjectEntryConverter(serializableConverter);
   }
 
-  convertBackward(value: Uint8Array): Result<BinaryData<{}>> {
+  convertBackward(value: Uint8Array): Result<BinaryData<Record<string, unknown>>> {
     const typeResult = this.dataTypeConverter_.convertBackward(value);
     if (!typeResult.success) {
       return {success: false};
