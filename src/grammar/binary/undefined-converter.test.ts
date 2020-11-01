@@ -7,22 +7,22 @@ import { DataType } from './data-type';
 import { UndefinedConverter } from './undefined-converter';
 
 
-test(`grammar.binary.UndefinedConverter`, init => {
+test('grammar.binary.UndefinedConverter', init => {
   const _ = init(() => {
     const converter = new UndefinedConverter();
     return {converter};
   });
 
-  should(`convert forward and backwards correctly`, () => {
-    const forwardResult = (_.converter.convertForward(undefined) as SuccessResult<Uint8Array>)
+  should('convert forward and backwards correctly', () => {
+    const forwardResult = (_.converter.convertForward() as SuccessResult<Uint8Array>)
         .result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
       result: objectThat<BinaryData<undefined>>().haveProperties({data: undefined}),
     });
   });
 
-  test(`convertBackward`, () => {
-    should(`convert correctly`, () => {
+  test('convertBackward', () => {
+    should('convert correctly', () => {
       const dataType = DataType.UNDEFINED;
       const array = Uint8Array.from([dataType]);
       assert(_.converter.convertBackward(array)).to.haveProperties({
@@ -30,21 +30,21 @@ test(`grammar.binary.UndefinedConverter`, init => {
       });
     });
 
-    should(`fail if the type is not UNDEFINED`, () => {
+    should('fail if the type is not UNDEFINED', () => {
       const dataType = DataType.LIST;
       const array = Uint8Array.from([dataType]);
       assert(_.converter.convertBackward(array)).to.haveProperties({success: false});
     });
 
-    should(`fail if the type conversion failed`, () => {
+    should('fail if the type conversion failed', () => {
       const array = Uint8Array.from([200]);
       assert(_.converter.convertBackward(array)).to.haveProperties({success: false});
     });
   });
 
-  test(`convertForward`, () => {
-    should(`convert correctly`, () => {
-      assert(_.converter.convertForward(undefined)).to.haveProperties({
+  test('convertForward', () => {
+    should('convert correctly', () => {
+      assert(_.converter.convertForward()).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([DataType.UNDEFINED]),
       });
     });

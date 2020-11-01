@@ -22,34 +22,34 @@ class TestConverter implements Converter<number, string> {
   }
 }
 
-test(`util.StrictConverter`, init => {
-  test(`convertBackward`, () => {
+test('util.StrictConverter', init => {
+  test('convertBackward', () => {
     const _ = init(() => {
       const converter = strict(new TestConverter());
       return {converter};
     });
 
-    should(`return the result if successful`, () => {
-      assert(_.converter.convertBackward(`1.23`)).to.equal(1.23);
+    should('return the result if successful', () => {
+      assert(_.converter.convertBackward('1.23')).to.equal(1.23);
     });
 
-    should(`throw error if fail`, () => {
-      assert(() => _.converter.convertBackward(`abc`)).to.throwErrorWithMessage(/Conversion of/);
+    should('throw error if fail', () => {
+      assert(() => _.converter.convertBackward('abc')).to.throwErrorWithMessage(/Conversion of/);
     });
   });
 
-  test(`convertForward`, init => {
+  test('convertForward', init => {
     const _ = init(() => {
       const converter = strict(reverse(new TestConverter()));
       return {converter};
     });
 
-    should(`return the result if successful`, () => {
-      assert(_.converter.convertForward(`1.23`)).to.equal(1.23);
+    should('return the result if successful', () => {
+      assert(_.converter.convertForward('1.23')).to.equal(1.23);
     });
 
-    should(`throw error if fail`, () => {
-      assert(() => _.converter.convertForward(`abc`)).to.throwErrorWithMessage(/Conversion of/);
+    should('throw error if fail', () => {
+      assert(() => _.converter.convertForward('abc')).to.throwErrorWithMessage(/Conversion of/);
     });
   });
 });

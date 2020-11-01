@@ -5,27 +5,27 @@ import { SuccessResult } from '../../base/result';
 import { assert, iterableThat, numberThat, objectThat, should, test } from 'gs-testing';
 
 
-test(`grammar.binary.NumberConverter`, init => {
+test('grammar.binary.NumberConverter', init => {
   const _ = init(() => {
     const converter = new NumberConverter();
     return {converter};
   });
 
-  should(`convert forward and backwards -127 correctly`, () => {
+  should('convert forward and backwards -127 correctly', () => {
     const forwardResult = (_.converter.convertForward(-127) as SuccessResult<Uint8Array>).result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
       result: objectThat<BinaryData<number>>().haveProperties({data: -127}),
     });
   });
 
-  should(`convert forward and backwards -32768 correctly`, () => {
+  should('convert forward and backwards -32768 correctly', () => {
     const forwardResult = (_.converter.convertForward(-0x8000) as SuccessResult<Uint8Array>).result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
       result: objectThat<BinaryData<number>>().haveProperties({data: -0x8000}),
     });
   });
 
-  should(`convert forward and backwards -2147483648 correctly`, () => {
+  should('convert forward and backwards -2147483648 correctly', () => {
     const forwardResult = (_.converter.convertForward(-0x80000000) as SuccessResult<Uint8Array>)
         .result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
@@ -33,7 +33,7 @@ test(`grammar.binary.NumberConverter`, init => {
     });
   });
 
-  should(`convert forward and backwards -1E38 correctly`, () => {
+  should('convert forward and backwards -1E38 correctly', () => {
     const forwardResult = (_.converter.convertForward(-3E38) as SuccessResult<Uint8Array>)
         .result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
@@ -43,7 +43,7 @@ test(`grammar.binary.NumberConverter`, init => {
     });
   });
 
-  should(`convert forward and backwards -4E38 correctly`, () => {
+  should('convert forward and backwards -4E38 correctly', () => {
     const forwardResult = (_.converter.convertForward(-4E38) as SuccessResult<Uint8Array>)
         .result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
@@ -51,7 +51,7 @@ test(`grammar.binary.NumberConverter`, init => {
     });
   });
 
-  should(`convert forward and backwards -1.5 correctly`, () => {
+  should('convert forward and backwards -1.5 correctly', () => {
     const forwardResult = (_.converter.convertForward(-1.5) as SuccessResult<Uint8Array>)
         .result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
@@ -59,21 +59,21 @@ test(`grammar.binary.NumberConverter`, init => {
     });
   });
 
-  should(`convert forward and backwards 255 correctly`, () => {
+  should('convert forward and backwards 255 correctly', () => {
     const forwardResult = (_.converter.convertForward(255) as SuccessResult<Uint8Array>).result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
       result: objectThat<BinaryData<number>>().haveProperties({data: 255}),
     });
   });
 
-  should(`convert forward and backwards 65535 correctly`, () => {
+  should('convert forward and backwards 65535 correctly', () => {
     const forwardResult = (_.converter.convertForward(0xFFFF) as SuccessResult<Uint8Array>).result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
       result: objectThat<BinaryData<number>>().haveProperties({data: 0xFFFF}),
     });
   });
 
-  should(`convert forward and backwards 4294967295 correctly`, () => {
+  should('convert forward and backwards 4294967295 correctly', () => {
     const forwardResult = (_.converter.convertForward(0xFFFFFFFF) as SuccessResult<Uint8Array>)
         .result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
@@ -81,7 +81,7 @@ test(`grammar.binary.NumberConverter`, init => {
     });
   });
 
-  should(`convert forward and backwards 4E38 correctly`, () => {
+  should('convert forward and backwards 4E38 correctly', () => {
     const forwardResult = (_.converter.convertForward(4E38) as SuccessResult<Uint8Array>)
         .result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
@@ -89,7 +89,7 @@ test(`grammar.binary.NumberConverter`, init => {
     });
   });
 
-  should(`convert forward and backwards 1.5 correctly`, () => {
+  should('convert forward and backwards 1.5 correctly', () => {
     const forwardResult = (_.converter.convertForward(1.5) as SuccessResult<Uint8Array>)
         .result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
@@ -97,8 +97,8 @@ test(`grammar.binary.NumberConverter`, init => {
     });
   });
 
-  test(`convertBackward`, () => {
-    should(`convert float64 correctly`, () => {
+  test('convertBackward', () => {
+    should('convert float64 correctly', () => {
       const array = Uint8Array.from([
         DataType.FLOAT64,
         177,
@@ -115,7 +115,7 @@ test(`grammar.binary.NumberConverter`, init => {
       });
     });
 
-    should(`convert int16 correctly`, () => {
+    should('convert int16 correctly', () => {
       const array = Uint8Array.from([
         DataType.INT16,
         0,
@@ -126,7 +126,7 @@ test(`grammar.binary.NumberConverter`, init => {
       });
     });
 
-    should(`convert int32 correctly`, () => {
+    should('convert int32 correctly', () => {
       const array = Uint8Array.from([
         DataType.INT32,
         0,
@@ -139,7 +139,7 @@ test(`grammar.binary.NumberConverter`, init => {
       });
     });
 
-    should(`convert int8 correctly`, () => {
+    should('convert int8 correctly', () => {
       const array = Uint8Array.from([
         DataType.INT8,
         129,
@@ -149,7 +149,7 @@ test(`grammar.binary.NumberConverter`, init => {
       });
     });
 
-    should(`convert uint16 correctly`, () => {
+    should('convert uint16 correctly', () => {
       const array = Uint8Array.from([
         DataType.UINT16,
         255,
@@ -160,7 +160,7 @@ test(`grammar.binary.NumberConverter`, init => {
       });
     });
 
-    should(`convert uint32 correctly`, () => {
+    should('convert uint32 correctly', () => {
       const array = Uint8Array.from([
         DataType.UINT32,
         255,
@@ -173,7 +173,7 @@ test(`grammar.binary.NumberConverter`, init => {
       });
     });
 
-    should(`convert uint8 correctly`, () => {
+    should('convert uint8 correctly', () => {
       const array = Uint8Array.from([
         DataType.UINT8,
         255,
@@ -183,19 +183,19 @@ test(`grammar.binary.NumberConverter`, init => {
       });
     });
 
-    should(`fail if the type is not a number type`, () => {
+    should('fail if the type is not a number type', () => {
       const array = Uint8Array.from([DataType.NULL, 255]);
       assert(_.converter.convertBackward(array)).to.haveProperties({success: false});
     });
 
-    should(`fail if the type conversion failed`, () => {
+    should('fail if the type conversion failed', () => {
       const array = Uint8Array.from([200]);
       assert(_.converter.convertBackward(array)).to.haveProperties({success: false});
     });
   });
 
-  test(`convertForward`, () => {
-    should(`convert -127 correctly`, () => {
+  test('convertForward', () => {
+    should('convert -127 correctly', () => {
       assert(_.converter.convertForward(-127)).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([
           DataType.INT8,
@@ -204,7 +204,7 @@ test(`grammar.binary.NumberConverter`, init => {
       });
     });
 
-    should(`convert -32768 correctly`, () => {
+    should('convert -32768 correctly', () => {
       assert(_.converter.convertForward(-0x8000)).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([
           DataType.INT16,
@@ -214,7 +214,7 @@ test(`grammar.binary.NumberConverter`, init => {
       });
     });
 
-    should(`convert -2147483648 correctly`, () => {
+    should('convert -2147483648 correctly', () => {
       assert(_.converter.convertForward(-0x80000000)).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([
           DataType.INT32,
@@ -226,7 +226,7 @@ test(`grammar.binary.NumberConverter`, init => {
       });
     });
 
-    should(`convert -4E38 correctly`, () => {
+    should('convert -4E38 correctly', () => {
       assert(_.converter.convertForward(-4E38)).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([
           DataType.FLOAT64,
@@ -242,7 +242,7 @@ test(`grammar.binary.NumberConverter`, init => {
       });
     });
 
-    should(`convert -1.5 correctly`, () => {
+    should('convert -1.5 correctly', () => {
       assert(_.converter.convertForward(-1.5)).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([
           DataType.FLOAT64,
@@ -258,7 +258,7 @@ test(`grammar.binary.NumberConverter`, init => {
       });
     });
 
-    should(`convert 255 correctly`, () => {
+    should('convert 255 correctly', () => {
       assert(_.converter.convertForward(255)).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([
           DataType.UINT8,
@@ -267,7 +267,7 @@ test(`grammar.binary.NumberConverter`, init => {
       });
     });
 
-    should(`convert 65535 correctly`, () => {
+    should('convert 65535 correctly', () => {
       assert(_.converter.convertForward(0xFFFF)).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([
           DataType.UINT16,
@@ -277,7 +277,7 @@ test(`grammar.binary.NumberConverter`, init => {
       });
     });
 
-    should(`convert 4294967295 correctly`, () => {
+    should('convert 4294967295 correctly', () => {
       assert(_.converter.convertForward(0xFFFFFFFF)).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([
           DataType.UINT32,
@@ -289,7 +289,7 @@ test(`grammar.binary.NumberConverter`, init => {
       });
     });
 
-    should(`convert 4E38 correctly`, () => {
+    should('convert 4E38 correctly', () => {
       assert(_.converter.convertForward(4E38)).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([
           DataType.FLOAT64,
@@ -305,7 +305,7 @@ test(`grammar.binary.NumberConverter`, init => {
       });
     });
 
-    should(`convert 1.5 correctly`, () => {
+    should('convert 1.5 correctly', () => {
       assert(_.converter.convertForward(1.5)).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([
           DataType.FLOAT64,

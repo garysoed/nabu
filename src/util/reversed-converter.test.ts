@@ -15,17 +15,17 @@ class ForwardOnlyConverter implements Converter<unknown, unknown> {
   }
 }
 
-test(`util.ReversedConverter`, () => {
-  test(`convertBackward`, () => {
-    should(`convert correctly`, () => {
+test('util.ReversedConverter', () => {
+  test('convertBackward', () => {
+    should('convert correctly', () => {
       const converter = reverse(new ForwardOnlyConverter());
       const obj = {};
       assert(converter.convertBackward(obj)).to.haveProperties({result: obj});
     });
   });
 
-  test(`convertForward`, () => {
-    should(`convert correctly`, () => {
+  test('convertForward', () => {
+    should('convert correctly', () => {
       const converter = reverse(new ForwardOnlyConverter());
       assert(converter.convertForward({})).to.haveProperties({success: false});
     });

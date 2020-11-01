@@ -1,13 +1,13 @@
 export function render(serializable: unknown): string {
   if (serializable === undefined) {
-    return `undefined`;
+    return 'undefined';
   } else if (serializable === null) {
-    return `null`;
-  } else if (typeof serializable === `boolean`) {
+    return 'null';
+  } else if (typeof serializable === 'boolean') {
     return renderBoolean(serializable);
-  } else if (typeof serializable === `number`) {
+  } else if (typeof serializable === 'number') {
     return `${serializable}`;
-  } else if (typeof serializable === `string`) {
+  } else if (typeof serializable === 'string') {
     return `'${serializable}'`;
   } else if (serializable instanceof Array) {
     return renderArray(serializable);
@@ -19,11 +19,11 @@ export function render(serializable: unknown): string {
 }
 
 function renderArray(value: readonly unknown[]): string {
-  return `[${value.map(item => render(item)).join(` `)}]`;
+  return `[${value.map(item => render(item)).join(' ')}]`;
 }
 
 function renderBoolean(value: boolean): string {
-  return value ? `T` : `F`;
+  return value ? 'T' : 'F';
 }
 
 function renderObject<O extends Record<string, unknown>>(value: O): string {
@@ -32,5 +32,5 @@ function renderObject<O extends Record<string, unknown>>(value: O): string {
     renderedItems.push(`${key}: ${render(value[key])}`);
   }
 
-  return `{${renderedItems.join(`, `)}}`;
+  return `{${renderedItems.join(', ')}}`;
 }

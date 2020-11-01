@@ -7,13 +7,13 @@ import { assert, iterableThat, objectThat, should, test } from 'gs-testing';
 
 
 
-test(`grammar.binary.DataTypeConverter`, init => {
+test('grammar.binary.DataTypeConverter', init => {
   const _ = init(() => {
     const converter = new DataTypeConverter();
     return {converter};
   });
 
-  should(`convert forward and backwards correctly`, () => {
+  should('convert forward and backwards correctly', () => {
     const dataType = DataType.LIST;
     const forwardResult = (_.converter.convertForward(dataType) as SuccessResult<Uint8Array>)
         .result;
@@ -22,8 +22,8 @@ test(`grammar.binary.DataTypeConverter`, init => {
     });
   });
 
-  test(`convertBackward`, () => {
-    should(`convert correctly`, () => {
+  test('convertBackward', () => {
+    should('convert correctly', () => {
       const dataType = DataType.LIST;
       const array = Uint8Array.from([dataType]);
       assert(_.converter.convertBackward(array)).to.haveProperties({
@@ -31,14 +31,14 @@ test(`grammar.binary.DataTypeConverter`, init => {
       });
     });
 
-    should(`fail if not a data type`, () => {
+    should('fail if not a data type', () => {
       const array = Uint8Array.from([200]);
       assert(_.converter.convertBackward(array)).to.haveProperties({success: false});
     });
   });
 
-  test(`convertForward`, () => {
-    should(`convert correctly`, () => {
+  test('convertForward', () => {
+    should('convert correctly', () => {
       const dataType = DataType.LIST;
       assert(_.converter.convertForward(dataType)).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([dataType]),

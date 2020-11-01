@@ -44,22 +44,22 @@ export class SerializableConverter implements BinaryConverter<unknown> {
 
   convertForward(value: unknown): Result<Uint8Array> {
     if (value === undefined) {
-      return this.undefinedConverter.convertForward(value);
+      return this.undefinedConverter.convertForward();
     }
 
     if (value === null) {
       return this.nullConverter.convertForward(value);
     }
 
-    if (typeof value === `boolean`) {
+    if (typeof value === 'boolean') {
       return this.booleanConverter.convertForward(value);
     }
 
-    if (typeof value === `number`) {
+    if (typeof value === 'number') {
       return this.numberConverter.convertForward(value);
     }
 
-    if (typeof value === `string`) {
+    if (typeof value === 'string') {
       return this.stringConverter.convertForward(value);
     }
 

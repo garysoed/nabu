@@ -7,21 +7,21 @@ import { assert, iterableThat, objectThat, should, test } from 'gs-testing';
 
 
 
-test(`grammar.binary.NullConverter`, init => {
+test('grammar.binary.NullConverter', init => {
   const _ = init(() => {
     const converter = new NullConverter();
     return {converter};
   });
 
-  should(`convert forward and backwards correctly`, () => {
+  should('convert forward and backwards correctly', () => {
     const forwardResult = (_.converter.convertForward(null) as SuccessResult<Uint8Array>).result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
       result: objectThat<BinaryData<null>>().haveProperties({data: null}),
     });
   });
 
-  test(`convertBackward`, () => {
-    should(`convert correctly`, () => {
+  test('convertBackward', () => {
+    should('convert correctly', () => {
       const dataType = DataType.NULL;
       const array = Uint8Array.from([dataType]);
       assert(_.converter.convertBackward(array)).to.haveProperties({
@@ -29,20 +29,20 @@ test(`grammar.binary.NullConverter`, init => {
       });
     });
 
-    should(`fail if the type is not NULL`, () => {
+    should('fail if the type is not NULL', () => {
       const dataType = DataType.LIST;
       const array = Uint8Array.from([dataType]);
       assert(_.converter.convertBackward(array)).to.haveProperties({success: false});
     });
 
-    should(`fail if the type conversion failed`, () => {
+    should('fail if the type conversion failed', () => {
       const array = Uint8Array.from([200]);
       assert(_.converter.convertBackward(array)).to.haveProperties({success: false});
     });
   });
 
-  test(`convertForward`, () => {
-    should(`convert correctly`, () => {
+  test('convertForward', () => {
+    should('convert correctly', () => {
       assert(_.converter.convertForward(null)).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([DataType.NULL]),
       });

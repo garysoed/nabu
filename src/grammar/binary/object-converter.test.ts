@@ -8,20 +8,20 @@ import { ObjectConverter } from './object-converter';
 import { SerializableConverter } from './serializable-converter';
 
 
-test(`grammar.binary.ObjectConverter`, init => {
+test('grammar.binary.ObjectConverter', init => {
   const _ = init(() => {
     const converter = new ObjectConverter(new SerializableConverter());
     return {converter};
   });
 
-  should(`convert forward and backward correctly`, () => {
+  should('convert forward and backward correctly', () => {
     const object = {
       boolean: true,
-      list: [`list`],
+      list: ['list'],
       null: null,
       number: 1.23,
       object: {a: 1},
-      string: `abc`,
+      string: 'abc',
       undefined,
     };
     const forwardResult = (_.converter.convertForward(object) as SuccessResult<Uint8Array>).result;
@@ -29,19 +29,19 @@ test(`grammar.binary.ObjectConverter`, init => {
       result: objectThat<BinaryData<Record<string, unknown>>>().haveProperties({
         data: objectThat<Record<string, unknown>>().haveProperties({
           boolean: true,
-          list: arrayThat<string>().haveExactElements([`list`]),
+          list: arrayThat<string>().haveExactElements(['list']),
           null: null,
           number: 1.23,
           object: objectThat<Record<string, unknown>>().haveProperties({a: 1}),
-          string: `abc`,
+          string: 'abc',
           undefined,
         }),
       }),
     });
   });
 
-  test(`convertBackward`, () => {
-    should(`convert correctly`, () => {
+  test('convertBackward', () => {
+    should('convert correctly', () => {
       const object = Uint8Array.from([
         DataType.OBJECT,
         // length
@@ -78,7 +78,7 @@ test(`grammar.binary.ObjectConverter`, init => {
       });
     });
 
-    should(`fail if one of the entry values cannot be converted`, () => {
+    should('fail if one of the entry values cannot be converted', () => {
       const object = Uint8Array.from([
         DataType.OBJECT,
         // length
@@ -111,7 +111,7 @@ test(`grammar.binary.ObjectConverter`, init => {
       assert(_.converter.convertBackward(object)).to.haveProperties({success: false});
     });
 
-    should(`fail if one of the entry keys cannot be converted`, () => {
+    should('fail if one of the entry keys cannot be converted', () => {
       const object = Uint8Array.from([
         DataType.OBJECT,
         // length
@@ -144,7 +144,7 @@ test(`grammar.binary.ObjectConverter`, init => {
       assert(_.converter.convertBackward(object)).to.haveProperties({success: false});
     });
 
-    should(`fail if the length cannot be converted`, () => {
+    should('fail if the length cannot be converted', () => {
       const object = Uint8Array.from([
         DataType.OBJECT,
         // length
@@ -177,14 +177,14 @@ test(`grammar.binary.ObjectConverter`, init => {
       assert(_.converter.convertBackward(object)).to.haveProperties({success: false});
     });
 
-    should(`fail if the type is not OBJECT`, () => {
+    should('fail if the type is not OBJECT', () => {
       const object = Uint8Array.from([
         DataType.UNDEFINED,
       ]);
       assert(_.converter.convertBackward(object)).to.haveProperties({success: false});
     });
 
-    should(`fail if the type cannot be converted`, () => {
+    should('fail if the type cannot be converted', () => {
       const object = Uint8Array.from([
         200,
         // length
@@ -218,8 +218,8 @@ test(`grammar.binary.ObjectConverter`, init => {
     });
   });
 
-  test(`convertForward`, () => {
-    should(`convert correctly`, () => {
+  test('convertForward', () => {
+    should('convert correctly', () => {
       assert(_.converter.convertForward({a: 1, b: 2})).to.haveProperties({
         result: iterableThat<number, Uint8Array>().startWith([
           DataType.OBJECT,
