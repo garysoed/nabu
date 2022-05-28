@@ -1,8 +1,10 @@
-import { BinaryData } from './binary-data';
-import { DataType } from './data-type';
-import { NumberConverter } from './number-converter';
-import { SuccessResult } from '../../base/result';
-import { assert, iterableThat, numberThat, objectThat, should, test } from 'gs-testing';
+import {assert, iterableThat, numberThat, objectThat, should, test} from 'gs-testing';
+
+import {SuccessResult} from '../../base/result';
+
+import {BinaryData} from './binary-data';
+import {DataType} from './data-type';
+import {NumberConverter} from './number-converter';
 
 
 test('grammar.binary.NumberConverter', init => {

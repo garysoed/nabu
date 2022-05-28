@@ -1,4 +1,4 @@
-import { Converter } from '../base/converter';
+import {Converter} from '../base/converter';
 
 export class StrictConverter<A, B> {
   constructor(private readonly baseConverter: Converter<A, B>) { }

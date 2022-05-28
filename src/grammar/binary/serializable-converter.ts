@@ -1,14 +1,14 @@
-import { Result } from '../../base/result';
+import {Result} from '../../base/result';
 
-import { BinaryConverter } from './binary-converter';
-import { BinaryData } from './binary-data';
-import { BooleanConverter } from './boolean-converter';
-import { ListConverter } from './list-converter';
-import { NullConverter } from './null-converter';
-import { NumberConverter } from './number-converter';
-import { ObjectConverter } from './object-converter';
-import { StringConverter } from './string-converter';
-import { UndefinedConverter } from './undefined-converter';
+import {BinaryConverter} from './binary-converter';
+import {BinaryData} from './binary-data';
+import {BooleanConverter} from './boolean-converter';
+import {ListConverter} from './list-converter';
+import {NullConverter} from './null-converter';
+import {NumberConverter} from './number-converter';
+import {ObjectConverter} from './object-converter';
+import {StringConverter} from './string-converter';
+import {UndefinedConverter} from './undefined-converter';
 
 /**
  * Combines all the different converters.

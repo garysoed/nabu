@@ -1,10 +1,10 @@
-import { BinaryData } from './binary-data';
-import { DataType } from './data-type';
-import { NullConverter } from './null-converter';
-import { SuccessResult } from '../../base/result';
-import { assert, iterableThat, objectThat, should, test } from 'gs-testing';
+import {assert, iterableThat, objectThat, should, test} from 'gs-testing';
 
+import {SuccessResult} from '../../base/result';
 
+import {BinaryData} from './binary-data';
+import {DataType} from './data-type';
+import {NullConverter} from './null-converter';
 
 
 test('grammar.binary.NullConverter', init => {

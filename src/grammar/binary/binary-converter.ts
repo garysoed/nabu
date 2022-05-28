@@ -1,5 +1,6 @@
-import { BinaryData } from './binary-data';
-import { Result } from '../../base/result';
+import {Result} from '../../base/result';
+
+import {BinaryData} from './binary-data';
 
 export interface BinaryConverter<T> {
   convertBackward(value: Uint8Array): Result<BinaryData<T>>;

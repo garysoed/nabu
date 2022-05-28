@@ -1,5 +1,5 @@
-import { Converter } from '../base/converter';
-import { Result } from '../base/result';
+import {Converter} from '../base/converter';
+import {Result} from '../base/result';
 
 class IdentityConverter<T> implements Converter<T, T> {
   convertBackward(value: T): Result<T> {

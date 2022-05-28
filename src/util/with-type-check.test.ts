@@ -1,7 +1,7 @@
-import { assert, should, test } from 'gs-testing';
-import { numberType } from 'gs-types';
+import {assert, should, test} from 'gs-testing';
+import {numberType} from 'gs-types';
 
-import { withTypeCheck } from './with-type-check';
+import {withTypeCheck} from './with-type-check';
 test('@nabu/util/with-type-check', () => {
   test('convertBackward', () => {
     should('convert correctly', () => {

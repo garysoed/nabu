@@ -1,5 +1,5 @@
-import { Converter } from '../base/converter';
-import { Result } from '../base/result';
+import {Converter} from '../base/converter';
+import {Result} from '../base/result';
 
 class ReversedConverter<A, B> implements Converter<B, A> {
   constructor(private readonly base_: Converter<A, B>) {}

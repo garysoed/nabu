@@ -1,11 +1,11 @@
-import { Result } from '../../base/result';
+import {Result} from '../../base/result';
 
-import { BinaryConverter } from './binary-converter';
-import { BinaryData } from './binary-data';
-import { DataType } from './data-type';
-import { DataTypeConverter } from './data-type-converter';
-import { NumberConverter } from './number-converter';
-import { StringConverter } from './string-converter';
+import {BinaryConverter} from './binary-converter';
+import {BinaryData} from './binary-data';
+import {DataType} from './data-type';
+import {DataTypeConverter} from './data-type-converter';
+import {NumberConverter} from './number-converter';
+import {StringConverter} from './string-converter';
 
 class ObjectEntryConverter implements BinaryConverter<[string, unknown]> {
   private readonly stringConverter_: StringConverter = new StringConverter();

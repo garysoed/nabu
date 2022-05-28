@@ -1,9 +1,10 @@
-import { BinaryConverter } from './binary-converter';
-import { BinaryData } from './binary-data';
-import { DataType } from './data-type';
-import { DataTypeConverter } from './data-type-converter';
-import { NumberConverter } from './number-converter';
-import { Result } from '../../base/result';
+import {Result} from '../../base/result';
+
+import {BinaryConverter} from './binary-converter';
+import {BinaryData} from './binary-data';
+import {DataType} from './data-type';
+import {DataTypeConverter} from './data-type-converter';
+import {NumberConverter} from './number-converter';
 
 /**
  * Converts string to uint8array

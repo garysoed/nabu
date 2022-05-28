@@ -1,8 +1,8 @@
-import { Converter } from '../../base/converter';
-import { Result } from '../../base/result';
+import {Converter} from '../../base/converter';
+import {Result} from '../../base/result';
 
-import { Base64 } from './base64';
-import { SerializableConverter } from './serializable-converter';
+import {Base64} from './base64';
+import {SerializableConverter} from './serializable-converter';
 
 class Binary implements Converter<unknown, string> {
   private readonly base64: Base64 = new Base64();

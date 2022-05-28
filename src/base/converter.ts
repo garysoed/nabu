@@ -1,4 +1,4 @@
-import { Result } from './result';
+import {Result} from './result';
 
 export interface Converter<F, T> {
   convertBackward(value: T): Result<F>;

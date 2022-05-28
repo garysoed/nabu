@@ -1,8 +1,9 @@
-import { BinaryConverter } from './binary-converter';
-import { BinaryData } from './binary-data';
-import { DataType } from './data-type';
-import { DataTypeConverter } from './data-type-converter';
-import { Result } from '../../base/result';
+import {Result} from '../../base/result';
+
+import {BinaryConverter} from './binary-converter';
+import {BinaryData} from './binary-data';
+import {DataType} from './data-type';
+import {DataTypeConverter} from './data-type-converter';
 
 /**
  * Converts numbers to uint8array. We don't use float 32 since it tends to lose precision.

@@ -1,5 +1,5 @@
-import { Converter } from '../base/converter';
-import { Result } from '../base/result';
+import {Converter} from '../base/converter';
+import {Result} from '../base/result';
 
 class FirstSuccessConverter<A, B> implements Converter<A, B> {
   constructor(private readonly converters: Array<Converter<A, B>>) { }

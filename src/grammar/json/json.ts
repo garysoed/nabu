@@ -1,5 +1,5 @@
-import { Converter } from '../../base/converter';
-import { Result } from '../../base/result';
+import {Converter} from '../../base/converter';
+import {Result} from '../../base/result';
 
 class Json implements Converter<unknown, string> {
   convertBackward(value: string): Result<unknown> {

@@ -1,8 +1,8 @@
-import { arrayThat, assert, objectThat, should, test } from 'gs-testing';
+import {arrayThat, assert, objectThat, should, test} from 'gs-testing';
 
-import { SuccessResult } from '../../base/result';
+import {SuccessResult} from '../../base/result';
 
-import { human } from './human';
+import {human} from './human';
 
 test('grammar.human.Human', () => {
   test('convertBackward', () => {

@@ -1,9 +1,9 @@
-import { assert, objectThat, should, test } from 'gs-testing';
+import {assert, objectThat, should, test} from 'gs-testing';
 
-import { SuccessResult } from '../../base/result';
+import {SuccessResult} from '../../base/result';
 
-import { BinaryData } from './binary-data';
-import { SerializableConverter } from './serializable-converter';
+import {BinaryData} from './binary-data';
+import {SerializableConverter} from './serializable-converter';
 
 
 test('grammar.binary.SerializableConverter', init => {

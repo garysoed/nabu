@@ -1,7 +1,8 @@
-import { BinaryConverter } from './binary-converter';
-import { BinaryData } from './binary-data';
-import { DataType, isADataType } from './data-type';
-import { Result } from '../../base/result';
+import {Result} from '../../base/result';
+
+import {BinaryConverter} from './binary-converter';
+import {BinaryData} from './binary-data';
+import {DataType, isADataType} from './data-type';
 
 export class DataTypeConverter implements BinaryConverter<DataType> {
   convertBackward(value: Uint8Array): Result<BinaryData<DataType>> {

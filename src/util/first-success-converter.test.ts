@@ -1,11 +1,11 @@
-import { assert, should, test } from 'gs-testing';
+import {assert, should, test} from 'gs-testing';
 
-import { Converter } from '../base/converter';
-import { Result } from '../base/result';
+import {Converter} from '../base/converter';
+import {Result} from '../base/result';
 
-import { firstSuccess } from './first-success-converter';
-import { reverse } from './reversed-converter';
-import { strict } from './strict-converter';
+import {firstSuccess} from './first-success-converter';
+import {reverse} from './reversed-converter';
+import {strict} from './strict-converter';
 
 
 class FloatParseConverter implements Converter<number, string> {

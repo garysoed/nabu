@@ -1,5 +1,5 @@
-import { Converter } from '../base/converter';
-import { Result } from '../base/result';
+import {Converter} from '../base/converter';
+import {Result} from '../base/result';
 
 class ComposedConverter<A, B> implements Converter<A, B> {
   private readonly converters_: Array<Converter<unknown, unknown>>;

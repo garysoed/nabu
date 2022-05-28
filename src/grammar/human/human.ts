@@ -1,8 +1,8 @@
-import { Converter } from '../../base/converter';
-import { Result } from '../../base/result';
+import {Converter} from '../../base/converter';
+import {Result} from '../../base/result';
 
-import { parse } from './parser';
-import { render } from './renderer';
+import {parse} from './parser';
+import {render} from './renderer';
 
 class Human implements Converter<unknown, string> {
   convertBackward(value: string): Result<unknown> {

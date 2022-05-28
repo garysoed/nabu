@@ -1,7 +1,7 @@
-import { Type } from 'gs-types';
+import {Type} from 'gs-types';
 
-import { Converter } from '../base/converter';
-import { Result } from '../base/result';
+import {Converter} from '../base/converter';
+import {Result} from '../base/result';
 
 class WithTypeCheckConverter<T> implements Converter<unknown, T> {
   constructor(private readonly type: Type<T>) { }

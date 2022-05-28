@@ -1,5 +1,5 @@
-import { Converter } from '../../base/converter';
-import { Result } from '../../base/result';
+import {Converter} from '../../base/converter';
+import {Result} from '../../base/result';
 
 const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 const REVERSE_MAP = new Map<string, number>();

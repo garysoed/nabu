@@ -1,6 +1,6 @@
-import { arrayThat, assert, objectThat, should, test } from 'gs-testing';
+import {arrayThat, assert, objectThat, should, test} from 'gs-testing';
 
-import { json } from './json';
+import {json} from './json';
 
 test('grammar.human.Json', () => {
 

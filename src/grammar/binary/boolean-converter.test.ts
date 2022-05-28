@@ -1,10 +1,10 @@
-import { assert, iterableThat, objectThat, should, test } from 'gs-testing';
+import {assert, iterableThat, objectThat, should, test} from 'gs-testing';
 
-import { SuccessResult } from '../../base/result';
+import {SuccessResult} from '../../base/result';
 
-import { BinaryData } from './binary-data';
-import { BooleanConverter } from './boolean-converter';
-import { DataType } from './data-type';
+import {BinaryData} from './binary-data';
+import {BooleanConverter} from './boolean-converter';
+import {DataType} from './data-type';
 
 
 test('grammar.binary.BooleanConverter', init => {

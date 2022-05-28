@@ -1,6 +1,6 @@
-import { arrayThat, assert, objectThat, should, test } from 'gs-testing';
+import {arrayThat, assert, objectThat, should, test} from 'gs-testing';
 
-import { parse } from './parser';
+import {parse} from './parser';
 
 test('grammar.human.parser', () => {
   test('parse', () => {

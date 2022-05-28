@@ -7,4 +7,4 @@ module.exports = webpackBuilder(__dirname)
         .setOutput('bundle.js', '/out')
         .addTypeScript()
     )
-    .build();
+    .build('[default]');

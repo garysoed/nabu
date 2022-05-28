@@ -1,8 +1,8 @@
-import { arrayThat, assert, objectThat, should, test } from 'gs-testing';
+import {arrayThat, assert, objectThat, should, test} from 'gs-testing';
 
-import { SuccessResult } from '../../base/result';
+import {SuccessResult} from '../../base/result';
 
-import { binary } from './binary';
+import {binary} from './binary';
 
 test('grammar.binary.Binary', () => {
   should('convert forward and backward undefined correctly', () => {

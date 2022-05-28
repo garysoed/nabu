@@ -1,10 +1,10 @@
-import { assert, should, test } from 'gs-testing';
+import {assert, should, test} from 'gs-testing';
 
-import { Converter } from '../base/converter';
-import { Result } from '../base/result';
+import {Converter} from '../base/converter';
+import {Result} from '../base/result';
 
-import { compose } from './composed-converter';
-import { reverse } from './reversed-converter';
+import {compose} from './composed-converter';
+import {reverse} from './reversed-converter';
 
 class PostfixConverter implements Converter<string, string> {
   constructor(private readonly postfix_: string) { }

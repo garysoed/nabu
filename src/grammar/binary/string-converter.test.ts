@@ -1,10 +1,10 @@
-import { assert, iterableThat, objectThat, should, test } from 'gs-testing';
+import {assert, iterableThat, objectThat, should, test} from 'gs-testing';
 
-import { SuccessResult } from '../../base/result';
+import {SuccessResult} from '../../base/result';
 
-import { BinaryData } from './binary-data';
-import { DataType } from './data-type';
-import { StringConverter } from './string-converter';
+import {BinaryData} from './binary-data';
+import {DataType} from './data-type';
+import {StringConverter} from './string-converter';
 
 
 test('grammar.binary.StringConverter', init => {
