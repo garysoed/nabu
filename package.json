@@ -45,8 +45,11 @@
     "typescript": "^4.6.2",
     "webpack": "^4.26.0"
   },
+  "peerDependencies": {
+    "rxjs": "^6.6.7"
+  },
   "dependencies": {
     "@types/jasmine": "^2.8.8",
-    "rxjs": "^6.5.2"
+    "rxjs": "^6.6.7"
   }
 }

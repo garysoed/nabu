@@ -3,7 +3,7 @@ export interface SuccessResult<T> {
   success: true;
 }
 
-interface FailureResult {
+export interface FailureResult {
   success: false;
 }
 
