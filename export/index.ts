@@ -7,6 +7,7 @@ export {human} from '../src/grammar/human/human';
 export {json} from '../src/grammar/json/json';
 
 // Utils
+export {array} from '../src/util/array-converter';
 export {compose} from '../src/util/composed-converter';
 export {firstSuccess} from '../src/util/first-success-converter';
 export {identity} from '../src/util/identity-converter';
