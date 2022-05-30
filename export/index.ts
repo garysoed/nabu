@@ -1,5 +1,5 @@
 export {Converter} from '../src/base/converter';
-export {Result, SuccessResult} from '../src/base/result';
+export {Result, SuccessResult, success, failure} from '../src/base/result';
 
 // Grammars
 export {binary} from '../src/grammar/binary/binary';

@@ -8,3 +8,11 @@ export interface FailureResult {
 }
 
 export type Result<T> = SuccessResult<T>|FailureResult;
+
+export function success<T>(result: T): SuccessResult<T> {
+  return {success: true, result};
+}
+
+export function failure(): FailureResult {
+  return {success: false};
+}
