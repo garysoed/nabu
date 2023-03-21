@@ -1,4 +1,4 @@
-import {assert, iterableThat, objectThat, should, test} from 'gs-testing';
+import {assert, iterableThat, objectThat, setup, should, test} from 'gs-testing';
 
 import {SuccessResult} from '../../base/result';
 
@@ -7,8 +7,8 @@ import {DataType} from './data-type';
 import {UndefinedConverter} from './undefined-converter';
 
 
-test('grammar.binary.UndefinedConverter', init => {
-  const _ = init(() => {
+test('grammar.binary.UndefinedConverter', () => {
+  const _ = setup(() => {
     const converter = new UndefinedConverter();
     return {converter};
   });

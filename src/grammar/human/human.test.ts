@@ -73,7 +73,8 @@ test('grammar.human.Human', () => {
     });
 
     should('render objects correctly', () => {
-      assert(human().convertForward({a: 1, b: 'b'})).to.haveProperties({result: '{a: 1, b: \'b\'}'});
+      assert(human().convertForward({a: 1, b: 'b'})).to
+          .haveProperties({result: '{a: 1, b: \'b\'}'});
     });
   });
 

@@ -1,4 +1,4 @@
-import {assert, should, test} from 'gs-testing';
+import {assert, setup, should, test} from 'gs-testing';
 
 import {Converter} from '../base/converter';
 import {Result} from '../base/result';
@@ -39,8 +39,8 @@ class IntegerParseConverter implements Converter<number, string> {
 }
 
 test('util.FirstSuccessConverter', () => {
-  test('convertBackward', init => {
-    const _ = init(() => {
+  test('convertBackward', () => {
+    const _ = setup(() => {
       const converter = firstSuccess(new IntegerParseConverter(), new FloatParseConverter());
       return {converter};
     });
@@ -54,8 +54,8 @@ test('util.FirstSuccessConverter', () => {
     });
   });
 
-  test('convertForward', init => {
-    const _ = init(() => {
+  test('convertForward', () => {
+    const _ = setup(() => {
       const converter = firstSuccess(
           reverse(new IntegerParseConverter()),
           reverse(new FloatParseConverter()),

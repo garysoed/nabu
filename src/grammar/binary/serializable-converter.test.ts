@@ -1,4 +1,4 @@
-import {assert, objectThat, should, test} from 'gs-testing';
+import {assert, objectThat, setup, should, test} from 'gs-testing';
 
 import {SuccessResult} from '../../base/result';
 
@@ -6,8 +6,8 @@ import {BinaryData} from './binary-data';
 import {SerializableConverter} from './serializable-converter';
 
 
-test('grammar.binary.SerializableConverter', init => {
-  const _ = init(() => {
+test('grammar.binary.SerializableConverter', () => {
+  const _ = setup(() => {
     const converter = new SerializableConverter();
     return {converter};
   });

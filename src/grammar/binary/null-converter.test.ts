@@ -1,4 +1,4 @@
-import {assert, iterableThat, objectThat, should, test} from 'gs-testing';
+import {assert, iterableThat, objectThat, setup, should, test} from 'gs-testing';
 
 import {SuccessResult} from '../../base/result';
 
@@ -7,8 +7,8 @@ import {DataType} from './data-type';
 import {NullConverter} from './null-converter';
 
 
-test('grammar.binary.NullConverter', init => {
-  const _ = init(() => {
+test('grammar.binary.NullConverter', () => {
+  const _ = setup(() => {
     const converter = new NullConverter();
     return {converter};
   });

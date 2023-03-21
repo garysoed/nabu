@@ -1,4 +1,4 @@
-import {assert, should, test} from 'gs-testing';
+import {assert, setup, should, test} from 'gs-testing';
 
 import {Converter} from '../base/converter';
 import {Result} from '../base/result';
@@ -22,9 +22,9 @@ class TestConverter implements Converter<number, string> {
   }
 }
 
-test('util.StrictConverter', init => {
+test('util.StrictConverter', () => {
   test('convertBackward', () => {
-    const _ = init(() => {
+    const _ = setup(() => {
       const converter = strict(new TestConverter());
       return {converter};
     });
@@ -38,8 +38,8 @@ test('util.StrictConverter', init => {
     });
   });
 
-  test('convertForward', init => {
-    const _ = init(() => {
+  test('convertForward', () => {
+    const _ = setup(() => {
       const converter = strict(reverse(new TestConverter()));
       return {converter};
     });

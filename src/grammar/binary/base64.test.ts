@@ -1,11 +1,11 @@
-import {assert, should, test} from 'gs-testing';
+import {assert, setup, should, test} from 'gs-testing';
 
 import {SuccessResult} from '../../base/result';
 
 import {Base64} from './base64';
 
-test('grammar.binary.Base64', init => {
-  const _ = init(() => {
+test('grammar.binary.Base64', () => {
+  const _ = setup(() => {
     const converter = new Base64();
     return {converter};
   });

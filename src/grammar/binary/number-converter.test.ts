@@ -1,4 +1,4 @@
-import {assert, iterableThat, numberThat, objectThat, should, test} from 'gs-testing';
+import {assert, iterableThat, numberThat, objectThat, setup, should, test} from 'gs-testing';
 
 import {SuccessResult} from '../../base/result';
 
@@ -7,8 +7,8 @@ import {DataType} from './data-type';
 import {NumberConverter} from './number-converter';
 
 
-test('grammar.binary.NumberConverter', init => {
-  const _ = init(() => {
+test('grammar.binary.NumberConverter', () => {
+  const _ = setup(() => {
     const converter = new NumberConverter();
     return {converter};
   });
