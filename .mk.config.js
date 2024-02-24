@@ -6,7 +6,6 @@ declare({
       'link',
       'gs-testing',
       'gs-types',
-      'dev',
       'devbase',
     ],
   }),
