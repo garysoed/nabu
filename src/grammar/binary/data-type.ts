@@ -22,6 +22,6 @@ for (const key in DataType) {
   NUMBER_SET.add(Number.parseInt(key, 10));
 }
 
-export function isADataType(value: number): value is DataType {
-  return NUMBER_SET.has(value);
+export function isADataType(value: unknown): value is DataType {
+  return typeof value === 'number' && NUMBER_SET.has(value);
 }

@@ -20,7 +20,8 @@ export class SerializableConverter implements BinaryConverter<unknown> {
   private readonly numberConverter: NumberConverter = new NumberConverter();
   private readonly objectConverter: ObjectConverter = new ObjectConverter(this);
   private readonly stringConverter: StringConverter = new StringConverter();
-  private readonly undefinedConverter: UndefinedConverter = new UndefinedConverter();
+  private readonly undefinedConverter: UndefinedConverter =
+    new UndefinedConverter();
 
   convertBackward(value: Uint8Array): Result<BinaryData<unknown>> {
     const converters = [
@@ -68,7 +69,9 @@ export class SerializableConverter implements BinaryConverter<unknown> {
     }
 
     if (value instanceof Object) {
-      return this.objectConverter.convertForward(value as Record<string, unknown>);
+      return this.objectConverter.convertForward(
+        value as Record<string, unknown>,
+      );
     }
 
     throw new Error(`Unsupported value: ${value}`);

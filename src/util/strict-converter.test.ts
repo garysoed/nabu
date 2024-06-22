@@ -6,7 +6,6 @@ import {Result} from '../base/result';
 import {reverse} from './reversed-converter';
 import {strict} from './strict-converter';
 
-
 class TestConverter implements Converter<number, string> {
   convertBackward(value: string): Result<number> {
     const result = parseFloat(value);
@@ -34,7 +33,9 @@ test('util.StrictConverter', () => {
     });
 
     should('throw error if fail', () => {
-      assert(() => _.converter.convertBackward('abc')).to.throwErrorWithMessage(/Conversion of/);
+      assert(() => _.converter.convertBackward('abc')).to.throwErrorWithMessage(
+        /Conversion of/,
+      );
     });
   });
 
@@ -49,7 +50,9 @@ test('util.StrictConverter', () => {
     });
 
     should('throw error if fail', () => {
-      assert(() => _.converter.convertForward('abc')).to.throwErrorWithMessage(/Conversion of/);
+      assert(() => _.converter.convertForward('abc')).to.throwErrorWithMessage(
+        /Conversion of/,
+      );
     });
   });
 });

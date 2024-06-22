@@ -17,13 +17,15 @@ test('grammar.human.renderer', () => {
     });
 
     should('render strings correctly', () => {
-      assert(render('string')).to.equal('\'string\'');
+      assert(render('string')).to.equal("'string'");
     });
   });
 
   test('renderArray', () => {
     should('render arrays correctly', () => {
-      assert(render([1, '2', [3, 4], {a: 5, b: '6'}])).to.equal('[1 \'2\' [3 4] {a: 5, b: \'6\'}]');
+      assert(render([1, '2', [3, 4], {a: 5, b: '6'}])).to.equal(
+        "[1 '2' [3 4] {a: 5, b: '6'}]",
+      );
     });
   });
 
@@ -39,7 +41,9 @@ test('grammar.human.renderer', () => {
 
   test('renderObject', () => {
     should('render objects correctly', () => {
-      assert(render({a: 1, b: {c: [1, 2, 3]}})).to.equal('{a: 1, b: {c: [1 2 3]}}');
+      assert(render({a: 1, b: {c: [1, 2, 3]}})).to.equal(
+        '{a: 1, b: {c: [1 2 3]}}',
+      );
     });
   });
 });

@@ -7,7 +7,6 @@ import {firstSuccess} from './first-success-converter';
 import {reverse} from './reversed-converter';
 import {strict} from './strict-converter';
 
-
 class FloatParseConverter implements Converter<number, string> {
   convertBackward(value: string): Result<number> {
     const result = parseFloat(value);
@@ -41,7 +40,10 @@ class IntegerParseConverter implements Converter<number, string> {
 test('util.FirstSuccessConverter', () => {
   test('convertBackward', () => {
     const _ = setup(() => {
-      const converter = firstSuccess(new IntegerParseConverter(), new FloatParseConverter());
+      const converter = firstSuccess(
+        new IntegerParseConverter(),
+        new FloatParseConverter(),
+      );
       return {converter};
     });
 
@@ -50,15 +52,17 @@ test('util.FirstSuccessConverter', () => {
     });
 
     should('fail if none of the converters are successful', () => {
-      assert(_.converter.convertBackward('abc')).to.haveProperties({success: false});
+      assert(_.converter.convertBackward('abc')).to.haveProperties({
+        success: false,
+      });
     });
   });
 
   test('convertForward', () => {
     const _ = setup(() => {
       const converter = firstSuccess(
-          reverse(new IntegerParseConverter()),
-          reverse(new FloatParseConverter()),
+        reverse(new IntegerParseConverter()),
+        reverse(new FloatParseConverter()),
       );
       return {converter};
     });
@@ -68,7 +72,9 @@ test('util.FirstSuccessConverter', () => {
     });
 
     should('fail if none of the converters are successful', () => {
-      assert(_.converter.convertForward('abc')).to.haveProperties({success: false});
+      assert(_.converter.convertForward('abc')).to.haveProperties({
+        success: false,
+      });
     });
   });
 });

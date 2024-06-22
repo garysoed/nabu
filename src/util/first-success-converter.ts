@@ -2,7 +2,7 @@ import {Converter} from '../base/converter';
 import {Result} from '../base/result';
 
 class FirstSuccessConverter<A, B> implements Converter<A, B> {
-  constructor(private readonly converters: Array<Converter<A, B>>) { }
+  constructor(private readonly converters: Array<Converter<A, B>>) {}
 
   convertBackward(value: B): Result<A> {
     for (const converter of this.converters) {
@@ -27,6 +27,8 @@ class FirstSuccessConverter<A, B> implements Converter<A, B> {
   }
 }
 
-export function firstSuccess<A, B>(...converters: Array<Converter<A, B>>): Converter<A, B> {
+export function firstSuccess<A, B>(
+  ...converters: Array<Converter<A, B>>
+): Converter<A, B> {
   return new FirstSuccessConverter(converters);
 }

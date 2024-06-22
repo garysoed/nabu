@@ -1,7 +1,7 @@
 import {Converter} from '../base/converter';
 
 export class StrictConverter<A, B> {
-  constructor(private readonly baseConverter: Converter<A, B>) { }
+  constructor(private readonly baseConverter: Converter<A, B>) {}
 
   convertBackward(value: B): A {
     const result = this.baseConverter.convertBackward(value);
@@ -22,6 +22,8 @@ export class StrictConverter<A, B> {
   }
 }
 
-export function strict<A, B>(baseConverter: Converter<A, B>): StrictConverter<A, B> {
+export function strict<A, B>(
+  baseConverter: Converter<A, B>,
+): StrictConverter<A, B> {
   return new StrictConverter(baseConverter);
 }

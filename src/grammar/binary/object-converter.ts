@@ -10,7 +10,9 @@ import {StringConverter} from './string-converter';
 class ObjectEntryConverter implements BinaryConverter<[string, unknown]> {
   private readonly stringConverter_: StringConverter = new StringConverter();
 
-  constructor(private readonly serializableConverter_: BinaryConverter<unknown>) { }
+  constructor(
+    private readonly serializableConverter_: BinaryConverter<unknown>,
+  ) {}
 
   convertBackward(value: Uint8Array): Result<BinaryData<[string, unknown]>> {
     const keyResult = this.stringConverter_.convertBackward(value);
@@ -19,7 +21,8 @@ class ObjectEntryConverter implements BinaryConverter<[string, unknown]> {
     }
 
     const contentResult = this.serializableConverter_.convertBackward(
-        value.slice(keyResult.result.length));
+      value.slice(keyResult.result.length),
+    );
     if (!contentResult.success) {
       return {success: false};
     }
@@ -53,16 +56,23 @@ class ObjectEntryConverter implements BinaryConverter<[string, unknown]> {
   }
 }
 
-export class ObjectConverter implements BinaryConverter<Record<string, unknown>> {
-  private readonly dataTypeConverter_: DataTypeConverter = new DataTypeConverter();
+export class ObjectConverter
+  implements BinaryConverter<Record<string, unknown>>
+{
+  private readonly dataTypeConverter_: DataTypeConverter =
+    new DataTypeConverter();
   private readonly numberConverter_: NumberConverter = new NumberConverter();
   private readonly objectEntryConverter_: ObjectEntryConverter;
 
   constructor(serializableConverter: BinaryConverter<unknown>) {
-    this.objectEntryConverter_ = new ObjectEntryConverter(serializableConverter);
+    this.objectEntryConverter_ = new ObjectEntryConverter(
+      serializableConverter,
+    );
   }
 
-  convertBackward(value: Uint8Array): Result<BinaryData<Record<string, unknown>>> {
+  convertBackward(
+    value: Uint8Array,
+  ): Result<BinaryData<Record<string, unknown>>> {
     const typeResult = this.dataTypeConverter_.convertBackward(value);
     if (!typeResult.success) {
       return {success: false};
@@ -73,7 +83,9 @@ export class ObjectConverter implements BinaryConverter<Record<string, unknown>>
     }
 
     const typeLength = typeResult.result.length;
-    const lengthResult = this.numberConverter_.convertBackward(value.slice(typeLength));
+    const lengthResult = this.numberConverter_.convertBackward(
+      value.slice(typeLength),
+    );
     if (!lengthResult.success) {
       return {success: false};
     }
@@ -81,7 +93,9 @@ export class ObjectConverter implements BinaryConverter<Record<string, unknown>>
     let arrayIndex = typeLength + lengthResult.result.length;
     const object: Record<string, unknown> = {};
     for (let i = 0; i < lengthResult.result.data; i++) {
-      const entryResult = this.objectEntryConverter_.convertBackward(value.slice(arrayIndex));
+      const entryResult = this.objectEntryConverter_.convertBackward(
+        value.slice(arrayIndex),
+      );
       if (!entryResult.success) {
         return {success: false};
       }
@@ -101,7 +115,9 @@ export class ObjectConverter implements BinaryConverter<Record<string, unknown>>
         continue;
       }
 
-      entryResults.push(this.objectEntryConverter_.convertForward([key, value[key]]));
+      entryResults.push(
+        this.objectEntryConverter_.convertForward([key, value[key]]),
+      );
     }
 
     const results = [
@@ -116,10 +132,7 @@ export class ObjectConverter implements BinaryConverter<Record<string, unknown>>
         return {success: false};
       }
 
-      array = new Uint8Array([
-        ...array,
-        ...result.result,
-      ]);
+      array = new Uint8Array([...array, ...result.result]);
     }
 
     return {result: array, success: true};

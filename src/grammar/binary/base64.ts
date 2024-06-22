@@ -1,11 +1,13 @@
 import {Converter} from '../../base/converter';
 import {Result} from '../../base/result';
 
-const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
+const LETTERS =
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 const REVERSE_MAP = new Map<string, number>();
-for (let i = 0; i < LETTERS.length; i++) {
-  REVERSE_MAP.set(LETTERS[i], i);
-}
+
+[...LETTERS].forEach((letter, i) => {
+  REVERSE_MAP.set(letter, i);
+});
 
 export class Base64 implements Converter<Uint8Array, string> {
   convertBackward(value: string): Result<Uint8Array> {
@@ -16,13 +18,26 @@ export class Base64 implements Converter<Uint8Array, string> {
       const letter2 = value[i + 2];
       const letter3 = value[i + 3];
 
+      if (
+        letter0 === undefined ||
+        letter1 === undefined ||
+        letter2 === undefined ||
+        letter3 === undefined
+      ) {
+        return {success: false};
+      }
+
       const item0 = REVERSE_MAP.get(letter0);
       const item1 = REVERSE_MAP.get(letter1);
       const item2 = letter2 === '=' ? 0 : REVERSE_MAP.get(letter2);
       const item3 = letter3 === '=' ? 0 : REVERSE_MAP.get(letter3);
 
-      if (item3 === undefined || item2 === undefined || item1 === undefined
-          || item0 === undefined) {
+      if (
+        item3 === undefined ||
+        item2 === undefined ||
+        item1 === undefined ||
+        item0 === undefined
+      ) {
         return {success: false};
       }
 
@@ -32,9 +47,9 @@ export class Base64 implements Converter<Uint8Array, string> {
       code += item2 << 6;
       code += item3;
 
-      const digit0 = (code & 0xFF0000) >> 16;
-      const digit1 = (code & 0x00FF00) >> 8;
-      const digit2 = code & 0x0000FF;
+      const digit0 = (code & 0xff0000) >> 16;
+      const digit1 = (code & 0x00ff00) >> 8;
+      const digit2 = code & 0x0000ff;
 
       array.push(digit0);
       if (letter2 !== '=') {
@@ -57,28 +72,36 @@ export class Base64 implements Converter<Uint8Array, string> {
       const item2 = input[i + 2];
 
       let code = 0;
-      code += item0 << 16;
-      code += (item1 || 0) << 8;
-      code += item2 || 0;
+      code += (item0 ?? 0) << 16;
+      code += (item1 ?? 0) << 8;
+      code += item2 ?? 0;
 
-      const letter0 = (code & 0xFC0000) >> 18;
-      const letter1 = (code & 0x03F000) >> 12;
-      const letter2 = (code & 0x000FC0) >> 6;
-      const letter3 = code & 0X3F;
+      const letter0 = LETTERS[(code & 0xfc0000) >> 18];
+      const letter1 = LETTERS[(code & 0x03f000) >> 12];
+      const letter2 = LETTERS[(code & 0x000fc0) >> 6];
+      const letter3 = LETTERS[code & 0x3f];
+      if (
+        letter0 === undefined ||
+        letter1 === undefined ||
+        letter2 === undefined ||
+        letter3 === undefined
+      ) {
+        throw new Error(`Array ${input} contains invalid char code`);
+      }
 
-      letters.push(LETTERS[letter0]);
-      letters.push(LETTERS[letter1]);
+      letters.push(letter0);
+      letters.push(letter1);
 
       if (item1 === undefined) {
         letters.push('=');
       } else {
-        letters.push(LETTERS[letter2]);
+        letters.push(letter2);
       }
 
       if (item2 === undefined) {
         letters.push('=');
       } else {
-        letters.push(LETTERS[letter3]);
+        letters.push(letter3);
       }
     }
 

@@ -8,7 +8,6 @@ test('@nabu/util/with-type-check', () => {
       const converter = withTypeCheck(numberType);
       assert(converter.convertBackward(123)).to.haveProperties({result: 123});
     });
-
   });
 
   test('convertForward', () => {
@@ -19,7 +18,9 @@ test('@nabu/util/with-type-check', () => {
 
     should('fail if the type is incorrect', () => {
       const converter = withTypeCheck(numberType);
-      assert(converter.convertForward('123')).to.haveProperties({success: false});
+      assert(converter.convertForward('123')).to.haveProperties({
+        success: false,
+      });
     });
   });
 });

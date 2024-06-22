@@ -13,10 +13,13 @@ import {NumberConverter} from './number-converter';
  * [type][length][entry1][entry2]...[entryN]
  */
 export class ListConverter implements BinaryConverter<readonly unknown[]> {
-  private readonly dataTypeConverter_: DataTypeConverter = new DataTypeConverter();
+  private readonly dataTypeConverter_: DataTypeConverter =
+    new DataTypeConverter();
   private readonly numberConverter_: NumberConverter = new NumberConverter();
 
-  constructor(private readonly serializableConverter_: BinaryConverter<unknown>) { }
+  constructor(
+    private readonly serializableConverter_: BinaryConverter<unknown>,
+  ) {}
 
   convertBackward(value: Uint8Array): Result<BinaryData<readonly unknown[]>> {
     const typeResult = this.dataTypeConverter_.convertBackward(value);
@@ -29,7 +32,9 @@ export class ListConverter implements BinaryConverter<readonly unknown[]> {
     }
 
     const typeLength = typeResult.result.length;
-    const lengthResult = this.numberConverter_.convertBackward(value.slice(typeLength));
+    const lengthResult = this.numberConverter_.convertBackward(
+      value.slice(typeLength),
+    );
     if (!lengthResult.success) {
       return {success: false};
     }
@@ -37,7 +42,9 @@ export class ListConverter implements BinaryConverter<readonly unknown[]> {
     let arrayIndex = typeLength + lengthResult.result.length;
     const array = [];
     for (let i = 0; i < lengthResult.result.data; i++) {
-      const itemResult = this.serializableConverter_.convertBackward(value.slice(arrayIndex));
+      const itemResult = this.serializableConverter_.convertBackward(
+        value.slice(arrayIndex),
+      );
       if (!itemResult.success) {
         return {success: false};
       }
@@ -50,7 +57,9 @@ export class ListConverter implements BinaryConverter<readonly unknown[]> {
   }
 
   convertForward(value: readonly unknown[]): Result<Uint8Array> {
-    const itemResults = value.map(item => this.serializableConverter_.convertForward(item));
+    const itemResults = value.map((item) =>
+      this.serializableConverter_.convertForward(item),
+    );
     const results = [
       this.dataTypeConverter_.convertForward(DataType.LIST),
       this.numberConverter_.convertForward(value.length),
@@ -63,10 +72,7 @@ export class ListConverter implements BinaryConverter<readonly unknown[]> {
         return {success: false};
       }
 
-      array = new Uint8Array([
-        ...array,
-        ...result.result,
-      ]);
+      array = new Uint8Array([...array, ...result.result]);
     }
 
     return {result: array, success: true};

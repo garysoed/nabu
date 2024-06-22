@@ -12,7 +12,8 @@ import {DataTypeConverter} from './data-type-converter';
  * [type]
  */
 export class UndefinedConverter implements BinaryConverter<undefined> {
-  private readonly dataTypeConverter_: DataTypeConverter = new DataTypeConverter();
+  private readonly dataTypeConverter_: DataTypeConverter =
+    new DataTypeConverter();
 
   convertBackward(value: Uint8Array): Result<BinaryData<undefined>> {
     const typeResult = this.dataTypeConverter_.convertBackward(value);
@@ -24,18 +25,21 @@ export class UndefinedConverter implements BinaryConverter<undefined> {
       return {success: false};
     }
 
-    return {result: {data: undefined, length: typeResult.result.length}, success: true};
+    return {
+      result: {data: undefined, length: typeResult.result.length},
+      success: true,
+    };
   }
 
   convertForward(): Result<Uint8Array> {
-    const dataTypeResult = this.dataTypeConverter_.convertForward(DataType.UNDEFINED);
+    const dataTypeResult = this.dataTypeConverter_.convertForward(
+      DataType.UNDEFINED,
+    );
     if (!dataTypeResult.success) {
       return {success: false};
     }
 
-    const array = new Uint8Array([
-      ...new Uint8Array(dataTypeResult.result),
-    ]);
+    const array = new Uint8Array([...new Uint8Array(dataTypeResult.result)]);
 
     return {result: array, success: true};
   }

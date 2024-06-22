@@ -1,4 +1,12 @@
-import {arrayThat, assert, iterableThat, objectThat, setup, should, test} from 'gs-testing';
+import {
+  arrayThat,
+  assert,
+  iterableThat,
+  objectThat,
+  setup,
+  should,
+  test,
+} from 'gs-testing';
 
 import {SuccessResult} from '../../base/result';
 
@@ -6,7 +14,6 @@ import {BinaryData} from './binary-data';
 import {DataType} from './data-type';
 import {ListConverter} from './list-converter';
 import {SerializableConverter} from './serializable-converter';
-
 
 test('grammar.binary.ListConverter', () => {
   const _ = setup(() => {
@@ -16,7 +23,9 @@ test('grammar.binary.ListConverter', () => {
 
   should('convert forward and backward correctly', () => {
     const list = [undefined, null, true, 1.23, 'abc', ['list'], {a: 1}];
-    const forwardResult = (_.converter.convertForward(list) as SuccessResult<Uint8Array>).result;
+    const forwardResult = (
+      _.converter.convertForward(list) as SuccessResult<Uint8Array>
+    ).result;
     assert(_.converter.convertBackward(forwardResult)).to.haveProperties({
       result: objectThat<BinaryData<readonly unknown[]>>().haveProperties({
         data: arrayThat().haveExactElements([
@@ -60,7 +69,9 @@ test('grammar.binary.ListConverter', () => {
         200,
         1,
       ]);
-      assert(_.converter.convertBackward(array)).to.haveProperties({success: false});
+      assert(_.converter.convertBackward(array)).to.haveProperties({
+        success: false,
+      });
     });
 
     should('fail if the length cannot be converted', () => {
@@ -73,7 +84,9 @@ test('grammar.binary.ListConverter', () => {
         DataType.BOOLEAN,
         1,
       ]);
-      assert(_.converter.convertBackward(array)).to.haveProperties({success: false});
+      assert(_.converter.convertBackward(array)).to.haveProperties({
+        success: false,
+      });
     });
 
     should('fail if the type is not LIST', () => {
@@ -86,7 +99,9 @@ test('grammar.binary.ListConverter', () => {
         DataType.BOOLEAN,
         1,
       ]);
-      assert(_.converter.convertBackward(array)).to.haveProperties({success: false});
+      assert(_.converter.convertBackward(array)).to.haveProperties({
+        success: false,
+      });
     });
 
     should('fail if the type cannot be converted', () => {
@@ -99,7 +114,9 @@ test('grammar.binary.ListConverter', () => {
         DataType.BOOLEAN,
         1,
       ]);
-      assert(_.converter.convertBackward(array)).to.haveProperties({success: false});
+      assert(_.converter.convertBackward(array)).to.haveProperties({
+        success: false,
+      });
     });
   });
 

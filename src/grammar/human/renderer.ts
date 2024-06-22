@@ -19,7 +19,7 @@ export function render(serializable: unknown): string {
 }
 
 function renderArray(value: readonly unknown[]): string {
-  return `[${value.map(item => render(item)).join(' ')}]`;
+  return `[${value.map((item) => render(item)).join(' ')}]`;
 }
 
 function renderBoolean(value: boolean): string {

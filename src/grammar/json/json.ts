@@ -5,7 +5,7 @@ class Json implements Converter<unknown, string> {
   convertBackward(value: string): Result<unknown> {
     try {
       return {result: JSON.parse(value), success: true};
-    } catch (error) {
+    } catch {
       return {success: false};
     }
   }
@@ -13,7 +13,7 @@ class Json implements Converter<unknown, string> {
   convertForward(input: unknown): Result<string> {
     try {
       return {result: JSON.stringify(input), success: true};
-    } catch (error) {
+    } catch {
       return {success: false};
     }
   }

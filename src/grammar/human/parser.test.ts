@@ -45,7 +45,7 @@ test('grammar.human.parser', () => {
       assert(parse('0')).to.equal(0);
 
       // Non decimals
-      assert(parse('0xbeef')).to.equal(0xBEEF);
+      assert(parse('0xbeef')).to.equal(0xbeef);
       assert(parse('0o1234')).to.equal(0o1234);
       assert(parse('0b1010')).to.equal(0b1010);
     });
@@ -83,20 +83,18 @@ test('grammar.human.parser', () => {
     undefined: undefined,
   }
       `;
-      assert(parse(INPUT)).to.equal(objectThat().haveProperties({
-        list: arrayThat().haveExactElements([
-          'string',
-          0.234,
-          0.002,
-        ]),
-        null: null,
-        object: objectThat().haveProperties({
-          decimal: 123.456,
-          number: 123,
-          string: 'string',
+      assert(parse(INPUT)).to.equal(
+        objectThat().haveProperties({
+          list: arrayThat().haveExactElements(['string', 0.234, 0.002]),
+          null: null,
+          object: objectThat().haveProperties({
+            decimal: 123.456,
+            number: 123,
+            string: 'string',
+          }),
+          undefined,
         }),
-        undefined,
-      }));
+      );
     });
   });
 });

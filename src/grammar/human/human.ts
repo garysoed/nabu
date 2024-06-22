@@ -8,7 +8,7 @@ class Human implements Converter<unknown, string> {
   convertBackward(value: string): Result<unknown> {
     try {
       return {result: parse(value), success: true};
-    } catch (error) {
+    } catch {
       return {success: false};
     }
   }

@@ -41,17 +41,17 @@ class ComposedConverter<A, B> implements Converter<A, B> {
 
 export function compose<A, B>(converter: Converter<A, B>): Converter<A, B>;
 export function compose<A, T0, B>(
-    converter0: Converter<A, T0>,
-    converter1: Converter<T0, B>,
+  converter0: Converter<A, T0>,
+  converter1: Converter<T0, B>,
 ): Converter<A, B>;
 export function compose<A, T0, T1, B>(
-    converter0: Converter<A, T0>,
-    converter1: Converter<T0, T1>,
-    converter2: Converter<T1, B>,
+  converter0: Converter<A, T0>,
+  converter1: Converter<T0, T1>,
+  converter2: Converter<T1, B>,
 ): Converter<A, B>;
 export function compose(
-    // tslint:disable-next-line:trailing-comma
-    ...converters: Array<Converter<unknown, unknown>>
+  // tslint:disable-next-line:trailing-comma
+  ...converters: Array<Converter<unknown, unknown>>
 ): Converter<unknown, unknown> {
   return new ComposedConverter(...converters);
 }

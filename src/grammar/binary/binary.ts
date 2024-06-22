@@ -6,7 +6,8 @@ import {SerializableConverter} from './serializable-converter';
 
 class Binary implements Converter<unknown, string> {
   private readonly base64: Base64 = new Base64();
-  private readonly serializableConverter: SerializableConverter = new SerializableConverter();
+  private readonly serializableConverter: SerializableConverter =
+    new SerializableConverter();
 
   convertBackward(value: string): Result<unknown> {
     const base64Result = this.base64.convertBackward(value);
@@ -14,7 +15,9 @@ class Binary implements Converter<unknown, string> {
       return {success: false};
     }
 
-    const result = this.serializableConverter.convertBackward(base64Result.result);
+    const result = this.serializableConverter.convertBackward(
+      base64Result.result,
+    );
     if (!result.success) {
       return {success: false};
     }

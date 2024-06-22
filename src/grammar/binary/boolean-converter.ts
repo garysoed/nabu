@@ -12,7 +12,8 @@ import {DataTypeConverter} from './data-type-converter';
  * [type][1/0]
  */
 export class BooleanConverter implements BinaryConverter<boolean> {
-  private readonly dataTypeConverter_: DataTypeConverter = new DataTypeConverter();
+  private readonly dataTypeConverter_: DataTypeConverter =
+    new DataTypeConverter();
 
   convertBackward(value: Uint8Array): Result<BinaryData<boolean>> {
     const typeResult = this.dataTypeConverter_.convertBackward(value);
@@ -33,7 +34,9 @@ export class BooleanConverter implements BinaryConverter<boolean> {
   }
 
   convertForward(value: boolean): Result<Uint8Array> {
-    const dataTypeResult = this.dataTypeConverter_.convertForward(DataType.BOOLEAN);
+    const dataTypeResult = this.dataTypeConverter_.convertForward(
+      DataType.BOOLEAN,
+    );
     if (!dataTypeResult.success) {
       return {success: false};
     }
