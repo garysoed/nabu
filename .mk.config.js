@@ -3,6 +3,6 @@ load('node_modules/devbase/ts/.mk.config-base.js');
 
 set_vars({
   vars: {
-    local_deps: ['devbase', 'gs-testing', 'gs-types', 'link'],
+    local_deps: ['devbase', 'gs-testing', 'gs-types'],
   },
 });
